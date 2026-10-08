@@ -3,6 +3,7 @@ import { MapPin, X, Mountain, ShieldCheck, Crosshair, ExternalLink, AlertTriangl
 import { SelectedLocation, formatCoordinates } from '../../geospatial/coordinates';
 import { CesiumViewerManager } from '../../cesium/viewer';
 import { isPointInAmazonStudyRegion } from '../../config/studyRegion';
+import { ForestConditionPanel } from './ForestConditionPanel';
 
 interface LocationPanelProps {
   location: SelectedLocation | null;
@@ -288,6 +289,18 @@ export const LocationPanel: React.FC<LocationPanelProps> = ({
             <strong>Scientific Note:</strong> The user-defined ignition establishes a hypothetical scenario condition. U-Net analysis independently processes available real Sentinel-2 multispectral satellite imagery.
           </div>
         )}
+
+        {/* Divider */}
+        <div style={{ borderTop: '1px solid rgba(255, 255, 255, 0.08)', margin: '4px 0' }} />
+
+        {/* Forest Condition Section */}
+        <ForestConditionPanel
+          hasActiveFireData={false}
+          hasBurnedAreaGroundTruth={location.source === 'EMSR239_EVENT'}
+        />
+
+        {/* Divider */}
+        <div style={{ borderTop: '1px solid rgba(255, 255, 255, 0.08)', margin: '4px 0' }} />
 
         {/* Scenario Ignition & Spread Analysis Controls */}
         <div style={{ display: 'flex', gap: '8px', paddingTop: '4px' }}>

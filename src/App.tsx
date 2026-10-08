@@ -11,18 +11,25 @@ import { EnvironmentalPanel } from './components/ui/EnvironmentalPanel';
 import { EnvironmentalFocusControl } from './components/map/EnvironmentalFocusControl';
 import { UNetInferencePanel } from './components/ui/UNetInferencePanel';
 import { FireSpreadPanel } from './components/ui/FireSpreadPanel';
+import { ComparisonPanel } from './components/ui/ComparisonPanel';
 import { SelectedLocation } from './geospatial/coordinates';
 import { SelectionMarkerManager } from './cesium/selectionMarker';
 import { FireMarkerManager } from './cesium/fireMarker';
 import { WildfireLayerManager } from './cesium/wildfireLayer';
 import { SpreadLayerManager } from './cesium/spreadLayer';
 import { StudyRegionLayerManager } from './cesium/studyRegionLayer';
+import { uNetPredictionLayerManager } from './cesium/unetPredictionLayer';
 import { CesiumViewerManager } from './cesium/viewer';
 import { ImageryType, setImageryLayer } from './cesium/imagery';
 import { AMAZON_REAL_WILDFIRE_OBSERVATIONS } from './wildfire/fireObservation';
 import { environmentalService } from './environmental/environmentalService';
 import { EnvironmentalTimeline } from './environmental/environmentalTypes';
-import { unetInferenceService, UNetInferenceResponse } from './services/unetInferenceService';
+import { UNetInferenceResponse } from './services/unetInferenceService';
+import { satelliteObservationService } from './services/satelliteObservationService';
+import { unetPreprocessingBridge } from './services/unetPreprocessingBridge';
+import { uNetResultGeoReferenceService, GeoreferencedUNetOutput } from './geospatial/unetResultGeoReference';
+import { fireSimulationComparisonService, ComparisonMetrics } from './comparison/fireSimulationComparison';
+import { simulationClockManager } from './simulation/simulationClock';
 import { terrainService } from './geospatial/terrainService';
 import { fuelService } from './geospatial/fuelService';
 import { fireSpreadModel } from './simulation/fireSpreadModel';
@@ -46,15 +53,22 @@ export function App() {
   const [isEnvPanelOpen, setIsEnvPanelOpen] = useState<boolean>(true);
   const [isEnvLoading, setIsEnvLoading] = useState<boolean>(false);
 
-  // U-Net Inference State
+  // U-Net Inference & Observation Pipeline State (Phase 2A, 2B, 2C)
   const [inferenceResult, setInferenceResult] = useState<UNetInferenceResponse | null>(null);
+  const [georefOutput, setGeorefOutput] = useState<GeoreferencedUNetOutput | null>(null);
   const [isInferenceLoading, setIsInferenceLoading] = useState<boolean>(false);
 
-  // Simulated Fire & Spread Scenario State
+  // Layer Visibility Toggles (Phase 2C)
+  const [showPredictionLayer, setShowPredictionLayer] = useState<boolean>(true);
+  const [showGroundTruthLayer, setShowGroundTruthLayer] = useState<boolean>(true);
+  const [showSimulationLayer, setShowSimulationLayer] = useState<boolean>(true);
+
+  // Simulated Fire & Spread Scenario State (Phase 1)
   const [isSimulatedFireActive, setIsSimulatedFireActive] = useState<boolean>(false);
   const [spreadResult, setSpreadResult] = useState<SpreadSimulationResult | null>(null);
   const [selectedHorizon, setSelectedHorizon] = useState<SpreadHorizon>('+1H');
   const [isSpreadLoading, setIsSpreadLoading] = useState<boolean>(false);
+  const [comparisonMetrics, setComparisonMetrics] = useState<ComparisonMetrics | null>(null);
 
   const activeFireObservation = AMAZON_REAL_WILDFIRE_OBSERVATIONS[0];
 
@@ -70,7 +84,7 @@ export function App() {
   // Fetch real-time or historical weather when selected location changes
   const loadWeatherForLocation = useCallback(async (loc: SelectedLocation) => {
     setIsEnvLoading(true);
-    setEnvTimeline(null); // Clear previous weather to avoid stale values
+    setEnvTimeline(null);
     const timeline = await environmentalService.fetchEnvironmentalTimeline(
       { latitude: loc.latitude, longitude: loc.longitude },
       loc.label,
@@ -80,15 +94,15 @@ export function App() {
     setIsEnvLoading(false);
   }, []);
 
-  // Initial Location & Weather Load (Amazon Rainforest)
+  // Initial Location & Weather Load (Amazon Rainforest Study Region)
   useEffect(() => {
     const defaultLoc: SelectedLocation = {
       id: 'default_amazon',
-      latitude: -3.3842,
-      longitude: -60.1985,
-      height: 12000,
+      latitude: -3.119,
+      longitude: -60.0217,
+      height: 18000,
       source: 'AMAZON_REGION',
-      label: 'Amazon Rainforest (Manaus Corridor, Brazil)',
+      label: 'Manaus & Anavilhanas Rainforest Reserve, Brazil',
       timestamp: new Date().toISOString()
     };
     setSelectedLocation(defaultLoc);
@@ -139,12 +153,16 @@ export function App() {
   // Handle globe click selection callback registration
   const handleSelectLocation = useCallback((location: SelectedLocation) => {
     setSelectedLocation(location);
-    setInferenceResult(null); // Reset inference result on new location click
+    setInferenceResult(null);
+    setGeorefOutput(null);
+    setComparisonMetrics(null);
   }, []);
 
   const handleClearLocation = useCallback(() => {
     setSelectedLocation(null);
     setInferenceResult(null);
+    setGeorefOutput(null);
+    setComparisonMetrics(null);
     setIsSimulatedFireActive(false);
     setSpreadResult(null);
     const manager = CesiumViewerManager.getInstance();
@@ -152,6 +170,7 @@ export function App() {
     if (viewer) {
       SelectionMarkerManager.getInstance().clear(viewer);
       SpreadLayerManager.getInstance().clearSpread(viewer);
+      uNetPredictionLayerManager.clearLayers(viewer);
     }
   }, []);
 
@@ -168,32 +187,74 @@ export function App() {
     setEnvTimeline((prev) => (prev ? { ...prev, selectedIndex: index } : null));
   }, []);
 
-  // Trigger U-Net Inference on demand for selected location
+  // Execute Phase 2A -> Phase 2B -> Phase 2C Satellite U-Net Pipeline
   const handleRunInference = useCallback(async () => {
     if (!selectedLocation) return;
     setIsInferenceLoading(true);
     setInferenceResult(null);
 
-    const res = await unetInferenceService.runInference({
+    // Phase 2A: Fetch satellite observation metadata
+    const obsResult = await satelliteObservationService.getObservation({
       latitude: selectedLocation.latitude,
       longitude: selectedLocation.longitude,
-      eventDate: selectedLocation.eventDate
+      requestedTimestamp: selectedLocation.timestamp || new Date().toISOString()
     });
 
-    setInferenceResult(res);
+    // Phase 2B: Preprocess 15-channel contract and execute U-Net inference
+    const segResult = await unetPreprocessingBridge.executePipeline(obsResult);
+
+    // Phase 2C-A: Format georeferenced output
+    const georef = uNetResultGeoReferenceService.createGeoreferencedOutput(segResult);
+    setGeorefOutput(georef);
+
+    // Backward-compatible UNetInferenceResponse state
+    setInferenceResult({
+      status: segResult.status === 'success' ? 'success' : 'unavailable',
+      latitude: segResult.latitude,
+      longitude: segResult.longitude,
+      acquisitionTime: segResult.actualAcquisitionTime,
+      threshold: segResult.threshold,
+      predictedBurnedPixels: segResult.predictedBurnedPixels,
+      totalPixels: segResult.totalPixels,
+      predictedBurnedPercentage: segResult.predictedBurnedPercentage,
+      source: 'Land8Fire U-Net 15-Channel',
+      provenance: segResult.provenance,
+      message: segResult.message
+    });
+
+    // Phase 2C-B: Update Cesium 3D vector prediction & ground truth layers
+    const manager = CesiumViewerManager.getInstance();
+    const viewer = manager.getViewer();
+    if (viewer) {
+      await uNetPredictionLayerManager.updateLayers(viewer, georef, showGroundTruthLayer);
+    }
+
+    // Phase 2C-D: Evaluate comparison if simulation is also active
+    if (spreadResult) {
+      const comp = fireSimulationComparisonService.compareSimulationWithObservation(
+        spreadResult,
+        georef,
+        selectedHorizon
+      );
+      setComparisonMetrics(comp);
+    }
+
     setIsInferenceLoading(false);
-  }, [selectedLocation]);
+  }, [selectedLocation, spreadResult, selectedHorizon, showGroundTruthLayer]);
 
   // Scenario Lifecycle: Create Ignition
   const handleCreateIgnition = useCallback(() => {
     setIsSimulatedFireActive(true);
     setSpreadResult(null);
-  }, []);
+    simulationClockManager.initializeClock(selectedLocation?.timestamp);
+  }, [selectedLocation]);
 
   // Scenario Lifecycle: Remove Fire / Clear Scenario
   const handleRemoveFire = useCallback(() => {
     setIsSimulatedFireActive(false);
     setSpreadResult(null);
+    setComparisonMetrics(null);
+    simulationClockManager.stopPlayback();
     const manager = CesiumViewerManager.getInstance();
     const viewer = manager.getViewer();
     if (viewer) {
@@ -224,7 +285,7 @@ export function App() {
       radiusMeters: 150,
       areaHectares: 7.1,
       timestamp: selectedLocation.eventDate || new Date().toISOString(),
-      provenance: 'SIMULATED / USER-DEFINED SCENARIO'
+      provenance: 'EXPERIMENTAL FIRE-SPREAD SIMULATION'
     };
 
     const res = fireSpreadModel.runSimulation(initialFire, envTimeline, terrain, fuel);
@@ -237,11 +298,23 @@ export function App() {
     if (viewer && res.timesteps[selectedHorizon]) {
       SpreadLayerManager.getInstance().renderSpreadPrediction(viewer, res.timesteps[selectedHorizon]);
     }
-  }, [selectedLocation, envTimeline, selectedHorizon]);
+
+    // Phase 2C-D: Evaluate simulation vs observation comparison
+    if (georefOutput) {
+      const comp = fireSimulationComparisonService.compareSimulationWithObservation(
+        res,
+        georefOutput,
+        selectedHorizon
+      );
+      setComparisonMetrics(comp);
+    }
+  }, [selectedLocation, envTimeline, selectedHorizon, georefOutput]);
 
   // Update 3D spread visualization when forecast horizon tab changes
   const handleSelectHorizon = useCallback((h: SpreadHorizon) => {
     setSelectedHorizon(h);
+    simulationClockManager.setHorizon(h);
+
     if (spreadResult && spreadResult.timesteps[h]) {
       const manager = CesiumViewerManager.getInstance();
       const viewer = manager.getViewer();
@@ -249,7 +322,45 @@ export function App() {
         SpreadLayerManager.getInstance().renderSpreadPrediction(viewer, spreadResult.timesteps[h]);
       }
     }
-  }, [spreadResult]);
+
+    if (spreadResult && georefOutput) {
+      const comp = fireSimulationComparisonService.compareSimulationWithObservation(
+        spreadResult,
+        georefOutput,
+        h
+      );
+      setComparisonMetrics(comp);
+    }
+  }, [spreadResult, georefOutput]);
+
+  // Handle Layer Visibility Toggles
+  const handleTogglePredictionLayer = useCallback(() => {
+    setShowPredictionLayer((prev) => {
+      const next = !prev;
+      uNetPredictionLayerManager.setPredictionVisibility(next);
+      return next;
+    });
+  }, []);
+
+  const handleToggleGroundTruthLayer = useCallback(() => {
+    setShowGroundTruthLayer((prev) => {
+      const next = !prev;
+      uNetPredictionLayerManager.setGroundTruthVisibility(next);
+      return next;
+    });
+  }, []);
+
+  const handleToggleSimulationLayer = useCallback(() => {
+    setShowSimulationLayer((prev) => {
+      const next = !prev;
+      const manager = CesiumViewerManager.getInstance();
+      const viewer = manager.getViewer();
+      if (viewer) {
+        SpreadLayerManager.getInstance().setSpreadVisibility(viewer, next);
+      }
+      return next;
+    });
+  }, []);
 
   return (
     <div style={{ width: '100vw', height: '100vh', position: 'relative', overflow: 'hidden' }}>
@@ -282,7 +393,7 @@ export function App() {
           flexDirection: 'column',
           gap: '12px',
           zIndex: 35,
-          pointerEvents: 'none' // Allow map clicks through container gaps
+          pointerEvents: 'none'
         }}
       >
         <div style={{ pointerEvents: 'auto' }}>
@@ -296,6 +407,23 @@ export function App() {
             onRunSpreadAnalysis={handleRunSpreadAnalysis}
           />
         </div>
+
+        {/* Phase 2C Comparison & Source Panel */}
+        {(georefOutput || spreadResult) && (
+          <div style={{ pointerEvents: 'auto' }}>
+            <ComparisonPanel
+              simulationClockTime={simulationClockManager.getState().currentSimulationTime}
+              unetOutput={georefOutput}
+              comparisonMetrics={comparisonMetrics}
+              showPrediction={showPredictionLayer}
+              showGroundTruth={showGroundTruthLayer}
+              showSimulation={showSimulationLayer}
+              onTogglePrediction={handleTogglePredictionLayer}
+              onToggleGroundTruth={handleToggleGroundTruthLayer}
+              onToggleSimulation={handleToggleSimulationLayer}
+            />
+          </div>
+        )}
 
         <div style={{ pointerEvents: 'auto' }}>
           <FireSpreadPanel

@@ -31,15 +31,15 @@ export const AMAZON_STUDY_REGION: StudyRegionMetadata = {
   description:
     'Operational geographic study region used by Land8Fire for Amazon Rainforest wildfire analysis.',
   boundingBox: {
-    west: -79.0,
-    south: -18.0,
-    east: -46.0,
-    north: 6.0
+    west: -60.5,
+    south: -3.5,
+    east: -59.5,
+    north: -2.5
   },
   center: {
-    latitude: -3.3842,
-    longitude: -60.1985,
-    altitudeMeters: 2500000 // 2,500 km altitude overview
+    latitude: -3.119,
+    longitude: -60.0217,
+    altitudeMeters: 18000 // 18 km altitude for local study area view
   }
 };
 

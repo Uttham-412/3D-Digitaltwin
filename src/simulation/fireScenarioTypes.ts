@@ -1,7 +1,7 @@
 import { Coordinates } from '../environmental/environmentalTypes';
 import { EnvironmentalObservation } from '../environmental/environmentalTypes';
 
-export type SpreadHorizon = '+1H' | '+2H' | '+6H' | '+12H' | '+24H';
+export type SpreadHorizon = '+0H' | '+1H' | '+2H' | '+6H' | '+12H' | '+24H';
 
 export interface FireState {
   id: string;
@@ -11,7 +11,7 @@ export interface FireState {
   radiusMeters: number;
   areaHectares: number;
   timestamp: string;
-  provenance: string; // e.g. "SIMULATED / USER-DEFINED SCENARIO"
+  provenance: string; // "SIMULATED / USER-DEFINED SCENARIO"
 }
 
 export interface TerrainData {
@@ -20,13 +20,13 @@ export interface TerrainData {
   aspectDegrees: number | null;
   aspectCardinal: string | null;
   isAvailable: boolean;
-  source: string; // e.g. "Cesium 3D World Terrain DEM"
+  source: string;
   statusMessage?: string;
 }
 
 export interface FuelData {
-  fuelClass: string; // e.g. "Tree Cover", "Shrubland", "Grassland", "DATA UNAVAILABLE"
-  burnabilityFactor: number | null; // 0.0 (non-burnable) to 1.0 (high fuel) or null if unavailable
+  fuelClass: string;
+  burnabilityFactor: number | null;
   fuelLoadTonsPerHectare: number | null;
   isBurnable: boolean;
   isAvailable: boolean;
@@ -35,18 +35,33 @@ export interface FuelData {
   statusMessage?: string;
 }
 
+export interface SectorRadius {
+  angleDegrees: number; // 0 to 350 in steps of 10
+  radiusMeters: number;
+  rosMetersPerMin: number;
+  coordinates: Coordinates;
+}
+
+export interface FireFrontGeometry {
+  activePerimeterCoordinates: Coordinates[]; // 36 boundary polygon coordinates
+  hotZoneCoordinates: Coordinates[];          // Inner ring boundary (0.85 * r)
+  burnedAreaCoordinates: Coordinates[];        // Core burned region boundary
+  sectorRadii: SectorRadius[];                 // 36 radial readings
+}
+
 export interface SpreadTimestepResult {
   horizon: SpreadHorizon;
   hoursAhead: number;
   timestamp: string;
   centerCoordinates: Coordinates;
-  majorAxisMeters: number; // Semi-major axis along wind/slope vector
-  minorAxisMeters: number; // Semi-minor axis perpendicular to vector
-  orientationDegrees: number; // Bearing of fire expansion
+  majorAxisMeters: number;
+  minorAxisMeters: number;
+  orientationDegrees: number;
   affectedAreaHectares: number;
   rateOfSpreadMetersPerMin: number;
   dominantFactor: string;
   environmentalState: EnvironmentalObservation;
+  geometry: FireFrontGeometry;
 }
 
 export interface SpreadSimulationResult {
@@ -55,6 +70,6 @@ export interface SpreadSimulationResult {
   terrain: TerrainData;
   fuel: FuelData;
   timesteps: Record<SpreadHorizon, SpreadTimestepResult>;
-  provenance: string; // "SIMULATED / EXPERIMENTAL FIRE-SPREAD SIMULATION"
+  provenance: string; // "EXPERIMENTAL FIRE-SPREAD SIMULATION"
   disclaimer: string;
 }

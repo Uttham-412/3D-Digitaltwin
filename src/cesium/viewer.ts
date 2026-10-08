@@ -60,7 +60,7 @@ export class CesiumViewerManager {
     // Enable high-DPI scaling for sharp rendering on retina screens
     this.viewer.resolutionScale = window.devicePixelRatio || 1.0;
 
-    // Set initial camera view to neutral global perspective
+    // Set initial camera view directly to local Amazon forest study area (Manaus & Anavilhanas Reserve)
     this.resetCameraToDefault();
 
     return this.viewer;
@@ -73,15 +73,18 @@ export class CesiumViewerManager {
   public resetCameraToDefault(): void {
     if (!this.viewer || this.viewer.isDestroyed()) return;
 
-    // Neutral global 3D perspective showing continent & global context
-    this.viewer.camera.flyTo({
-      destination: Cesium.Cartesian3.fromDegrees(10.0, 35.0, 7500000), // Height 7,500km
+    // Realistic tilted 3D perspective over Manaus & Anavilhanas Rainforest Reserve
+    this.viewer.camera.setView({
+      destination: Cesium.Cartesian3.fromDegrees(
+        AMAZON_RAINFOREST_REGION.longitude,
+        AMAZON_RAINFOREST_REGION.latitude,
+        AMAZON_RAINFOREST_REGION.viewingHeight
+      ),
       orientation: {
-        heading: Cesium.Math.toRadians(0),
-        pitch: Cesium.Math.toRadians(-75), // 75 degree downward perspective
+        heading: Cesium.Math.toRadians(AMAZON_RAINFOREST_REGION.headingDegrees),
+        pitch: Cesium.Math.toRadians(AMAZON_RAINFOREST_REGION.pitchDegrees),
         roll: 0,
       },
-      duration: 2.0,
     });
   }
 

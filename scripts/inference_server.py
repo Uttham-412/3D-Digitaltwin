@@ -15,15 +15,15 @@ MODEL_PATH = r"G:\.shortcut-targets-by-id\1JR1Kj2BMHFHE8RVqogPyMglKE1YRaoOn\Land
 ZIP_PATH = r"G:\.shortcut-targets-by-id\1mf2mmndxMskGzk3Zj-t9q-V6PoUx2oMu\Wildfire Project\datasets\Satellite_burned_area_dataset_part5.zip"
 
 MEAN_GPU = torch.tensor([
-    0.0820, 0.0750, 0.0910, 0.0880, 0.1150,
-    0.1850, 0.2100, 0.2250, 0.2350, 0.0450,
-    0.0120, 0.1420, 0.4350, 0.2150, 0.1250
+    0.054257, 0.067676, 0.091714, 0.107805, 0.143499,
+    0.202211, 0.225245, 0.237767, 0.248593, 0.254053,
+    0.240885, 0.173530, 0.368527, 0.120145, 0.320615
 ], dtype=torch.float32)
 
 STD_GPU = torch.tensor([
-    0.0250, 0.0280, 0.0320, 0.0350, 0.0420,
-    0.0550, 0.0620, 0.0680, 0.0710, 0.0150,
-    0.0050, 0.0480, 0.1850, 0.1450, 0.0850
+    0.072358, 0.075483, 0.079899, 0.095268, 0.097878,
+    0.107183, 0.115450, 0.122247, 0.122630, 0.140352,
+    0.119594, 0.098965, 0.303724, 0.325588, 0.337697
 ], dtype=torch.float32)
 
 class DoubleConv(nn.Module):
@@ -127,8 +127,8 @@ def run_unet_inference_emsr239():
     b08 = b_scaled[7]
     b08a = b_scaled[8]
     b09 = b_scaled[9]
-    b10_cirrus = np.full_like(b01, 0.0120)
-    b12_swir2 = b_scaled[11]
+    b11_swir1 = b_scaled[10] if patch_raster.shape[0] > 10 else b_scaled[9]
+    b12_swir2 = b_scaled[11] if patch_raster.shape[0] > 11 else b_scaled[9]
 
     def compute_index(b_a, b_b):
         denom = b_a + b_b
@@ -143,7 +143,7 @@ def run_unet_inference_emsr239():
 
     raw_15ch = np.stack([
         b01, b02, b03, b04, b05, b06, b07, b08,
-        b08a, b09, b10_cirrus, b12_swir2, ndvi, nbr, ndri
+        b08a, b09, b11_swir1, b12_swir2, ndvi, nbr, ndri
     ], axis=0)
 
     input_tensor = torch.from_numpy(raw_15ch).float().unsqueeze(0)

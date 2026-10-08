@@ -1,8 +1,21 @@
-import React, { useState } from 'react';
+/**
+ * LAND8FIRE — OBJECTIVE 2: FIRE SPREAD ANALYSIS PANEL
+ *
+ * Operator panel for the EXPERIMENTAL DIRECTIONAL FIRE-SPREAD MODEL:
+ * - Time horizon step controls (+0H, +1H, +2H, +6H, +12H, +24H)
+ * - Simulation clock play/pause animation toggle
+ * - Dynamic 36-sector perimeter area and mean rate-of-spread readouts
+ * - Scientific provenance label: "EXPERIMENTAL FIRE-SPREAD SIMULATION"
+ * - Environmental, terrain DEM gradient, and fuel vector breakdowns
+ */
+
+import React, { useState, useEffect } from 'react';
+import { Play, Pause } from 'lucide-react';
 import {
   SpreadSimulationResult,
   SpreadHorizon
 } from '../../simulation/fireScenarioTypes';
+import { simulationClockManager, SimulationClockState } from '../../simulation/simulationClock';
 
 interface FireSpreadPanelProps {
   simulationResult: SpreadSimulationResult | null;
@@ -20,10 +33,27 @@ export const FireSpreadPanel: React.FC<FireSpreadPanelProps> = ({
   isLoading = false
 }) => {
   const [showExplanation, setShowExplanation] = useState<boolean>(true);
+  const [clockState, setClockState] = useState<SimulationClockState>(simulationClockManager.getState());
+
+  useEffect(() => {
+    const unsubscribe = simulationClockManager.subscribe((state) => {
+      setClockState(state);
+    });
+    return unsubscribe;
+  }, []);
 
   if (!isLoading && !simulationResult) return null;
 
   const currentStep = simulationResult?.timesteps[selectedHorizon];
+
+  const handleHorizonClick = (horizon: SpreadHorizon) => {
+    simulationClockManager.setHorizon(horizon);
+    onSelectHorizon(horizon);
+  };
+
+  const handleTogglePlayback = () => {
+    simulationClockManager.togglePlayback();
+  };
 
   return (
     <div
@@ -64,14 +94,14 @@ export const FireSpreadPanel: React.FC<FireSpreadPanelProps> = ({
           <h3
             style={{
               margin: 0,
-              fontSize: '14px',
+              fontSize: '13px',
               fontWeight: 700,
               letterSpacing: '0.05em',
               textTransform: 'uppercase',
               color: '#F97316'
             }}
           >
-            FIRE SPREAD ANALYSIS
+            EXPERIMENTAL FIRE SPREAD
           </h3>
         </div>
         <button
@@ -129,7 +159,7 @@ export const FireSpreadPanel: React.FC<FireSpreadPanelProps> = ({
             <div>
               <div style={{ fontSize: '10px', color: '#94A3B8' }}>PROVENANCE</div>
               <div style={{ fontSize: '11px', fontWeight: 700, color: '#FDBA74' }}>
-                {simulationResult.provenance}
+                EXPERIMENTAL FIRE-SPREAD SIMULATION
               </div>
             </div>
             <span
@@ -147,20 +177,40 @@ export const FireSpreadPanel: React.FC<FireSpreadPanelProps> = ({
             </span>
           </div>
 
-          {/* Forecast Horizon Tabs */}
+          {/* Time Horizon Step Controls & Playback */}
           <div style={{ marginBottom: '14px' }}>
-            <div style={{ fontSize: '10px', color: '#94A3B8', marginBottom: '6px' }}>
-              PREDICTION HORIZON
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '6px' }}>
+              <div style={{ fontSize: '10px', color: '#94A3B8' }}>SIMULATION TIME HORIZON</div>
+              <button
+                onClick={handleTogglePlayback}
+                style={{
+                  background: clockState.isPlaying ? 'rgba(239, 68, 68, 0.2)' : 'rgba(16, 185, 129, 0.2)',
+                  border: `1px solid ${clockState.isPlaying ? 'rgba(239, 68, 68, 0.4)' : 'rgba(16, 185, 129, 0.4)'}`,
+                  color: clockState.isPlaying ? '#EF4444' : '#10B981',
+                  borderRadius: '4px',
+                  padding: '2px 8px',
+                  fontSize: '10px',
+                  fontWeight: 600,
+                  cursor: 'pointer',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '4px'
+                }}
+              >
+                {clockState.isPlaying ? <Pause size={10} /> : <Play size={10} />}
+                {clockState.isPlaying ? 'PAUSE' : 'PLAY'}
+              </button>
             </div>
-            <div style={{ display: 'flex', gap: '6px' }}>
-              {(['+1H', '+2H', '+6H', '+12H', '+24H'] as SpreadHorizon[]).map((h) => (
+
+            <div style={{ display: 'flex', gap: '4px' }}>
+              {(['+0H', '+1H', '+2H', '+6H', '+12H', '+24H'] as SpreadHorizon[]).map((h) => (
                 <button
                   key={h}
-                  onClick={() => onSelectHorizon(h)}
+                  onClick={() => handleHorizonClick(h)}
                   style={{
                     flex: 1,
                     padding: '6px 0',
-                    fontSize: '11px',
+                    fontSize: '10.5px',
                     fontWeight: 700,
                     borderRadius: '6px',
                     border:
@@ -180,7 +230,7 @@ export const FireSpreadPanel: React.FC<FireSpreadPanelProps> = ({
             </div>
           </div>
 
-          {/* Primary Metrics */}
+          {/* Primary Metrics Grid */}
           <div
             style={{
               display: 'grid',
@@ -216,134 +266,15 @@ export const FireSpreadPanel: React.FC<FireSpreadPanelProps> = ({
             </div>
           </div>
 
-          {/* 1. SCENARIO SECTION */}
+          {/* Scenario Details Section */}
           <div style={{ backgroundColor: 'rgba(30, 41, 59, 0.6)', padding: '10px', borderRadius: '8px', marginBottom: '10px' }}>
             <div style={{ fontSize: '10px', fontWeight: 700, color: '#FDBA74', letterSpacing: '0.05em', marginBottom: '4px' }}>
               SCENARIO — SIMULATED IGNITION
             </div>
             <div style={{ fontSize: '11px', color: '#CBD5E1', lineHeight: 1.4 }}>
               <div><strong>Location:</strong> {simulationResult.initialFireState.latitude.toFixed(4)}° N, {simulationResult.initialFireState.longitude.toFixed(4)}° E</div>
-              <div><strong>Timestamp:</strong> {new Date(simulationResult.initialFireState.timestamp).toLocaleString()}</div>
+              <div><strong>Clock Time:</strong> {new Date(currentStep.timestamp).toLocaleString()}</div>
               <div><strong>Provenance:</strong> {simulationResult.initialFireState.provenance}</div>
-            </div>
-          </div>
-
-          {/* 2. ENVIRONMENT SECTION */}
-          <div style={{ backgroundColor: 'rgba(30, 41, 59, 0.6)', padding: '10px', borderRadius: '8px', marginBottom: '10px' }}>
-            <div style={{ fontSize: '10px', fontWeight: 700, color: '#38BDF8', letterSpacing: '0.05em', marginBottom: '4px' }}>
-              ENVIRONMENT (Open-Meteo)
-            </div>
-            <div style={{ fontSize: '11px', color: '#CBD5E1', lineHeight: 1.4 }}>
-              <div><strong>Temperature:</strong> {currentStep.environmentalState.temperature.toFixed(1)} °C</div>
-              <div><strong>Humidity:</strong> {currentStep.environmentalState.relativeHumidity}%</div>
-              <div><strong>Wind:</strong> {currentStep.environmentalState.windSpeed} km/h (Direction {currentStep.environmentalState.windDirection}° {currentStep.environmentalState.windDirectionCardinal})</div>
-              <div><strong>Precipitation:</strong> {currentStep.environmentalState.precipitation} mm</div>
-              <div><strong>Pressure:</strong> {currentStep.environmentalState.surfacePressure} hPa</div>
-            </div>
-          </div>
-
-          {/* 3. TERRAIN SECTION */}
-          <div style={{ backgroundColor: 'rgba(30, 41, 59, 0.6)', padding: '10px', borderRadius: '8px', marginBottom: '10px' }}>
-            <div style={{ fontSize: '10px', fontWeight: 700, color: '#A7F3D0', letterSpacing: '0.05em', marginBottom: '4px' }}>
-              TERRAIN (Cesium 3D World DEM)
-            </div>
-            <div style={{ fontSize: '11px', color: '#CBD5E1', lineHeight: 1.4 }}>
-              {simulationResult.terrain.isAvailable ? (
-                <>
-                  <div><strong>Elevation:</strong> {simulationResult.terrain.elevationMeters !== null ? `${simulationResult.terrain.elevationMeters} m` : 'ELEVATION DATA UNAVAILABLE'}</div>
-                  <div><strong>Slope:</strong> {simulationResult.terrain.slopeDegrees !== null ? `${simulationResult.terrain.slopeDegrees}°` : 'SLOPE DATA UNAVAILABLE'}</div>
-                  <div><strong>Aspect:</strong> {simulationResult.terrain.aspectDegrees !== null ? `${simulationResult.terrain.aspectDegrees}° (${simulationResult.terrain.aspectCardinal})` : 'ASPECT DATA UNAVAILABLE'}</div>
-                </>
-              ) : (
-                <div style={{ color: '#EF4444', fontWeight: 600 }}>TERRAIN DATA UNAVAILABLE</div>
-              )}
-            </div>
-          </div>
-
-          {/* 4. VEGETATION / FUEL SECTION */}
-          <div style={{ backgroundColor: 'rgba(30, 41, 59, 0.6)', padding: '10px', borderRadius: '8px', marginBottom: '10px' }}>
-            <div style={{ fontSize: '10px', fontWeight: 700, color: '#F472B6', letterSpacing: '0.05em', marginBottom: '4px' }}>
-              VEGETATION / FUEL
-            </div>
-            <div style={{ fontSize: '11px', color: '#CBD5E1', lineHeight: 1.4 }}>
-              {simulationResult.fuel.isAvailable ? (
-                <>
-                  <div><strong>Land Cover:</strong> {simulationResult.fuel.fuelClass}</div>
-                  <div><strong>Fuel Load:</strong> {simulationResult.fuel.fuelLoadTonsPerHectare !== null ? `${simulationResult.fuel.fuelLoadTonsPerHectare} t/ha (${simulationResult.fuel.isDerivedEstimate ? 'DERIVED ESTIMATE' : 'MEASURED'})` : 'FUEL LOAD DATA UNAVAILABLE'}</div>
-                  <div><strong>Burnability Coefficient:</strong> {simulationResult.fuel.burnabilityFactor !== null ? simulationResult.fuel.burnabilityFactor.toFixed(2) : 'DATA UNAVAILABLE'}</div>
-                </>
-              ) : (
-                <div style={{ color: '#EF4444', fontWeight: 600 }}>FUEL DATA UNAVAILABLE</div>
-              )}
-            </div>
-          </div>
-
-          {/* 5. FUTURE SPREAD SECTION */}
-          <div style={{ marginBottom: '12px' }}>
-            <div style={{ fontSize: '10px', color: '#94A3B8', marginBottom: '6px' }}>
-              PREDICTION HORIZON
-            </div>
-            <div style={{ display: 'flex', gap: '6px' }}>
-              {(['+1H', '+2H', '+6H', '+12H', '+24H'] as SpreadHorizon[]).map((h) => (
-                <button
-                  key={h}
-                  onClick={() => onSelectHorizon(h)}
-                  style={{
-                    flex: 1,
-                    padding: '6px 0',
-                    fontSize: '11px',
-                    fontWeight: 700,
-                    borderRadius: '6px',
-                    border:
-                      selectedHorizon === h
-                        ? '1px solid #F97316'
-                        : '1px solid rgba(255, 255, 255, 0.1)',
-                    backgroundColor:
-                      selectedHorizon === h ? 'rgba(249, 115, 22, 0.25)' : 'rgba(30, 41, 59, 0.6)',
-                    color: selectedHorizon === h ? '#F97316' : '#94A3B8',
-                    cursor: 'pointer',
-                    transition: 'all 0.2s ease'
-                  }}
-                >
-                  {h}
-                </button>
-              ))}
-            </div>
-          </div>
-
-          {/* Primary Prediction Metrics */}
-          <div
-            style={{
-              display: 'grid',
-              gridTemplateColumns: '1fr 1fr',
-              gap: '8px',
-              marginBottom: '12px'
-            }}
-          >
-            <div
-              style={{
-                backgroundColor: 'rgba(30, 41, 59, 0.6)',
-                padding: '10px',
-                borderRadius: '8px'
-              }}
-            >
-              <div style={{ fontSize: '10px', color: '#94A3B8' }}>AFFECTED AREA</div>
-              <div style={{ fontSize: '18px', fontWeight: 800, color: '#F97316' }}>
-                {currentStep.affectedAreaHectares} <span style={{ fontSize: '12px' }}>ha</span>
-              </div>
-            </div>
-
-            <div
-              style={{
-                backgroundColor: 'rgba(30, 41, 59, 0.6)',
-                padding: '10px',
-                borderRadius: '8px'
-              }}
-            >
-              <div style={{ fontSize: '10px', color: '#94A3B8' }}>RATE OF SPREAD</div>
-              <div style={{ fontSize: '18px', fontWeight: 800, color: '#FDBA74' }}>
-                {currentStep.rateOfSpreadMetersPerMin} <span style={{ fontSize: '12px' }}>m/min</span>
-              </div>
             </div>
           </div>
 
@@ -374,7 +305,7 @@ export const FireSpreadPanel: React.FC<FireSpreadPanelProps> = ({
                 alignItems: 'center'
               }}
             >
-              <span>WHY IS THE FIRE SPREADING THIS WAY?</span>
+              <span>ENVIRONMENTAL & TERRAIN INFLUENCE</span>
               <span>{showExplanation ? '▲' : '▼'}</span>
             </button>
 
@@ -395,9 +326,9 @@ export const FireSpreadPanel: React.FC<FireSpreadPanelProps> = ({
                   {currentStep.environmentalState.windSpeed} km/h from {currentStep.environmentalState.windDirectionCardinal} ({currentStep.environmentalState.windDirection}°). Pushes fire toward {((currentStep.environmentalState.windDirection + 180) % 360).toFixed(0)}°.
                 </div>
                 <div>
-                  <strong style={{ color: '#A7F3D0' }}>TERRAIN EFFECT:</strong>{' '}
+                  <strong style={{ color: '#A7F3D0' }}>TERRAIN GRADIENT:</strong>{' '}
                   {simulationResult.terrain.isAvailable && simulationResult.terrain.slopeDegrees !== null
-                    ? `${simulationResult.terrain.slopeDegrees}° slope toward ${simulationResult.terrain.aspectCardinal}. Fire advances faster uphill along slope aspect.`
+                    ? `${simulationResult.terrain.slopeDegrees}° slope toward ${simulationResult.terrain.aspectCardinal}. Fire advances faster uphill along slope gradient.`
                     : 'TERRAIN SLOPE DATA UNAVAILABLE (Computed on flat baseline)'}
                 </div>
                 <div>
@@ -407,7 +338,7 @@ export const FireSpreadPanel: React.FC<FireSpreadPanelProps> = ({
                 <div>
                   <strong style={{ color: '#F472B6' }}>FUEL AVAILABILITY:</strong>{' '}
                   {simulationResult.fuel.isAvailable
-                    ? `${simulationResult.fuel.fuelClass} (Factor ${simulationResult.fuel.burnabilityFactor ?? 'N/A'})`
+                    ? `${simulationResult.fuel.fuelClass} (Burnability ${simulationResult.fuel.burnabilityFactor ?? 'N/A'})`
                     : 'FUEL DATA UNAVAILABLE (Baseline vegetation coefficient applied)'}
                 </div>
               </div>
