@@ -35,10 +35,8 @@ export const EMSR239InfoPanel: React.FC = () => {
     <div
       className="glass-panel"
       style={{
-        position: 'absolute',
-        top: '84px',
-        left: '390px',
-        width: '380px',
+        position: 'relative',
+        width: '360px',
         maxWidth: 'calc(100vw - 32px)',
         padding: '16px',
         zIndex: 25,
@@ -129,7 +127,7 @@ export const EMSR239InfoPanel: React.FC = () => {
           >
             <div style={{ display: 'flex', justifyContent: 'space-between' }}>
               <span style={{ color: 'var(--text-muted)' }}>AI Model:</span>
-              <strong style={{ color: 'var(--text-primary)' }}>Land8Fire 15-ch U-Net (Epoch 8)</strong>
+              <strong style={{ color: 'var(--text-primary)' }}>15-ch U-Net (Epoch 8)</strong>
             </div>
 
             <div style={{ display: 'flex', justifyContent: 'space-between' }}>

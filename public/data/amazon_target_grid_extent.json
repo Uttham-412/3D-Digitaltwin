@@ -1,0 +1,21 @@
+{
+  "crs_projected": "EPSG:32720",
+  "crs_geographic": "EPSG:4326",
+  "bounds_projected_utm20s": {
+    "xMin": 829790.0,
+    "xMax": 832350.0,
+    "yMin": 9653500.0,
+    "yMax": 9656060.0
+  },
+  "bounds_geographic_wgs84": {
+    "west": -60.0332530205011,
+    "north": -3.107512073651307,
+    "east": -60.01017923715985,
+    "south": -3.130575539055171
+  },
+  "dimensions": [
+    256,
+    256
+  ],
+  "resolution_m": 10.0
+}

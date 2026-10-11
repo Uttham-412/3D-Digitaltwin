@@ -33,3 +33,11 @@ public/Cesium
 # Python cache files
 __pycache__/
 *.pyc
+
+# CDSE Cache and Satellite Data Downloads
+scratch/cache/
+scratch/cache/**
+*.zip
+*.SAFE
+*.SAFE/
+

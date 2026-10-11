@@ -76,6 +76,24 @@ export class SimulationClockManager {
   }
 
   /**
+   * Set authoritative simulation time directly from an external source (e.g. Environmental Timeline slider).
+   */
+  public setAuthoritativeTime(isoTime: string): void {
+    const targetDate = new Date(isoTime);
+    if (isNaN(targetDate.getTime())) return;
+
+    const diffHours = (targetDate.getTime() - this.startTime.getTime()) / (3600 * 1000);
+    if (diffHours >= 0 && diffHours <= 24) {
+      this.setElapsedHours(diffHours);
+    } else {
+      this.startTime = targetDate;
+      this.elapsedHours = 0;
+      this.activeHorizon = '+0H';
+      this.notify();
+    }
+  }
+
+  /**
    * Set numeric elapsed hours.
    */
   public setElapsedHours(hours: number): void {

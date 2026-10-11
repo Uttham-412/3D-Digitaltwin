@@ -38,6 +38,9 @@ export interface UNetSegmentationResult {
   actualAcquisitionTime?: string;
   latitude: number;
   longitude: number;
+  rasterCrs?: string;
+  geographicCrs?: 'EPSG:4326';
+  displayCrs?: 'EPSG:4326';
   crs?: string;
   boundingBox?: GeospatialBoundingBox;
   spatialResolutionMeters?: number;
@@ -45,6 +48,18 @@ export interface UNetSegmentationResult {
   predictedBurnedPixels?: number;
   totalPixels?: number; // 65536
   predictedBurnedPercentage?: number;
+  predictedAreaHectares?: number;
+  spatialExtent?: GeospatialBoundingBox;
+  geoJsonUrl?: string;
+  sentinel2RgbUrl?: string;
+  probabilityColormapUrl?: string;
+  binaryMaskUrl?: string;
+  probabilityRasterUrl?: string;
+  binaryMaskRasterUrl?: string;
+  temporalCategory?: string;
+  timeDifferenceHours?: number;
+  validDataPercentage?: number;
+  scientificNote?: string;
   provenance: string;
   message: string;
 }
@@ -63,13 +78,17 @@ export class UNetPreprocessingBridge {
     return UNetPreprocessingBridge.instance;
   }
 
+  public getChannelOrder(): readonly string[] {
+    return SENTINEL2_15CH_CHANNELS;
+  }
+
   /**
    * Preprocess real satellite observation and execute U-Net inference.
    */
   public async executePipeline(
     observation: SatelliteObservationResult
   ): Promise<UNetSegmentationResult> {
-    // Step 1: Check availability
+    // Step 1: Check availability & 15-channel readiness
     if (!observation.available) {
       return {
         available: false,
@@ -80,7 +99,27 @@ export class UNetPreprocessingBridge {
         latitude: observation.latitude,
         longitude: observation.longitude,
         provenance: 'U-NET INFERENCE ENGINE',
-        message: 'SATELLITE OBSERVATION: NOT AVAILABLE'
+        message: observation.message || 'SATELLITE OBSERVATION: NOT AVAILABLE'
+      };
+    }
+
+    if (observation.is15ChannelReady === false) {
+      return {
+        available: false,
+        status: 'unavailable',
+        modelId: this.MODEL_CHECKPOINT_ID,
+        threshold: this.INFERENCE_THRESHOLD,
+        requestedTimestamp: observation.requestedTimestamp,
+        actualAcquisitionTime: observation.actualAcquisitionTime,
+        latitude: observation.latitude,
+        longitude: observation.longitude,
+        rasterCrs: observation.rasterCrs,
+        geographicCrs: observation.geographicCrs || 'EPSG:4326',
+        displayCrs: observation.displayCrs || 'EPSG:4326',
+        crs: observation.rasterCrs || observation.crs,
+        boundingBox: observation.boundingBox,
+        provenance: 'U-NET INFERENCE ENGINE',
+        message: 'SATELLITE OBSERVATION: BANDS DISCOVERED (Metadata Only — 15-Channel Raster Pending Cache)'
       };
     }
 
@@ -95,7 +134,10 @@ export class UNetPreprocessingBridge {
         actualAcquisitionTime: observation.actualAcquisitionTime,
         latitude: observation.latitude,
         longitude: observation.longitude,
-        crs: observation.crs,
+        rasterCrs: observation.rasterCrs,
+        geographicCrs: observation.geographicCrs || 'EPSG:4326',
+        displayCrs: observation.displayCrs || 'EPSG:4326',
+        crs: observation.rasterCrs || observation.crs,
         boundingBox: observation.boundingBox,
         provenance: 'U-NET INFERENCE ENGINE',
         message: `VALIDATION ERROR: Observation must contain exactly 15 channels. Found: ${observation.bandsAvailable?.length ?? 0}`
@@ -113,6 +155,11 @@ export class UNetPreprocessingBridge {
           requestedTimestamp: observation.requestedTimestamp,
           latitude: observation.latitude,
           longitude: observation.longitude,
+          rasterCrs: observation.rasterCrs,
+          geographicCrs: observation.geographicCrs || 'EPSG:4326',
+          displayCrs: observation.displayCrs || 'EPSG:4326',
+          crs: observation.rasterCrs || observation.crs,
+          boundingBox: observation.boundingBox,
           provenance: 'U-NET INFERENCE ENGINE',
           message: `CHANNEL ORDER ERROR: Channel ${i} expected '${SENTINEL2_15CH_CHANNELS[i]}', found '${observation.bandsAvailable[i]}'`
         };
@@ -123,10 +170,20 @@ export class UNetPreprocessingBridge {
     const response = await unetInferenceService.runInference({
       latitude: observation.latitude,
       longitude: observation.longitude,
-      eventDate: observation.actualAcquisitionTime
+      eventDate: observation.actualAcquisitionTime,
+      productId: observation.cdseItemId
     });
 
     if (response.status === 'success') {
+      const extent: GeospatialBoundingBox = response.spatialExtent
+        ? {
+            minLat: response.spatialExtent.minLat,
+            maxLat: response.spatialExtent.maxLat,
+            minLon: response.spatialExtent.minLon,
+            maxLon: response.spatialExtent.maxLon
+          }
+        : observation.boundingBox!;
+
       return {
         available: true,
         status: 'success',
@@ -136,14 +193,29 @@ export class UNetPreprocessingBridge {
         actualAcquisitionTime: observation.actualAcquisitionTime || response.acquisitionTime,
         latitude: observation.latitude,
         longitude: observation.longitude,
-        crs: observation.crs,
-        boundingBox: observation.boundingBox,
-        spatialResolutionMeters: observation.spatialResolutionMeters,
-        pixelDimensions: observation.pixelDimensions,
+        rasterCrs: response.rasterCrs || observation.rasterCrs,
+        geographicCrs: 'EPSG:4326',
+        displayCrs: 'EPSG:4326',
+        crs: response.rasterCrs || observation.rasterCrs || observation.crs,
+        boundingBox: extent,
+        spatialExtent: extent,
+        spatialResolutionMeters: observation.spatialResolutionMeters || 10,
+        pixelDimensions: observation.pixelDimensions || { width: 256, height: 256 },
         predictedBurnedPixels: response.predictedBurnedPixels,
         totalPixels: response.totalPixels || 65536,
         predictedBurnedPercentage: response.predictedBurnedPercentage,
-        provenance: `DERIVED / U-NET 15-CH (${this.MODEL_CHECKPOINT_ID})`,
+        predictedAreaHectares: response.predictedAreaHectares,
+        validDataPercentage: response.validDataPercentage,
+        temporalCategory: response.temporalCategory,
+        timeDifferenceHours: response.timeDifferenceHours,
+        scientificNote: response.scientificNote,
+        geoJsonUrl: response.geoJsonUrl || response.geojsonUrl,
+        sentinel2RgbUrl: response.sentinel2RgbUrl,
+        probabilityColormapUrl: response.probabilityColormapUrl,
+        binaryMaskUrl: response.binaryMaskUrl,
+        probabilityRasterUrl: response.probabilityRasterUrl,
+        binaryMaskRasterUrl: response.binaryMaskRasterUrl,
+        provenance: response.provenance || `DERIVED / U-NET 15-CH (${this.MODEL_CHECKPOINT_ID})`,
         message: 'U-Net segmentation prediction executed successfully.'
       };
     }
@@ -157,7 +229,10 @@ export class UNetPreprocessingBridge {
       actualAcquisitionTime: observation.actualAcquisitionTime,
       latitude: observation.latitude,
       longitude: observation.longitude,
-      crs: observation.crs,
+      rasterCrs: observation.rasterCrs,
+      geographicCrs: observation.geographicCrs || 'EPSG:4326',
+      displayCrs: observation.displayCrs || 'EPSG:4326',
+      crs: observation.rasterCrs || observation.crs,
       boundingBox: observation.boundingBox,
       provenance: 'U-NET INFERENCE ENGINE',
       message: response.message || 'U-Net inference unavailable for target scene.'
@@ -174,6 +249,10 @@ export class UNetPreprocessingBridge {
     height: number = 256,
     isRawDN: boolean = true
   ): { normalizedTensor: Float32Array; shape: [number, number, number] } {
+    if (width !== 256 || height !== 256) {
+      throw new Error(`Incompatible grid dimensions: model expects 256x256, received ${width}x${height}`);
+    }
+
     const numPixels = width * height;
     if (rawBands.length !== 15 * numPixels) {
       throw new Error(`Invalid tensor size: expected ${15 * numPixels}, got ${rawBands.length}`);
@@ -210,6 +289,16 @@ export class UNetPreprocessingBridge {
       const valB11 = rawBands[b11 + i] / scaleFactor;
       const valB12 = rawBands[b12 + i] / scaleFactor;
 
+      // Validate finite input reflectance
+      if (
+        !Number.isFinite(valB01) || !Number.isFinite(valB02) || !Number.isFinite(valB03) ||
+        !Number.isFinite(valB04) || !Number.isFinite(valB05) || !Number.isFinite(valB06) ||
+        !Number.isFinite(valB07) || !Number.isFinite(valB08) || !Number.isFinite(valB08a) ||
+        !Number.isFinite(valB09) || !Number.isFinite(valB11) || !Number.isFinite(valB12)
+      ) {
+        throw new Error(`Non-finite or corrupted pixel value detected in band inputs at index ${i}`);
+      }
+
       const valNDVI = calculateNDVI(valB08, valB04);
       const valNBR = calculateNBR(valB08, valB12);
       const valNDRI = calculateNDRI(valB04, valB02);
@@ -222,6 +311,9 @@ export class UNetPreprocessingBridge {
       for (let c = 0; c < 15; c++) {
         const offset = c * numPixels + i;
         const normVal = (channelVals[c] - SENTINEL2_15CH_MEAN[c]) / (SENTINEL2_15CH_STD[c] + 1e-6);
+        if (!Number.isFinite(normVal)) {
+          throw new Error(`Normalization failure: non-finite value at channel ${c}, pixel ${i}`);
+        }
         normalizedTensor[offset] = normVal;
       }
     }

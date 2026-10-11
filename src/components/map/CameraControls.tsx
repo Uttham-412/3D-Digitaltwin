@@ -3,7 +3,6 @@ import { Plus, Minus, Compass, Move3d } from 'lucide-react';
 import { CesiumViewerManager } from '../../cesium/viewer';
 import { AmazonRegionControl } from './AmazonRegionControl';
 import { FireFocusControl } from './FireFocusControl';
-import { EMSR239FocusControl } from './EMSR239FocusControl';
 import { SelectedLocation } from '../../geospatial/coordinates';
 import * as Cesium from 'cesium';
 
@@ -105,7 +104,6 @@ export const CameraControls: React.FC<CameraControlsProps> = ({ onSelectLocation
 
       <AmazonRegionControl onSelectLocation={onSelectLocation} />
       <FireFocusControl onSelectLocation={onSelectLocation} />
-      <EMSR239FocusControl onSelectLocation={onSelectLocation} />
     </div>
   );
 };

@@ -33,6 +33,8 @@ export interface FuelData {
   isDerivedEstimate?: boolean;
   source: string;
   statusMessage?: string;
+  burnabilityStatus?: 'BURNABLE' | 'WATER' | 'NON_BURNABLE_URBAN' | 'UNVERIFIED';
+  isWater?: boolean;
 }
 
 export interface SectorRadius {
@@ -40,6 +42,7 @@ export interface SectorRadius {
   radiusMeters: number;
   rosMetersPerMin: number;
   coordinates: Coordinates;
+  isWaterBlocked?: boolean;
 }
 
 export interface FireFrontGeometry {
@@ -47,6 +50,7 @@ export interface FireFrontGeometry {
   hotZoneCoordinates: Coordinates[];          // Inner ring boundary (0.85 * r)
   burnedAreaCoordinates: Coordinates[];        // Core burned region boundary
   sectorRadii: SectorRadius[];                 // 36 radial readings
+  waterExclusionSectors?: number[];            // Indices of sectors stopped by water
 }
 
 export interface SpreadTimestepResult {
@@ -62,6 +66,21 @@ export interface SpreadTimestepResult {
   dominantFactor: string;
   environmentalState: EnvironmentalObservation;
   geometry: FireFrontGeometry;
+  fuelMoistureContentPercent?: number;        // Simard (1968) / Rothermel (1972) EMC %
+  fuelMoistureDampingFactor?: number;         // Rothermel eta_M moisture damping (0.0 to 1.0)
+  weatherInterpolationStatus?: 'EXACT' | 'INTERPOLATED' | 'EXTRAPOLATED_OUT_OF_BOUNDS' | 'MISSING';
+  waterExclusionCount?: number;               // Number of sectors clamped by water boundaries
+}
+
+export interface IgnitionValidationResult {
+  valid: boolean;
+  code: 'VALID' | 'REJECTED_WATER' | 'BLOCKED_UNVERIFIED_SURFACE' | 'REJECTED_NON_BURNABLE';
+  message: string;
+  details?: {
+    latitude: number;
+    longitude: number;
+    surfaceType?: string;
+  };
 }
 
 export interface SpreadSimulationResult {
@@ -72,4 +91,5 @@ export interface SpreadSimulationResult {
   timesteps: Record<SpreadHorizon, SpreadTimestepResult>;
   provenance: string; // "EXPERIMENTAL FIRE-SPREAD SIMULATION"
   disclaimer: string;
+  waterExclusionActive?: boolean;
 }

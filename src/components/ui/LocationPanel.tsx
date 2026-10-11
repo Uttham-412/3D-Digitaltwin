@@ -1,9 +1,11 @@
 import React from 'react';
-import { MapPin, X, Mountain, ShieldCheck, Crosshair, ExternalLink, AlertTriangle } from 'lucide-react';
+import { MapPin, X, Mountain, Crosshair, AlertTriangle, Satellite, Flame } from 'lucide-react';
 import { SelectedLocation, formatCoordinates } from '../../geospatial/coordinates';
 import { CesiumViewerManager } from '../../cesium/viewer';
 import { isPointInAmazonStudyRegion } from '../../config/studyRegion';
+import { waterMaskService } from '../../geospatial/waterMaskService';
 import { ForestConditionPanel } from './ForestConditionPanel';
+import { SimulationAssessmentRequest } from '../../services/simulationAssessmentCoordinator';
 
 interface LocationPanelProps {
   location: SelectedLocation | null;
@@ -13,6 +15,9 @@ interface LocationPanelProps {
   onCreateIgnition?: () => void;
   onRemoveFire?: () => void;
   onRunSpreadAnalysis?: () => void;
+  ignitionRejectionMessage?: string | null;
+  onOpenDetectionPanel?: () => void;
+  assessmentRequest?: SimulationAssessmentRequest | null;
 }
 
 export const LocationPanel: React.FC<LocationPanelProps> = ({
@@ -22,11 +27,17 @@ export const LocationPanel: React.FC<LocationPanelProps> = ({
   isSimulatedFireActive = false,
   onCreateIgnition,
   onRemoveFire,
-  onRunSpreadAnalysis
+  onRunSpreadAnalysis,
+  ignitionRejectionMessage,
+  onOpenDetectionPanel,
+  assessmentRequest,
 }) => {
   if (!location) return null;
 
   const isInAmazon = isPointInAmazonStudyRegion(location.latitude, location.longitude);
+  const waterCheck = waterMaskService.checkPoint({ latitude: location.latitude, longitude: location.longitude });
+  const isWater = waterCheck.surfaceClass === 'WATER';
+  const isUnverified = waterCheck.surfaceClass === 'UNVERIFIED';
 
   const handleFlyTo = () => {
     const manager = CesiumViewerManager.getInstance();
@@ -34,72 +45,69 @@ export const LocationPanel: React.FC<LocationPanelProps> = ({
   };
 
   const heightVal = location.height ?? 0;
-  const elevationFeet = (heightVal * 3.28084).toFixed(0);
+  const isAssessmentCompleted = assessmentRequest?.status === 'COMPLETED' && assessmentRequest.georeferencedOutput;
+  const isAssessmentLoading =
+    assessmentRequest?.status === 'INITIALIZING' ||
+    assessmentRequest?.status === 'DISCOVERING_OBSERVATION' ||
+    assessmentRequest?.status === 'ACQUIRING_RASTER' ||
+    assessmentRequest?.status === 'PREPROCESSING' ||
+    assessmentRequest?.status === 'RUNNING_INFERENCE';
 
   return (
     <div
       className="glass-panel"
       style={{
         position: 'relative',
-        width: '380px',
-        maxWidth: 'calc(100vw - 48px)',
-        padding: '20px',
+        width: '360px',
+        maxWidth: 'calc(100vw - 32px)',
+        padding: '14px 16px',
         zIndex: 35,
-        borderRadius: 'var(--radius-lg)',
+        borderRadius: 'var(--radius-md)',
         border: isSimulatedFireActive
-          ? '1px solid rgba(249, 115, 22, 0.5)'
-          : isInAmazon
-          ? '1px solid rgba(16, 185, 129, 0.4)'
-          : '1px solid rgba(245, 158, 11, 0.4)',
-        boxShadow: '0 12px 40px rgba(0, 0, 0, 0.6)',
-        animation: 'slideUp 0.3s cubic-bezier(0.16, 1, 0.3, 1)',
+          ? '1px solid rgba(249, 115, 22, 0.4)'
+          : '1px solid rgba(255, 255, 255, 0.1)',
+        boxShadow: '0 12px 32px rgba(0, 0, 0, 0.55)',
+        display: 'flex',
+        flexDirection: 'column',
+        gap: '10px',
       }}
     >
-      <style>{`
-        @keyframes slideUp {
-          from { opacity: 0; transform: translateY(20px); }
-          to { opacity: 1; transform: translateY(0); }
-        }
-      `}</style>
-
-      {/* Header */}
+      {/* Location Header */}
       <div
         style={{
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'space-between',
-          marginBottom: '14px',
         }}
       >
-        <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-          <div
-            style={{
-              width: '32px',
-              height: '32px',
-              borderRadius: '50%',
-              background: isSimulatedFireActive
-                ? 'rgba(249, 115, 22, 0.15)'
-                : isInAmazon
-                ? 'rgba(16, 185, 129, 0.15)'
-                : 'rgba(245, 158, 11, 0.15)',
-              border: isSimulatedFireActive
-                ? '1px solid #F97316'
-                : isInAmazon
-                ? '1px solid #10B981'
-                : '1px solid #F59E0B',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-            }}
-          >
-            <MapPin size={18} color={isSimulatedFireActive ? '#F97316' : isInAmazon ? '#10B981' : '#F59E0B'} />
-          </div>
-          <div>
-            <h2 style={{ fontSize: '0.95rem', fontWeight: 600, color: 'var(--text-primary)' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '8px', minWidth: 0 }}>
+          <MapPin
+            size={16}
+            color={isSimulatedFireActive ? '#f97316' : isInAmazon ? '#34d399' : '#fbbf24'}
+            style={{ flexShrink: 0 }}
+          />
+          <div style={{ minWidth: 0 }}>
+            <h2
+              style={{
+                fontSize: '0.88rem',
+                fontWeight: 600,
+                color: 'var(--text-primary)',
+                margin: 0,
+                whiteSpace: 'nowrap',
+                overflow: 'hidden',
+                textOverflow: 'ellipsis',
+              }}
+            >
               {location.label || 'Selected Location'}
             </h2>
-            <span style={{ fontSize: '0.7rem', color: isInAmazon ? '#34D399' : '#FBBF24', fontWeight: 600 }}>
-              {isInAmazon ? 'AMAZON DIGITAL TWIN STUDY REGION' : 'GLOBAL CONTEXT MODE (OUTSIDE STUDY REGION)'}
+            <span
+              style={{
+                fontSize: '0.64rem',
+                color: isInAmazon ? '#34d399' : '#fbbf24',
+                fontWeight: 500,
+              }}
+            >
+              {isInAmazon ? 'Amazon study region' : 'Outside study region'}
             </span>
           </div>
         </div>
@@ -107,68 +115,33 @@ export const LocationPanel: React.FC<LocationPanelProps> = ({
         <button
           onClick={onClear}
           className="glass-button"
-          style={{ width: '28px', height: '28px', borderRadius: '50%' }}
-          title="Deselect Location"
+          style={{ width: '24px', height: '24px', borderRadius: '50%', padding: 0 }}
+          title="Deselect location"
         >
-          <X size={16} />
+          <X size={13} />
         </button>
       </div>
 
-      {/* Provenance & Study Region Status Badge */}
-      <div
-        style={{
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-          padding: '6px 10px',
-          borderRadius: 'var(--radius-sm)',
-          background: isSimulatedFireActive
-            ? 'rgba(249, 115, 22, 0.15)'
-            : isInAmazon
-            ? 'rgba(16, 185, 129, 0.12)'
-            : 'rgba(245, 158, 11, 0.12)',
-          border: isSimulatedFireActive
-            ? '1px solid rgba(249, 115, 22, 0.35)'
-            : isInAmazon
-            ? '1px solid rgba(16, 185, 129, 0.25)'
-            : '1px solid rgba(245, 158, 11, 0.25)',
-          marginBottom: '14px',
-          fontSize: '0.72rem',
-          color: isSimulatedFireActive ? '#FDBA74' : isInAmazon ? '#34d399' : '#fbbf24',
-          fontWeight: 600,
-        }}
-      >
-        <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-          <ShieldCheck size={14} />
-          <span>PROVENANCE: {isSimulatedFireActive ? 'SIMULATED / USER-DEFINED SCENARIO' : `${location.classification || 'OBSERVED'} / USER_SELECTED`}</span>
-        </div>
-      </div>
-
-      {/* Telemetry Grid */}
+      {/* Telemetry (Coordinates & Elevation) */}
       <div
         style={{
           display: 'grid',
           gridTemplateColumns: '1fr 1fr',
-          gap: '10px',
-          marginBottom: '14px',
+          gap: '8px',
+          background: 'rgba(0, 0, 0, 0.25)',
+          padding: '8px 10px',
+          borderRadius: 'var(--radius-sm)',
+          border: '1px solid rgba(255, 255, 255, 0.05)',
         }}
       >
-        {/* Coordinates */}
-        <div
-          style={{
-            background: 'rgba(0, 0, 0, 0.35)',
-            padding: '10px 12px',
-            borderRadius: 'var(--radius-md)',
-            border: '1px solid rgba(255, 255, 255, 0.06)',
-          }}
-        >
-          <span style={{ fontSize: '0.68rem', color: 'var(--text-muted)', display: 'block', marginBottom: '4px' }}>
-            COORDINATES (WGS84)
+        <div>
+          <span style={{ fontSize: '0.62rem', color: 'var(--text-muted)', display: 'block' }}>
+            Coordinates
           </span>
           <span
             style={{
-              fontSize: '0.82rem',
-              fontWeight: 600,
+              fontSize: '0.74rem',
+              fontWeight: 500,
               fontFamily: 'var(--font-mono)',
               color: 'var(--accent-cyan)',
             }}
@@ -177,197 +150,245 @@ export const LocationPanel: React.FC<LocationPanelProps> = ({
           </span>
         </div>
 
-        {/* Elevation */}
-        <div
-          style={{
-            background: 'rgba(0, 0, 0, 0.35)',
-            padding: '10px 12px',
-            borderRadius: 'var(--radius-md)',
-            border: '1px solid rgba(255, 255, 255, 0.06)',
-          }}
-        >
-          <div style={{ display: 'flex', alignItems: 'center', gap: '4px', marginBottom: '4px' }}>
-            <Mountain size={12} color="var(--text-muted)" />
-            <span style={{ fontSize: '0.68rem', color: 'var(--text-muted)' }}>TERRAIN ELEVATION</span>
+        <div>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '3px' }}>
+            <Mountain size={11} color="var(--text-muted)" />
+            <span style={{ fontSize: '0.62rem', color: 'var(--text-muted)' }}>Elevation</span>
           </div>
           <span
             style={{
-              fontSize: '0.82rem',
-              fontWeight: 600,
+              fontSize: '0.74rem',
+              fontWeight: 500,
               fontFamily: 'var(--font-mono)',
               color: 'var(--text-primary)',
             }}
           >
-            {heightVal.toLocaleString()} m{' '}
-            <span style={{ fontSize: '0.7rem', color: 'var(--text-muted)', fontWeight: 400 }}>
-              ({elevationFeet} ft)
-            </span>
+            {heightVal.toLocaleString()} m
           </span>
         </div>
       </div>
 
-      {/* Outside Amazon Restriction Warning Banner */}
+      {/* Outside Study Region Notice */}
       {!isInAmazon && (
         <div
           style={{
-            backgroundColor: 'rgba(245, 158, 11, 0.12)',
-            border: '1px solid rgba(245, 158, 11, 0.35)',
+            backgroundColor: 'rgba(245, 158, 11, 0.08)',
+            border: '1px solid rgba(245, 158, 11, 0.25)',
             borderRadius: 'var(--radius-sm)',
-            padding: '10px 12px',
-            marginBottom: '14px',
-            color: '#FBBF24',
-            fontSize: '0.72rem',
-            lineHeight: 1.45
+            padding: '8px 10px',
+            color: '#fbbf24',
+            fontSize: '0.70rem',
+            lineHeight: 1.35,
           }}
         >
-          <div style={{ display: 'flex', alignItems: 'center', gap: '6px', fontWeight: 700, marginBottom: '4px' }}>
-            <AlertTriangle size={14} color="#FBBF24" />
-            <span>AMAZON STUDY REGION ONLY</span>
-          </div>
-          <div>
-            Wildfire analysis, scenario creation, U-Net AI inference, and fire-spread simulation are restricted to the Land8Fire Amazon Rainforest Digital Twin study region.
-          </div>
+          Fire simulation and satellite assessment are restricted to the Amazon study region.
         </div>
       )}
 
-      {/* Action Controls */}
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-        <div style={{ display: 'flex', gap: '8px' }}>
+      {/* Water Surface / Unverified Warning */}
+      {isWater && (
+        <div
+          style={{
+            padding: '6px 10px',
+            borderRadius: 'var(--radius-sm)',
+            background: 'rgba(239, 68, 68, 0.1)',
+            border: '1px solid rgba(239, 68, 68, 0.3)',
+            color: '#fca5a5',
+            fontSize: '0.70rem',
+            display: 'flex',
+            gap: '6px',
+            alignItems: 'center',
+          }}
+        >
+          <AlertTriangle size={13} color="#ef4444" style={{ flexShrink: 0 }} />
+          <span>Water surface: Wildfires cannot ignite on open water bodies.</span>
+        </div>
+      )}
+
+      {isUnverified && (
+        <div
+          style={{
+            padding: '6px 10px',
+            borderRadius: 'var(--radius-sm)',
+            background: 'rgba(245, 158, 11, 0.1)',
+            border: '1px solid rgba(245, 158, 11, 0.3)',
+            color: '#fde68a',
+            fontSize: '0.70rem',
+            display: 'flex',
+            gap: '6px',
+            alignItems: 'center',
+          }}
+        >
+          <AlertTriangle size={13} color="#f59e0b" style={{ flexShrink: 0 }} />
+          <span>Unverified surface: Coordinates are outside hydrography bounds.</span>
+        </div>
+      )}
+
+      {ignitionRejectionMessage && (
+        <div
+          style={{
+            padding: '6px 10px',
+            borderRadius: 'var(--radius-sm)',
+            background: 'rgba(239, 68, 68, 0.1)',
+            border: '1px solid rgba(239, 68, 68, 0.3)',
+            color: '#fca5a5',
+            fontSize: '0.70rem',
+          }}
+        >
+          {ignitionRejectionMessage}
+        </div>
+      )}
+
+      {/* Primary Actions: Navigation & Single Consolidated Assessment Action */}
+      <div style={{ display: 'flex', gap: '8px' }}>
+        <button
+          onClick={handleFlyTo}
+          className="glass-button"
+          style={{
+            flex: 1,
+            padding: '6px 10px',
+            fontSize: '0.74rem',
+            fontWeight: 500,
+            gap: '5px',
+          }}
+        >
+          <Crosshair size={13} color="var(--accent-cyan)" />
+          Center
+        </button>
+
+        {/* Consolidated Assessment Action: ONE clear primary action */}
+        {isAssessmentCompleted ? (
           <button
-            onClick={handleFlyTo}
+            onClick={onOpenDetectionPanel}
             className="glass-button"
             style={{
-              flex: 1,
-              padding: '8px 12px',
-              fontSize: '0.78rem',
-              fontWeight: 500,
+              flex: 1.5,
+              padding: '6px 10px',
+              fontSize: '0.74rem',
+              fontWeight: 600,
+              gap: '6px',
+              color: '#34d399',
+              borderColor: 'rgba(16, 185, 129, 0.35)',
+              background: 'rgba(16, 185, 129, 0.12)',
+            }}
+            title="Open Fire Assessment Panel"
+          >
+            <Satellite size={13} />
+            <span>View assessment</span>
+          </button>
+        ) : isAssessmentLoading ? (
+          <button
+            onClick={onOpenDetectionPanel}
+            className="glass-button"
+            style={{
+              flex: 1.5,
+              padding: '6px 10px',
+              fontSize: '0.74rem',
+              fontWeight: 600,
+              gap: '6px',
+              color: '#fbbf24',
+              borderColor: 'rgba(245, 158, 11, 0.35)',
+              background: 'rgba(245, 158, 11, 0.12)',
+            }}
+          >
+            <Satellite size={13} />
+            <span>Assessing...</span>
+          </button>
+        ) : (
+          <button
+            onClick={isInAmazon ? onRunInference : undefined}
+            disabled={!isInAmazon}
+            className="glass-button"
+            style={{
+              flex: 1.5,
+              padding: '6px 10px',
+              fontSize: '0.74rem',
+              fontWeight: 600,
+              gap: '6px',
+              color: isInAmazon ? '#f87171' : '#64748b',
+              borderColor: isInAmazon ? 'rgba(239, 68, 68, 0.35)' : 'rgba(255, 255, 255, 0.08)',
+              background: isInAmazon ? 'rgba(239, 68, 68, 0.08)' : 'rgba(30, 41, 59, 0.3)',
+              cursor: isInAmazon ? 'pointer' : 'not-allowed',
+              opacity: isInAmazon ? 1 : 0.6,
+            }}
+            title={isInAmazon ? 'Run U-Net satellite assessment' : 'Restricted to Amazon study region'}
+          >
+            <Satellite size={13} />
+            <span>Assess area</span>
+          </button>
+        )}
+      </div>
+
+      {/* Simulation Scenario Controls */}
+      <div style={{ display: 'flex', gap: '8px' }}>
+        {!isSimulatedFireActive ? (
+          <button
+            onClick={isInAmazon && !isWater && !isUnverified ? onCreateIgnition : undefined}
+            disabled={!isInAmazon || isWater || isUnverified}
+            className="glass-button"
+            style={{
+              width: '100%',
+              padding: '7px 10px',
+              fontSize: '0.75rem',
+              fontWeight: 600,
+              color: isInAmazon && !isWater && !isUnverified ? '#f97316' : '#64748b',
+              borderColor: isInAmazon && !isWater && !isUnverified ? 'rgba(249, 115, 22, 0.4)' : 'rgba(255, 255, 255, 0.08)',
+              background: isInAmazon && !isWater && !isUnverified ? 'rgba(249, 115, 22, 0.12)' : 'rgba(30, 41, 59, 0.3)',
+              cursor: isInAmazon && !isWater && !isUnverified ? 'pointer' : 'not-allowed',
               gap: '6px',
             }}
           >
-            <Crosshair size={14} color="var(--accent-cyan)" />
-            Center Camera
+            <Flame size={13} />
+            <span>Create fire scenario</span>
           </button>
-
-          {onRunInference && (
-            <button
-              onClick={isInAmazon ? onRunInference : undefined}
-              disabled={!isInAmazon}
-              className="glass-button"
-              style={{
-                flex: 1.4,
-                padding: '8px 12px',
-                fontSize: '0.78rem',
-                fontWeight: 600,
-                gap: '6px',
-                color: isInAmazon ? '#EF4444' : '#64748B',
-                borderColor: isInAmazon ? 'rgba(239, 68, 68, 0.4)' : 'rgba(255, 255, 255, 0.1)',
-                background: isInAmazon ? 'rgba(239, 68, 68, 0.1)' : 'rgba(30, 41, 59, 0.4)',
-                cursor: isInAmazon ? 'pointer' : 'not-allowed',
-                opacity: isInAmazon ? 1 : 0.6
-              }}
-              title={isInAmazon ? "Run U-Net AI Burned-Area Segmentation Inference" : "Restricted to Amazon Study Region"}
-            >
-              <ExternalLink size={14} color={isInAmazon ? "#EF4444" : "#64748B"} />
-              Analyze with U-Net AI
-            </button>
-          )}
-        </div>
-
-        {/* U-Net Scientific Semantics Note */}
-        {isInAmazon && (
-          <div
-            style={{
-              fontSize: '0.66rem',
-              color: '#94A3B8',
-              backgroundColor: 'rgba(0, 0, 0, 0.3)',
-              padding: '6px 8px',
-              borderRadius: 'var(--radius-sm)',
-              borderLeft: '2px solid #38BDF8',
-              lineHeight: 1.35
-            }}
-          >
-            <strong>Scientific Note:</strong> The user-defined ignition establishes a hypothetical scenario condition. U-Net analysis independently processes available real Sentinel-2 multispectral satellite imagery.
-          </div>
+        ) : (
+          <>
+            {onRunSpreadAnalysis && (
+              <button
+                onClick={isInAmazon ? onRunSpreadAnalysis : undefined}
+                disabled={!isInAmazon}
+                className="glass-button"
+                style={{
+                  flex: 1.2,
+                  padding: '7px 10px',
+                  fontSize: '0.74rem',
+                  fontWeight: 600,
+                  color: '#fdba74',
+                  borderColor: 'rgba(249, 115, 22, 0.4)',
+                  background: 'rgba(249, 115, 22, 0.15)',
+                  gap: '5px',
+                }}
+              >
+                <Flame size={13} />
+                <span>Spread analysis</span>
+              </button>
+            )}
+            {onRemoveFire && (
+              <button
+                onClick={onRemoveFire}
+                className="glass-button"
+                style={{
+                  flex: 0.8,
+                  padding: '7px 10px',
+                  fontSize: '0.74rem',
+                  fontWeight: 500,
+                  color: '#94a3b8',
+                }}
+              >
+                Clear fire
+              </button>
+            )}
+          </>
         )}
+      </div>
 
-        {/* Divider */}
-        <div style={{ borderTop: '1px solid rgba(255, 255, 255, 0.08)', margin: '4px 0' }} />
-
-        {/* Forest Condition Section */}
+      {/* Forest Condition Section */}
+      <div style={{ borderTop: '1px solid rgba(255, 255, 255, 0.06)', paddingTop: '6px' }}>
         <ForestConditionPanel
+          location={location}
           hasActiveFireData={false}
           hasBurnedAreaGroundTruth={location.source === 'EMSR239_EVENT'}
         />
-
-        {/* Divider */}
-        <div style={{ borderTop: '1px solid rgba(255, 255, 255, 0.08)', margin: '4px 0' }} />
-
-        {/* Scenario Ignition & Spread Analysis Controls */}
-        <div style={{ display: 'flex', gap: '8px', paddingTop: '4px' }}>
-          {!isSimulatedFireActive ? (
-            <button
-              onClick={isInAmazon ? onCreateIgnition : undefined}
-              disabled={!isInAmazon}
-              className="glass-button"
-              style={{
-                flex: 1,
-                padding: '8px 12px',
-                fontSize: '0.78rem',
-                fontWeight: 700,
-                color: isInAmazon ? '#F97316' : '#64748B',
-                borderColor: isInAmazon ? 'rgba(249, 115, 22, 0.5)' : 'rgba(255, 255, 255, 0.1)',
-                background: isInAmazon ? 'rgba(249, 115, 22, 0.15)' : 'rgba(30, 41, 59, 0.4)',
-                cursor: isInAmazon ? 'pointer' : 'not-allowed',
-                opacity: isInAmazon ? 1 : 0.6
-              }}
-              title={isInAmazon ? "Place a hypothetical ignition point at selected location" : "Restricted to Amazon Study Region"}
-            >
-              🔥 CREATE FIRE SCENARIO
-            </button>
-          ) : (
-            <>
-              {onRunSpreadAnalysis && (
-                <button
-                  onClick={isInAmazon ? onRunSpreadAnalysis : undefined}
-                  disabled={!isInAmazon}
-                  className="glass-button"
-                  style={{
-                    flex: 1.2,
-                    padding: '8px 10px',
-                    fontSize: '0.75rem',
-                    fontWeight: 700,
-                    color: isInAmazon ? '#FDBA74' : '#64748B',
-                    borderColor: isInAmazon ? 'rgba(249, 115, 22, 0.6)' : 'rgba(255, 255, 255, 0.1)',
-                    background: isInAmazon ? 'rgba(249, 115, 22, 0.25)' : 'rgba(30, 41, 59, 0.4)',
-                    cursor: isInAmazon ? 'pointer' : 'not-allowed',
-                    opacity: isInAmazon ? 1 : 0.6
-                  }}
-                  title={isInAmazon ? "Calculate fire spread simulation based on environmental & terrain vectors" : "Restricted to Amazon Study Region"}
-                >
-                  ⚡ SPREAD ANALYSIS
-                </button>
-              )}
-              {onRemoveFire && (
-                <button
-                  onClick={onRemoveFire}
-                  className="glass-button"
-                  style={{
-                    flex: 0.8,
-                    padding: '8px 10px',
-                    fontSize: '0.75rem',
-                    fontWeight: 600,
-                    color: '#94A3B8',
-                    borderColor: 'rgba(255, 255, 255, 0.15)',
-                    background: 'rgba(30, 41, 59, 0.6)'
-                  }}
-                  title="Remove simulated fire ignition and clear scenario"
-                >
-                  REMOVE FIRE
-                </button>
-              )}
-            </>
-          )}
-        </div>
       </div>
     </div>
   );

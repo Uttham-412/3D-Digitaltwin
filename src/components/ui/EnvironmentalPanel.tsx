@@ -3,6 +3,7 @@ import {
   EnvironmentalTimeline,
   EnvironmentalProvenance
 } from '../../environmental/environmentalTypes';
+import { computeEquilibriumMoistureContent } from '../../simulation/fireSpreadModel';
 
 interface EnvironmentalPanelProps {
   timeline: EnvironmentalTimeline | null;
@@ -27,24 +28,30 @@ export const EnvironmentalPanel: React.FC<EnvironmentalPanelProps> = ({
       : null;
 
   return (
-    <div
+    <aside
+      aria-label="Environmental intelligence panel"
+      className="glass-panel"
       style={{
         position: 'absolute',
         top: '80px',
         right: '20px',
         width: '360px',
+        maxWidth: 'calc(100vw - 32px)',
         maxHeight: 'calc(100vh - 120px)',
         overflowY: 'auto',
-        backgroundColor: 'rgba(15, 23, 42, 0.88)',
-        backdropFilter: 'blur(16px)',
-        WebkitBackdropFilter: 'blur(16px)',
-        border: '1px solid rgba(56, 189, 248, 0.25)',
-        borderRadius: '16px',
-        boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.5), 0 8px 10px -6px rgba(0, 0, 0, 0.5)',
-        color: '#F8FAFC',
-        fontFamily: 'Inter, system-ui, -apple-system, sans-serif',
-        zIndex: 100,
-        padding: '20px'
+        backgroundColor: 'rgba(15, 20, 30, 0.95)',
+        backdropFilter: 'blur(20px)',
+        WebkitBackdropFilter: 'blur(20px)',
+        border: '1px solid rgba(255, 255, 255, 0.1)',
+        borderRadius: 'var(--radius-md)',
+        boxShadow: '0 16px 40px rgba(0, 0, 0, 0.65)',
+        color: '#f8fafc',
+        fontFamily: 'var(--font-sans)',
+        zIndex: 50,
+        padding: '14px 16px',
+        display: 'flex',
+        flexDirection: 'column',
+        gap: '12px',
       }}
     >
       {/* Header */}
@@ -53,44 +60,29 @@ export const EnvironmentalPanel: React.FC<EnvironmentalPanelProps> = ({
           display: 'flex',
           justifyContent: 'space-between',
           alignItems: 'center',
-          borderBottom: '1px solid rgba(255, 255, 255, 0.1)',
-          paddingBottom: '12px',
-          marginBottom: '16px'
+          borderBottom: '1px solid rgba(255, 255, 255, 0.08)',
+          paddingBottom: '10px',
         }}
       >
         <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-          <div
-            style={{
-              width: '10px',
-              height: '10px',
-              borderRadius: '50%',
-              backgroundColor: '#38BDF8',
-              boxShadow: '0 0 10px #38BDF8'
-            }}
-          />
           <h3
             style={{
               margin: 0,
-              fontSize: '15px',
-              fontWeight: 700,
-              letterSpacing: '0.05em',
-              textTransform: 'uppercase',
-              color: '#38BDF8'
+              fontSize: '0.85rem',
+              fontWeight: 600,
+              color: 'var(--text-primary)',
             }}
           >
-            ENVIRONMENTAL INTELLIGENCE
+            Environmental intelligence
           </h3>
         </div>
         <button
           onClick={onClose}
+          className="glass-button"
           style={{
-            background: 'none',
-            border: 'none',
-            color: '#94A3B8',
-            cursor: 'pointer',
-            fontSize: '18px',
-            lineHeight: 1,
-            padding: '4px'
+            width: '24px',
+            height: '24px',
+            padding: 0,
           }}
           title="Close panel"
         >
@@ -164,10 +156,13 @@ export const EnvironmentalPanel: React.FC<EnvironmentalPanelProps> = ({
           >
             <div>
               <div style={{ fontSize: '11px', color: '#94A3B8', textTransform: 'uppercase' }}>
-                LOCATION
+                LOCATION & TIME
               </div>
               <div style={{ fontSize: '13px', fontWeight: 600, color: '#E2E8F0' }}>
                 {timeline.locationName || `Lat ${timeline.location.latitude.toFixed(2)}°, Lng ${timeline.location.longitude.toFixed(2)}°`}
+              </div>
+              <div style={{ fontSize: '10px', color: '#38BDF8', marginTop: '2px' }}>
+                {new Date(currentObs.timestamp).toUTCString()}
               </div>
             </div>
             <span
@@ -234,6 +229,24 @@ export const EnvironmentalPanel: React.FC<EnvironmentalPanelProps> = ({
               </div>
             </div>
 
+            {/* 1-Hour Dead Fuel Moisture (Simard EMC) */}
+            <div
+              style={{
+                backgroundColor: 'rgba(30, 41, 59, 0.6)',
+                padding: '12px',
+                borderRadius: '10px',
+                border: '1px solid rgba(255, 255, 255, 0.05)'
+              }}
+            >
+              <div style={{ fontSize: '11px', color: '#94A3B8' }}>1-Hr Fuel Moisture</div>
+              <div style={{ fontSize: '20px', fontWeight: 700, color: '#EAB308' }}>
+                {computeEquilibriumMoistureContent(currentObs.temperature, currentObs.relativeHumidity).toFixed(1)} %
+              </div>
+              <div style={{ fontSize: '9px', color: '#64748B', marginTop: '2px' }}>
+                Simard / Rothermel EMC
+              </div>
+            </div>
+
             {/* Precipitation */}
             <div
               style={{
@@ -280,7 +293,7 @@ export const EnvironmentalPanel: React.FC<EnvironmentalPanelProps> = ({
           >
             <div>
               <div style={{ fontSize: '11px', color: '#94A3B8', textTransform: 'uppercase' }}>
-                WIND VECTOR
+                WIND VECTOR ({new Date(currentObs.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false })} UTC)
               </div>
               <div style={{ fontSize: '22px', fontWeight: 800, color: '#38BDF8' }}>
                 {currentObs.windSpeed.toFixed(1)} <span style={{ fontSize: '13px' }}>km/h</span>
@@ -445,6 +458,6 @@ export const EnvironmentalPanel: React.FC<EnvironmentalPanelProps> = ({
           </div>
         </>
       )}
-    </div>
+    </aside>
   );
 };
