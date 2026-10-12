@@ -1,6 +1,7 @@
 import { Coordinates } from '../environmental/environmentalTypes';
 import { FuelData, IgnitionValidationResult } from '../simulation/fireScenarioTypes';
 import { waterMaskService } from './waterMaskService';
+import { isPointInAmazonStudyRegion } from '../config/studyRegion';
 
 export type SpatialBurnabilityChecker = (coords: Coordinates) => {
   burnabilityStatus: 'BURNABLE' | 'WATER' | 'NON_BURNABLE_URBAN' | 'UNVERIFIED';
@@ -56,6 +57,19 @@ class FuelService {
       };
     }
 
+    const lat = coords.latitude;
+    const lng = coords.longitude;
+    const inStudyRegion = isPointInAmazonStudyRegion(lat, lng);
+
+    if (!inStudyRegion) {
+      return {
+        burnabilityStatus: 'UNVERIFIED',
+        isBurnable: false,
+        isWater: false,
+        fuelClass: 'Outside Amazon Study Region'
+      };
+    }
+
     // Authoritative real-time spatial query via ESA WorldCover 10m water mask
     const waterCheck = waterMaskService.checkPoint(coords);
 
@@ -73,13 +87,11 @@ class FuelService {
         burnabilityStatus: 'UNVERIFIED',
         isBurnable: false,
         isWater: false,
-        fuelClass: 'SURFACE UNVERIFIED'
+        fuelClass: 'Unverified Surface (Hydrography Coverage Required)'
       };
     }
 
     // Verified Land: Check if within Manaus urban core
-    const lat = coords.latitude;
-    const lng = coords.longitude;
     const isManausUrban = lat >= -3.145 && lat <= -3.070 && lng >= -60.045 && lng <= -59.970;
 
     if (isManausUrban) {
@@ -91,12 +103,12 @@ class FuelService {
       };
     }
 
-    // Verified burnable rainforest land cover
+    // Verified burnable rainforest land cover in Amazon study region
     return {
       burnabilityStatus: 'BURNABLE',
       isBurnable: true,
       isWater: false,
-      fuelClass: 'Tropical Rainforest / Dense Tree Cover'
+      fuelClass: 'Tropical Rainforest / Dense Tree Cover (ESA WorldCover Class 10)'
     };
   }
 
@@ -131,6 +143,23 @@ class FuelService {
       return this.cache.get(key)!;
     }
 
+    // Check regional membership first
+    const inStudyRegion = isPointInAmazonStudyRegion(lat, lng);
+    if (!inStudyRegion) {
+      const outsideData: FuelData = {
+        fuelClass: 'Outside Amazon Study Region',
+        burnabilityFactor: null,
+        fuelLoadTonsPerHectare: null,
+        isBurnable: false,
+        isAvailable: false,
+        burnabilityStatus: 'UNVERIFIED',
+        isWater: false,
+        source: 'Amazon Digital Twin Study Region Boundary',
+        statusMessage: `Coordinates (${lat.toFixed(4)}°, ${lng.toFixed(4)}°) are outside the operational Amazon Digital Twin study region.`
+      };
+      return outsideData;
+    }
+
     // Wait until authoritative water mask is loaded
     await waterMaskService.waitUntilReady();
 
@@ -156,16 +185,17 @@ class FuelService {
 
     if (waterCheck.surfaceClass === 'UNVERIFIED') {
       const unverifiedData: FuelData = {
-        fuelClass: 'SURFACE UNVERIFIED',
+        fuelClass: 'Unverified Surface (Hydrography Coverage Required)',
         burnabilityFactor: null,
         fuelLoadTonsPerHectare: null,
         isBurnable: false,
         isAvailable: false,
         burnabilityStatus: 'UNVERIFIED',
         isWater: false,
-        source: 'ESA WorldCover 2021 v200',
-        statusMessage: waterCheck.details
+        source: 'ESA WorldCover 2021 v200 (Coverage Boundary)',
+        statusMessage: `Coordinates (${lat.toFixed(4)}°, ${lng.toFixed(4)}°) are inside the Amazon study region, but outside 10m high-resolution water mask coverage. Water status unverified.`
       };
+      this.cache.set(key, unverifiedData);
       return unverifiedData;
     }
 
@@ -189,7 +219,7 @@ class FuelService {
       return urbanData;
     }
 
-    // Verified burnable rainforest land cover
+    // Verified burnable rainforest land cover in Amazon study region
     const forestData: FuelData = {
       fuelClass: 'Tropical Rainforest / Dense Tree Cover (ESA WorldCover Class 10)',
       burnabilityFactor: 0.85,
@@ -208,7 +238,7 @@ class FuelService {
 
   /**
    * Validate whether a coordinate is suitable for hypothetical fire ignition.
-   * Strictly rejects open water bodies and unverified surfaces.
+   * Strictly rejects open water bodies, urban surfaces, and unverified/outside surfaces.
    */
   public validateIgnition(coords: Coordinates, fuel: FuelData): IgnitionValidationResult {
     if (fuel.burnabilityStatus === 'WATER' || fuel.isWater === true) {
@@ -224,28 +254,41 @@ class FuelService {
       };
     }
 
-    if (fuel.burnabilityStatus === 'UNVERIFIED' || !fuel.isAvailable) {
-      return {
-        valid: false,
-        code: 'BLOCKED_UNVERIFIED_SURFACE',
-        message: `Ignition Blocked: Surface classification is unverified at coordinates (${coords.latitude.toFixed(4)}°, ${coords.longitude.toFixed(4)}°). Land-cover or water-mask data is required before simulating ignition.`,
-        details: {
-          latitude: coords.latitude,
-          longitude: coords.longitude,
-          surfaceType: 'UNVERIFIED'
-        }
-      };
-    }
-
-    if (fuel.burnabilityStatus === 'NON_BURNABLE_URBAN' || fuel.isBurnable === false) {
+    if (fuel.burnabilityStatus === 'NON_BURNABLE_URBAN' || (fuel.isBurnable === false && fuel.fuelClass.includes('Urban'))) {
       return {
         valid: false,
         code: 'REJECTED_NON_BURNABLE',
-        message: `Ignition Rejected: Selected coordinates (${coords.latitude.toFixed(4)}°, ${coords.longitude.toFixed(4)}°) are classified as non-burnable surface (${fuel.fuelClass}).`,
+        message: `Ignition Rejected: Selected coordinates (${coords.latitude.toFixed(4)}°, ${coords.longitude.toFixed(4)}°) are classified as non-burnable surface (${fuel.fuelClass}). Wildfire ignition is prohibited on impervious urban infrastructure.`,
         details: {
           latitude: coords.latitude,
           longitude: coords.longitude,
           surfaceType: fuel.fuelClass
+        }
+      };
+    }
+
+    if (fuel.fuelClass === 'Outside Amazon Study Region') {
+      return {
+        valid: false,
+        code: 'BLOCKED_UNVERIFIED_SURFACE',
+        message: `Ignition Blocked: Coordinates (${coords.latitude.toFixed(4)}°, ${coords.longitude.toFixed(4)}°) are outside the operational Amazon Digital Twin study region.`,
+        details: {
+          latitude: coords.latitude,
+          longitude: coords.longitude,
+          surfaceType: 'OUTSIDE_REGION'
+        }
+      };
+    }
+
+    if (fuel.burnabilityStatus === 'UNVERIFIED' || !fuel.isAvailable || fuel.fuelClass.includes('Unverified')) {
+      return {
+        valid: false,
+        code: 'BLOCKED_UNVERIFIED_SURFACE',
+        message: `Ignition Blocked: Hydrography status is unverified at coordinates (${coords.latitude.toFixed(4)}°, ${coords.longitude.toFixed(4)}°). Authoritative 10m water mask coverage is required by conservative safety policy to verify dry land before simulating ignition.`,
+        details: {
+          latitude: coords.latitude,
+          longitude: coords.longitude,
+          surfaceType: 'HYDROGRAPHY_UNVERIFIED'
         }
       };
     }

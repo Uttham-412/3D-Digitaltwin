@@ -10,7 +10,7 @@
  * - CRS: EPSG:4326 (WGS 84 geographic coordinates)
  * - Resolution: 10 meters (8.333e-5 degrees)
  * - Source: AWS Open Data S3 Cloud-Optimized GeoTIFFs (S06W063, S06W060, S03W063, S03W060)
- * - Bounding Extent: [-60.25° W, -3.35° S, -59.85° W, -2.95° S]
+ * - Bounding Extent: [-60.30° W, -3.40° S, -59.70° W, -2.80° S]
  * - Water Class Code: 80 (Permanent water bodies)
  *
  * Features:
@@ -58,10 +58,10 @@ export class WaterMaskService {
 
   // Exact study area bounds covered by the authoritative ESA WorldCover mask
   public readonly verifiedBounds = {
-    west: -60.25,
-    south: -3.35,
-    east: -59.85,
-    north: -2.95
+    west: -60.30,
+    south: -3.40,
+    east: -59.70,
+    north: -2.80
   };
 
   public getMetadata(): WaterMaskMetadata | null {

@@ -26,6 +26,7 @@
 import { Coordinates } from '../environmental/environmentalTypes';
 import { waterMaskService } from './waterMaskService';
 import { fuelService } from './fuelService';
+import { isPointInAmazonStudyRegion } from '../config/studyRegion';
 
 export type ForestConditionClass =
   | 'HEALTHY VEGETATION'
@@ -247,6 +248,28 @@ export class ForestConditionService {
         const sampledNbr = this.samplingData.nbr[pixelIdx] ?? 0.65;
         const sampledProb = this.samplingData.probability[pixelIdx] ?? 0.10;
 
+        // Check urban infrastructure first to prevent optical spectral confusion with burn scars
+        const burnability = fuelService.checkBurnabilitySync(coords);
+        if (burnability.burnabilityStatus === 'NON_BURNABLE_URBAN') {
+          return {
+            latitude: lat,
+            longitude: lon,
+            classification: 'NON-BURNABLE / URBAN',
+            color: this.CATEGORY_COLORS['NON-BURNABLE / URBAN'],
+            confidence: 0.95,
+            source: 'OpenStreetMap / Manaus Urban Footprint',
+            observationDate: this.samplingData.acquisition_date,
+            ndvi: Number(sampledNdvi.toFixed(3)),
+            nbr: Number(sampledNbr.toFixed(3)),
+            unetBurnProbability: Number(sampledProb.toFixed(3)),
+            isBurnable: false,
+            isWater: false,
+            description: 'Impervious urban infrastructure and settlement (Manaus Metropolitan Core). Non-burnable fuel class with low optical vegetation index.',
+            limitationsNote: 'High proportion of concrete, asphalt, and built structures. Unsuitable for wildfire ignition.',
+            samplingMethod: 'RASTER_PIXEL_SAMPLE'
+          };
+        }
+
         // 3A. U-Net Burned Area Model Prediction Threshold Check (tau = 0.65)
         if (sampledProb >= 0.65) {
           return {
@@ -312,27 +335,6 @@ export class ForestConditionService {
         }
 
         // 3D. Low NDVI (NDVI < 0.15)
-        const burnability = fuelService.checkBurnabilitySync(coords);
-        if (burnability.burnabilityStatus === 'NON_BURNABLE_URBAN') {
-          return {
-            latitude: lat,
-            longitude: lon,
-            classification: 'NON-BURNABLE / URBAN',
-            color: this.CATEGORY_COLORS['NON-BURNABLE / URBAN'],
-            confidence: 0.90,
-            source: 'OpenStreetMap / Sentinel-2 Low NDVI (<0.15)',
-            observationDate: this.samplingData.acquisition_date,
-            ndvi: Number(sampledNdvi.toFixed(3)),
-            nbr: Number(sampledNbr.toFixed(3)),
-            unetBurnProbability: Number(sampledProb.toFixed(3)),
-            isBurnable: false,
-            isWater: false,
-            description: 'Impervious urban infrastructure and settlement. Non-burnable fuel class with low optical vegetation index.',
-            limitationsNote: 'High proportion of concrete, asphalt, and built structures. Unsuitable for wildfire ignition.',
-            samplingMethod: 'RASTER_PIXEL_SAMPLE'
-          };
-        }
-
         return {
           latitude: lat,
           longitude: lon,
@@ -371,12 +373,25 @@ export class ForestConditionService {
       };
     }
 
-    // 5. Amazon Rainforest Region Check (Tile T20MRB / Regional Land Cover)
-    const isAmazonRainforest =
-      lat >= -3.70 && lat <= -2.71 &&
-      lon >= -60.30 && lon <= -59.31;
+    // 5. Amazon Rainforest Study Region Check (authoritative study region boundary)
+    const inStudyRegion = isPointInAmazonStudyRegion(lat, lon);
+    if (inStudyRegion) {
+      if (waterCheck.surfaceClass === 'UNVERIFIED') {
+        return {
+          latitude: lat,
+          longitude: lon,
+          classification: 'UNVERIFIED / INSUFFICIENT DATA',
+          color: this.CATEGORY_COLORS['UNVERIFIED / INSUFFICIENT DATA'],
+          confidence: 0.40,
+          source: 'Amazon Study Region (Hydrography Unverified)',
+          isBurnable: false,
+          isWater: false,
+          description: `Coordinates (${lat.toFixed(4)}°, ${lon.toFixed(4)}°) are inside the Amazon study region, but outside 10m high-resolution hydrography mask coverage.`,
+          limitationsNote: 'Water status unverified. Authoritative 10m water mask coverage is required by safety policy before classifying surface as verified burnable forest.',
+          samplingMethod: 'COORDINATE_BOUNDS_CHECK'
+        };
+      }
 
-    if (isAmazonRainforest && burnability.isBurnable) {
       return {
         latitude: lat,
         longitude: lon,
@@ -387,23 +402,23 @@ export class ForestConditionService {
         isBurnable: true,
         isWater: false,
         description: 'Tropical Rainforest / Dense Tree Cover (Amazonas Forest Corridor). Burnable vegetative fuel.',
-        limitationsNote: 'Regional land-cover classification. 10m Sentinel-2 multispectral NDVI/NBR pending local patch raster extraction.',
+        limitationsNote: 'Location is inside the Amazon study region and verified terrestrial land. Local 10m satellite raster pending acquisition.',
         samplingMethod: 'COORDINATE_BOUNDS_CHECK'
       };
     }
 
-    // 6. Unverified / Outside High-Resolution Raster Coverage
+    // 6. Outside Amazon Study Region
     return {
       latitude: lat,
       longitude: lon,
       classification: 'UNVERIFIED / INSUFFICIENT DATA',
       color: this.CATEGORY_COLORS['UNVERIFIED / INSUFFICIENT DATA'],
       confidence: 0.0,
-      source: 'Outside Regional Coverage & Satellite Footprint',
+      source: 'Outside Amazon Study Region',
       isBurnable: false,
       isWater: false,
-      description: `Coordinates (${lat.toFixed(4)}°, ${lon.toFixed(4)}°) are outside the verified Amazon study region and Sentinel-2 tile extent.`,
-      limitationsNote: 'Detailed surface spectral indices (NDVI, NBR) and U-Net burned area probability require satellite raster acquisition for this geographic extent.',
+      description: `Coordinates (${lat.toFixed(4)}°, ${lon.toFixed(4)}°) are outside the operational Amazon Digital Twin study region.`,
+      limitationsNote: 'Operational Digital Twin study region is bounded by [-60.50° to -59.50° W, -3.50° to -2.50° S]. Detailed spectral indices require regional coverage.',
       samplingMethod: 'UNVERIFIED_FALLBACK'
     };
   }

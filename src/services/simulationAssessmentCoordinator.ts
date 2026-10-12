@@ -259,10 +259,33 @@ export class SimulationAssessmentCoordinator {
       if (!observation.available) {
         request.status = 'AWAITING_SATELLITE_OBSERVATION';
         request.canRetry = true;
-        request.statusMessage =
-          observation.message ||
-          `Awaiting satellite observation: No cloud-free Sentinel-2 L2A tile is cataloged covering (${ignitionLat.toFixed(4)}°, ${ignitionLon.toFixed(4)}°) within the search window. Simulation continues normally without synthetic data.`;
+        request.failureReason = observation.message || `No matching satellite observation: No Sentinel-2 Level-2A product is cataloged covering (${ignitionLat.toFixed(4)}°, ${ignitionLon.toFixed(4)}°) within the search window.`;
+        request.statusMessage = request.failureReason;
         request.isCoveredByObservation = false;
+        request.updatedAt = new Date().toISOString();
+        this.notify();
+        return request;
+      }
+
+      // Check cloud cover threshold (<40%)
+      if (observation.cloudCoverPercentage !== undefined && observation.cloudCoverPercentage > 40) {
+        request.status = 'OBSERVATION_UNSUITABLE';
+        request.canRetry = true;
+        request.failureReason = `Excessive cloud cover: Discovered satellite observation has ${observation.cloudCoverPercentage.toFixed(1)}% cloud cover, which exceeds the 40% operational threshold.`;
+        request.statusMessage = request.failureReason;
+        request.updatedAt = new Date().toISOString();
+        this.notify();
+        return request;
+      }
+
+      // Check required band availability
+      const requiredBands = ['B01', 'B02', 'B03', 'B04', 'B05', 'B06', 'B07', 'B08', 'B09', 'B11', 'B12'];
+      const hasAllBands = observation.bandsAvailable && requiredBands.every((b) => observation.bandsAvailable!.some((a) => a.includes(b)));
+      if (observation.bandsAvailable && !hasAllBands) {
+        request.status = 'OBSERVATION_UNSUITABLE';
+        request.canRetry = true;
+        request.failureReason = 'Missing required bands: Discovered Sentinel-2 observation is missing required multispectral bands for 15-channel U-Net preprocessing.';
+        request.statusMessage = request.failureReason;
         request.updatedAt = new Date().toISOString();
         this.notify();
         return request;
@@ -305,11 +328,27 @@ export class SimulationAssessmentCoordinator {
             request.statusMessage = '15-channel multispectral raster acquired. Validating bands and computing spectral indices...';
             request.updatedAt = new Date().toISOString();
             this.notify();
+          } else if (acqData.status === 'out_of_swath') {
+            request.status = 'AWAITING_SATELLITE_OBSERVATION';
+            request.canRetry = true;
+            request.failureReason = 'Product unavailable or inaccessible: Coordinates fall outside orbital swath of local Sentinel-2 archive.';
+            request.statusMessage = request.failureReason;
+            request.updatedAt = new Date().toISOString();
+            this.notify();
+            return request;
+          } else if (acqData.status === 'not_cached') {
+            request.status = 'AWAITING_SATELLITE_OBSERVATION';
+            request.canRetry = true;
+            request.failureReason = `Product unavailable or inaccessible: Sentinel-2 archive for ${observation.cdseItemId || 'discovered tile'} is not currently cached locally.`;
+            request.statusMessage = request.failureReason;
+            request.updatedAt = new Date().toISOString();
+            this.notify();
+            return request;
           } else {
             request.status = 'FAILED';
             request.canRetry = true;
-            request.failureReason = acqData.message || 'CDSE acquisition did not produce a ready 15-channel raster.';
-            request.statusMessage = `Raster acquisition failed: ${request.failureReason}`;
+            request.failureReason = `Preprocessing or inference failure: ${acqData.message || 'CDSE acquisition did not produce a ready 15-channel raster.'}`;
+            request.statusMessage = request.failureReason;
             request.updatedAt = new Date().toISOString();
             this.notify();
             return request;
@@ -317,8 +356,8 @@ export class SimulationAssessmentCoordinator {
         } else {
           request.status = 'FAILED';
           request.canRetry = true;
-          request.failureReason = `CDSE acquisition service returned HTTP ${acqRes.status}.`;
-          request.statusMessage = `Acquisition failed: ${request.failureReason}`;
+          request.failureReason = `Preprocessing or inference failure: CDSE acquisition service returned HTTP ${acqRes.status}.`;
+          request.statusMessage = request.failureReason;
           request.updatedAt = new Date().toISOString();
           this.notify();
           return request;
@@ -331,7 +370,7 @@ export class SimulationAssessmentCoordinator {
         const errMsg = err instanceof Error ? err.message : String(err);
         request.status = 'FAILED';
         request.canRetry = true;
-        request.failureReason = `Acquisition server unreachable (${errMsg}). Verify inference_server.py is running.`;
+        request.failureReason = `Preprocessing or inference failure: Acquisition server unreachable (${errMsg}). Verify inference_server.py is running.`;
         request.statusMessage = request.failureReason;
         request.updatedAt = new Date().toISOString();
         this.notify();
@@ -396,7 +435,7 @@ export class SimulationAssessmentCoordinator {
     if (segResult.status !== 'success') {
       request.status = 'FAILED';
       request.canRetry = true;
-      request.failureReason = segResult.message || 'U-Net inference failed to process satellite tensor.';
+      request.failureReason = `Preprocessing or inference failure: ${segResult.message || 'U-Net inference failed to process satellite tensor.'}`;
       request.statusMessage = request.failureReason;
       this.notify();
       return request;

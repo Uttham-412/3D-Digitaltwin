@@ -23,9 +23,7 @@ import { ImageryType, setImageryLayer } from './cesium/imagery';
 import { AMAZON_REAL_WILDFIRE_OBSERVATIONS } from './wildfire/fireObservation';
 import { environmentalService } from './environmental/environmentalService';
 import { EnvironmentalTimeline } from './environmental/environmentalTypes';
-import { satelliteObservationService } from './services/satelliteObservationService';
-import { unetPreprocessingBridge } from './services/unetPreprocessingBridge';
-import { uNetResultGeoReferenceService, GeoreferencedUNetOutput } from './geospatial/unetResultGeoReference';
+import { GeoreferencedUNetOutput } from './geospatial/unetResultGeoReference';
 import { fireSimulationComparisonService, ComparisonMetrics } from './comparison/fireSimulationComparison';
 import { simulationClockManager } from './simulation/simulationClock';
 import { terrainService } from './geospatial/terrainService';
@@ -277,45 +275,35 @@ export function App() {
     });
   }, []);
 
-  // Execute Phase 2A -> Phase 2B -> Phase 2C Satellite U-Net Pipeline
+  // Execute Phase 2A -> Phase 2B -> Phase 2C Satellite U-Net Pipeline via Assessment Coordinator
   const handleRunInference = useCallback(async () => {
     if (!selectedLocation) return;
     setIsInferenceLoading(true);
-
-    // Phase 2A: Fetch satellite observation metadata
-    const obsResult = await satelliteObservationService.getObservation({
-      latitude: selectedLocation.latitude,
-      longitude: selectedLocation.longitude,
-      requestedTimestamp: selectedLocation.timestamp || new Date().toISOString()
-    });
-
-    // Phase 2B: Preprocess 15-channel contract and execute U-Net inference
-    const segResult = await unetPreprocessingBridge.executePipeline(obsResult);
-
-    // Phase 2C-A: Format georeferenced output
-    const georef = uNetResultGeoReferenceService.createGeoreferencedOutput(segResult);
-    setGeorefOutput(georef);
-
-    // Phase 2C-B & 3D: Update Cesium 3D vector prediction, raster & ground truth layers
-    const manager = CesiumViewerManager.getInstance();
-    const viewer = manager.getViewer();
-    if (viewer) {
-      await uNetPredictionLayerManager.updateLayers(viewer, georef, showGroundTruthLayer, visualizationMode, showPredictionLayer);
-    }
     setIsDetectionPanelOpen(true);
 
-    // Phase 2C-D: Evaluate comparison if simulation is also active
-    if (spreadResult) {
-      const comp = fireSimulationComparisonService.compareSimulationWithObservation(
-        spreadResult,
-        georef,
-        selectedHorizon
-      );
-      setComparisonMetrics(comp);
-    }
+    const authTimestamp = (envTimeline && envTimeline.observations[envTimeline.selectedIndex])
+      ? envTimeline.observations[envTimeline.selectedIndex].timestamp
+      : (selectedLocation.timestamp || new Date().toISOString());
 
-    setIsInferenceLoading(false);
-  }, [selectedLocation, spreadResult, selectedHorizon, showGroundTruthLayer, visualizationMode, showPredictionLayer]);
+    const simId = isSimulatedFireActive ? `sim_${Date.now()}` : `assess_${Date.now()}`;
+
+    try {
+      await simulationAssessmentCoordinator.startAssessmentForSimulation({
+        simulationId: simId,
+        ignitionLat: selectedLocation.latitude,
+        ignitionLon: selectedLocation.longitude,
+        simulationStartTime: authTimestamp,
+        timelineTime: authTimestamp,
+        selectedHorizon: selectedHorizon,
+        spreadResult: spreadResult,
+        forceRefresh: true
+      });
+    } catch (err) {
+      console.error('[App] Assessment execution error:', err);
+    } finally {
+      setIsInferenceLoading(false);
+    }
+  }, [selectedLocation, envTimeline, isSimulatedFireActive, selectedHorizon, spreadResult]);
 
   // Scenario Lifecycle: Create Ignition with surface burnability & water validation
   const handleCreateIgnition = useCallback(async () => {

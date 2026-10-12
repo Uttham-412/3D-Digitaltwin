@@ -264,46 +264,6 @@ export class SatelliteObservationService {
       };
     }
 
-    const isInsideTileT20MRBFootprint =
-      latitude >= -3.70 &&
-      latitude <= -2.71 &&
-      longitude >= -60.30 &&
-      longitude <= -59.31;
-
-    if (isInsideTileT20MRBFootprint) {
-      return {
-        available: true,
-        source: 'Sentinel-2 L2A (S2B_MSIL2A_20261001T142709_N0513_R053_T20MRB)',
-        satelliteSource: 'CDSE_LIVE',
-        dataStatus: 'BANDS_AVAILABLE',
-        is15ChannelReady: false,
-        cdseItemId: 'S2B_MSIL2A_20261001T142709_N0513_R053_T20MRB_20261001T181049',
-        requestedTimestamp,
-        actualAcquisitionTime: '2026-10-01T14:27:09Z',
-        latitude,
-        longitude,
-        boundingBox: boundingBox || {
-          minLat: latitude - 0.012,
-          maxLat: latitude + 0.012,
-          minLon: longitude - 0.012,
-          maxLon: longitude + 0.012
-        },
-        spatialResolutionMeters: 10,
-        pixelDimensions: { width: 256, height: 256 },
-        rasterCrs: 'EPSG:32720',
-        geographicCrs: 'EPSG:4326',
-        displayCrs: 'EPSG:4326',
-        crs: 'EPSG:32720',
-        bandsAvailable: [...SENTINEL2_15CH_CHANNELS],
-        cloudCoverPercentage: 1.2,
-        dnScaleFactor: 10000.0,
-        tensorShape: [15, 256, 256],
-        normalizationMean: [...SENTINEL2_15CH_MEAN],
-        normalizationStd: [...SENTINEL2_15CH_STD],
-        message: 'SATELLITE OBSERVATION: OUT_OF_SWATH (Coordinates fall outside orbital swath of local Sentinel-2 archive; adjacent tile required)'
-      };
-    }
-
     // Query Copernicus Data Space Ecosystem (CDSE) STAC catalogue for remote/live observations
     const cdseRes = await cdseDiscoveryService.discoverObservation({
       latitude,

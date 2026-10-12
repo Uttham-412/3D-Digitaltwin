@@ -4,6 +4,7 @@ import { SelectedLocation, formatCoordinates } from '../../geospatial/coordinate
 import { CesiumViewerManager } from '../../cesium/viewer';
 import { isPointInAmazonStudyRegion } from '../../config/studyRegion';
 import { waterMaskService } from '../../geospatial/waterMaskService';
+import { fuelService } from '../../geospatial/fuelService';
 import { ForestConditionPanel } from './ForestConditionPanel';
 import { SimulationAssessmentRequest } from '../../services/simulationAssessmentCoordinator';
 
@@ -37,7 +38,10 @@ export const LocationPanel: React.FC<LocationPanelProps> = ({
   const isInAmazon = isPointInAmazonStudyRegion(location.latitude, location.longitude);
   const waterCheck = waterMaskService.checkPoint({ latitude: location.latitude, longitude: location.longitude });
   const isWater = waterCheck.surfaceClass === 'WATER';
-  const isUnverified = waterCheck.surfaceClass === 'UNVERIFIED';
+  const isWaterUnverified = waterCheck.surfaceClass === 'UNVERIFIED';
+  const burnability = fuelService.checkBurnabilitySync({ latitude: location.latitude, longitude: location.longitude });
+  const isUrban = burnability.burnabilityStatus === 'NON_BURNABLE_URBAN';
+  const isBurnable = burnability.isBurnable;
 
   const handleFlyTo = () => {
     const manager = CesiumViewerManager.getInstance();
@@ -45,13 +49,22 @@ export const LocationPanel: React.FC<LocationPanelProps> = ({
   };
 
   const heightVal = location.height ?? 0;
-  const isAssessmentCompleted = assessmentRequest?.status === 'COMPLETED' && assessmentRequest.georeferencedOutput;
-  const isAssessmentLoading =
+  const isAssessmentCompleted = Boolean(assessmentRequest?.status === 'COMPLETED' && assessmentRequest.georeferencedOutput);
+  const isAssessmentLoading = Boolean(
     assessmentRequest?.status === 'INITIALIZING' ||
     assessmentRequest?.status === 'DISCOVERING_OBSERVATION' ||
     assessmentRequest?.status === 'ACQUIRING_RASTER' ||
     assessmentRequest?.status === 'PREPROCESSING' ||
-    assessmentRequest?.status === 'RUNNING_INFERENCE';
+    assessmentRequest?.status === 'RUNNING_INFERENCE'
+  );
+  const hasAssessmentResult = Boolean(
+    assessmentRequest && (
+      (assessmentRequest.status === 'COMPLETED' && assessmentRequest.georeferencedOutput) ||
+      assessmentRequest.status === 'AWAITING_SATELLITE_OBSERVATION' ||
+      assessmentRequest.status === 'FAILED' ||
+      assessmentRequest.status === 'OBSERVATION_UNSUITABLE'
+    )
+  );
 
   return (
     <div
@@ -205,22 +218,41 @@ export const LocationPanel: React.FC<LocationPanelProps> = ({
         </div>
       )}
 
-      {isUnverified && (
+      {isUrban && (
         <div
           style={{
             padding: '6px 10px',
             borderRadius: 'var(--radius-sm)',
-            background: 'rgba(245, 158, 11, 0.1)',
-            border: '1px solid rgba(245, 158, 11, 0.3)',
-            color: '#fde68a',
+            background: 'rgba(148, 163, 184, 0.1)',
+            border: '1px solid rgba(148, 163, 184, 0.3)',
+            color: '#cbd5e1',
             fontSize: '0.70rem',
             display: 'flex',
             gap: '6px',
             alignItems: 'center',
           }}
         >
-          <AlertTriangle size={13} color="#f59e0b" style={{ flexShrink: 0 }} />
-          <span>Unverified surface: Coordinates are outside hydrography bounds.</span>
+          <AlertTriangle size={13} color="#94a3b8" style={{ flexShrink: 0 }} />
+          <span>Urban surface: Wildfire ignition is prohibited in urban areas.</span>
+        </div>
+      )}
+
+      {isInAmazon && isWaterUnverified && !isWater && (
+        <div
+          style={{
+            padding: '6px 10px',
+            borderRadius: 'var(--radius-sm)',
+            background: 'rgba(56, 189, 248, 0.08)',
+            border: '1px solid rgba(56, 189, 248, 0.25)',
+            color: '#7dd3fc',
+            fontSize: '0.70rem',
+            display: 'flex',
+            gap: '6px',
+            alignItems: 'center',
+          }}
+        >
+          <AlertTriangle size={13} color="#38bdf8" style={{ flexShrink: 0 }} />
+          <span>Water status unverified</span>
         </div>
       )}
 
@@ -257,7 +289,7 @@ export const LocationPanel: React.FC<LocationPanelProps> = ({
         </button>
 
         {/* Consolidated Assessment Action: ONE clear primary action */}
-        {isAssessmentCompleted ? (
+        {hasAssessmentResult ? (
           <button
             onClick={onOpenDetectionPanel}
             className="glass-button"
@@ -267,9 +299,9 @@ export const LocationPanel: React.FC<LocationPanelProps> = ({
               fontSize: '0.74rem',
               fontWeight: 600,
               gap: '6px',
-              color: '#34d399',
-              borderColor: 'rgba(16, 185, 129, 0.35)',
-              background: 'rgba(16, 185, 129, 0.12)',
+              color: isAssessmentCompleted ? '#34d399' : '#fbbf24',
+              borderColor: isAssessmentCompleted ? 'rgba(16, 185, 129, 0.35)' : 'rgba(245, 158, 11, 0.35)',
+              background: isAssessmentCompleted ? 'rgba(16, 185, 129, 0.12)' : 'rgba(245, 158, 11, 0.12)',
             }}
             title="Open Fire Assessment Panel"
           >
@@ -323,23 +355,22 @@ export const LocationPanel: React.FC<LocationPanelProps> = ({
       <div style={{ display: 'flex', gap: '8px' }}>
         {!isSimulatedFireActive ? (
           <button
-            onClick={isInAmazon && !isWater && !isUnverified ? onCreateIgnition : undefined}
-            disabled={!isInAmazon || isWater || isUnverified}
+            onClick={onCreateIgnition}
             className="glass-button"
             style={{
               width: '100%',
               padding: '7px 10px',
               fontSize: '0.75rem',
               fontWeight: 600,
-              color: isInAmazon && !isWater && !isUnverified ? '#f97316' : '#64748b',
-              borderColor: isInAmazon && !isWater && !isUnverified ? 'rgba(249, 115, 22, 0.4)' : 'rgba(255, 255, 255, 0.08)',
-              background: isInAmazon && !isWater && !isUnverified ? 'rgba(249, 115, 22, 0.12)' : 'rgba(30, 41, 59, 0.3)',
-              cursor: isInAmazon && !isWater && !isUnverified ? 'pointer' : 'not-allowed',
+              color: isBurnable ? '#f97316' : '#94a3b8',
+              borderColor: isBurnable ? 'rgba(249, 115, 22, 0.4)' : 'rgba(255, 255, 255, 0.1)',
+              background: isBurnable ? 'rgba(249, 115, 22, 0.12)' : 'rgba(30, 41, 59, 0.3)',
+              cursor: 'pointer',
               gap: '6px',
             }}
           >
             <Flame size={13} />
-            <span>Create fire scenario</span>
+            <span>Simulate fire ignition</span>
           </button>
         ) : (
           <>

@@ -54,25 +54,38 @@ export const UNetDetectionPanel: React.FC<UNetDetectionPanelProps> = ({
   if (!isOpen) return null;
 
   const status = assessmentRequest?.status;
-  const isCompleted =
-    (status === 'COMPLETED' || (!status && Boolean(georefOutput?.isAvailable))) &&
-    Boolean(georefOutput && georefOutput.isAvailable);
-  const isAwaiting = status === 'AWAITING_SATELLITE_OBSERVATION';
-  const isFailed = status === 'FAILED';
-  const isProgress =
-    isLoading ||
-    status === 'INITIALIZING' ||
-    status === 'DISCOVERING_OBSERVATION' ||
-    status === 'ACQUIRING_RASTER' ||
-    status === 'PREPROCESSING' ||
-    status === 'RUNNING_INFERENCE';
 
   const isLocationMismatch =
     currentIgnitionLat !== undefined &&
     currentIgnitionLon !== undefined &&
     assessmentRequest !== null &&
-    (Math.abs(assessmentRequest.ignitionLat - currentIgnitionLat) > 0.05 ||
-      Math.abs(assessmentRequest.ignitionLon - currentIgnitionLon) > 0.05);
+    (Math.abs(assessmentRequest.ignitionLat - currentIgnitionLat) > 0.005 ||
+      Math.abs(assessmentRequest.ignitionLon - currentIgnitionLon) > 0.005);
+
+  const isCompleted =
+    !isLocationMismatch &&
+    status === 'COMPLETED' &&
+    Boolean(georefOutput && georefOutput.isAvailable);
+
+  const isSearching = status === 'DISCOVERING_OBSERVATION';
+  const isAcquiring = status === 'ACQUIRING_RASTER';
+  const isPreprocessing = status === 'PREPROCESSING';
+  const isRunningInference = status === 'RUNNING_INFERENCE';
+  const isProgress =
+    !isLocationMismatch &&
+    (isLoading ||
+      status === 'INITIALIZING' ||
+      isSearching ||
+      isAcquiring ||
+      isPreprocessing ||
+      isRunningInference);
+
+  const isUnavailable =
+    !isLocationMismatch &&
+    (status === 'AWAITING_SATELLITE_OBSERVATION' ||
+      status === 'OBSERVATION_UNSUITABLE');
+
+  const isFailed = !isLocationMismatch && status === 'FAILED';
 
   const isHistorical =
     assessmentRequest?.isHistoricalBaseline ||
@@ -105,25 +118,57 @@ export const UNetDetectionPanel: React.FC<UNetDetectionPanelProps> = ({
     (burnedPixels > 0 ? (burnedPixels * 0.01).toFixed(2) : '0.00');
 
   const getStatusBadge = () => {
+    if (isLocationMismatch) {
+      return {
+        label: 'Ready to assess',
+        color: '#94a3b8',
+        bg: 'rgba(148, 163, 184, 0.12)',
+        border: 'rgba(148, 163, 184, 0.25)',
+      };
+    }
     if (isCompleted) {
       return {
-        label: 'Completed',
+        label: 'Assessment completed',
         color: '#34d399',
         bg: 'rgba(16, 185, 129, 0.12)',
         border: 'rgba(16, 185, 129, 0.3)',
       };
     }
-    if (isProgress) {
+    if (isSearching) {
       return {
-        label: 'Processing',
+        label: 'Searching for imagery',
+        color: '#38bdf8',
+        bg: 'rgba(56, 189, 248, 0.12)',
+        border: 'rgba(56, 189, 248, 0.3)',
+      };
+    }
+    if (isAcquiring) {
+      return {
+        label: 'Acquiring imagery',
+        color: '#38bdf8',
+        bg: 'rgba(56, 189, 248, 0.12)',
+        border: 'rgba(56, 189, 248, 0.3)',
+      };
+    }
+    if (isPreprocessing) {
+      return {
+        label: 'Preparing model input',
         color: '#fbbf24',
         bg: 'rgba(245, 158, 11, 0.12)',
         border: 'rgba(245, 158, 11, 0.3)',
       };
     }
-    if (isAwaiting) {
+    if (isRunningInference) {
       return {
-        label: 'Awaiting imagery',
+        label: 'Running U-Net inference',
+        color: '#fbbf24',
+        bg: 'rgba(245, 158, 11, 0.12)',
+        border: 'rgba(245, 158, 11, 0.3)',
+      };
+    }
+    if (isUnavailable) {
+      return {
+        label: 'Imagery unavailable',
         color: '#38bdf8',
         bg: 'rgba(56, 189, 248, 0.12)',
         border: 'rgba(56, 189, 248, 0.3)',
@@ -131,14 +176,14 @@ export const UNetDetectionPanel: React.FC<UNetDetectionPanelProps> = ({
     }
     if (isFailed) {
       return {
-        label: 'Unavailable',
+        label: 'Assessment failed',
         color: '#f87171',
         bg: 'rgba(239, 68, 68, 0.12)',
         border: 'rgba(239, 68, 68, 0.3)',
       };
     }
     return {
-      label: 'Ready',
+      label: 'Ready to assess',
       color: '#94a3b8',
       bg: 'rgba(148, 163, 184, 0.12)',
       border: 'rgba(148, 163, 184, 0.25)',
@@ -328,7 +373,15 @@ export const UNetDetectionPanel: React.FC<UNetDetectionPanelProps> = ({
               />
               <style>{`@keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }`}</style>
               <div style={{ fontSize: '0.78rem', fontWeight: 600, color: '#f1f5f9' }}>
-                Analyzing Sentinel-2 satellite data...
+                {isSearching
+                  ? 'Searching for Sentinel-2 imagery...'
+                  : isAcquiring
+                  ? 'Acquiring multispectral raster...'
+                  : isPreprocessing
+                  ? 'Preparing 15-channel model input...'
+                  : isRunningInference
+                  ? 'Running U-Net inference...'
+                  : 'Analyzing Sentinel-2 satellite data...'}
               </div>
               <div style={{ fontSize: '0.70rem', color: '#94a3b8', marginTop: '4px' }}>
                 {assessmentRequest?.statusMessage || 'Acquiring multispectral bands and computing U-Net inference.'}
@@ -336,8 +389,8 @@ export const UNetDetectionPanel: React.FC<UNetDetectionPanelProps> = ({
             </div>
           )}
 
-          {/* Awaiting Imagery State */}
-          {!isProgress && isAwaiting && (
+          {/* Imagery Unavailable State */}
+          {!isProgress && isUnavailable && (
             <div
               style={{
                 backgroundColor: 'rgba(56, 189, 248, 0.08)',
@@ -349,7 +402,8 @@ export const UNetDetectionPanel: React.FC<UNetDetectionPanelProps> = ({
                 color: '#bae6fd',
               }}
             >
-              <div>No local Sentinel-2 observation is currently cached for this coordinate.</div>
+              <div style={{ fontWeight: 600, marginBottom: '2px' }}>Imagery unavailable</div>
+              <div>{assessmentRequest?.statusMessage || 'No suitable Sentinel-2 Level-2A observation could be acquired for this coordinate.'}</div>
               <div style={{ marginTop: '4px', fontSize: '0.68rem', color: '#94a3b8' }}>
                 Simulated fire spread continues on the 3D map.
               </div>
@@ -380,7 +434,8 @@ export const UNetDetectionPanel: React.FC<UNetDetectionPanelProps> = ({
                 color: '#fca5a5',
               }}
             >
-              <div>Assessment unavailable: {assessmentRequest?.statusMessage || 'Unable to process raster data.'}</div>
+              <div style={{ fontWeight: 600, marginBottom: '2px' }}>Assessment failed</div>
+              <div>{assessmentRequest?.statusMessage || 'Unable to process raster data or run model inference.'}</div>
               {onRetryAssessment && (
                 <div style={{ marginTop: '8px', display: 'flex', justifyContent: 'flex-end' }}>
                   <button
@@ -388,7 +443,7 @@ export const UNetDetectionPanel: React.FC<UNetDetectionPanelProps> = ({
                     className="glass-button"
                     style={{ padding: '4px 10px', fontSize: '0.70rem', gap: '4px' }}
                   >
-                    <RefreshCw size={11} /> Retry
+                    <RefreshCw size={11} /> Retry assessment
                   </button>
                 </div>
               )}
