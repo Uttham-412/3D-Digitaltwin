@@ -1,4 +1,5 @@
 import React from 'react';
+import { X } from 'lucide-react';
 import {
   EnvironmentalTimeline,
   EnvironmentalProvenance
@@ -33,19 +34,19 @@ export const EnvironmentalPanel: React.FC<EnvironmentalPanelProps> = ({
       className="glass-panel"
       style={{
         position: 'absolute',
-        top: '80px',
+        top: '76px',
         right: '20px',
         width: '360px',
         maxWidth: 'calc(100vw - 32px)',
-        maxHeight: 'calc(100vh - 120px)',
+        maxHeight: 'calc(100vh - 165px)',
         overflowY: 'auto',
-        backgroundColor: 'rgba(15, 20, 30, 0.95)',
-        backdropFilter: 'blur(20px)',
-        WebkitBackdropFilter: 'blur(20px)',
-        border: '1px solid rgba(255, 255, 255, 0.1)',
+        backgroundColor: 'var(--bg-surface)',
+        backdropFilter: 'blur(16px)',
+        WebkitBackdropFilter: 'blur(16px)',
+        border: '1px solid var(--border-color)',
         borderRadius: 'var(--radius-md)',
-        boxShadow: '0 16px 40px rgba(0, 0, 0, 0.65)',
-        color: '#f8fafc',
+        boxShadow: 'var(--shadow-floating)',
+        color: 'var(--text-primary)',
         fontFamily: 'var(--font-sans)',
         zIndex: 50,
         padding: '14px 16px',
@@ -60,7 +61,7 @@ export const EnvironmentalPanel: React.FC<EnvironmentalPanelProps> = ({
           display: 'flex',
           justifyContent: 'space-between',
           alignItems: 'center',
-          borderBottom: '1px solid rgba(255, 255, 255, 0.08)',
+          borderBottom: '1px solid var(--border-color)',
           paddingBottom: '10px',
         }}
       >
@@ -71,9 +72,10 @@ export const EnvironmentalPanel: React.FC<EnvironmentalPanelProps> = ({
               fontSize: '0.85rem',
               fontWeight: 600,
               color: 'var(--text-primary)',
+              letterSpacing: '-0.01em',
             }}
           >
-            Environmental intelligence
+            Environmental Intelligence
           </h3>
         </div>
         <button
@@ -83,10 +85,12 @@ export const EnvironmentalPanel: React.FC<EnvironmentalPanelProps> = ({
             width: '24px',
             height: '24px',
             padding: 0,
+            borderRadius: 'var(--radius-sm)',
+            color: 'var(--text-secondary)',
           }}
           title="Close panel"
         >
-          ✕
+          <X size={14} />
         </button>
       </div>
 
@@ -96,7 +100,7 @@ export const EnvironmentalPanel: React.FC<EnvironmentalPanelProps> = ({
           style={{
             padding: '24px',
             textAlign: 'center',
-            color: '#94A3B8',
+            color: 'var(--text-secondary)',
             fontSize: '13px'
           }}
         >
@@ -105,8 +109,8 @@ export const EnvironmentalPanel: React.FC<EnvironmentalPanelProps> = ({
               display: 'inline-block',
               width: '24px',
               height: '24px',
-              border: '2px solid rgba(56,189,248,0.2)',
-              borderTopColor: '#38BDF8',
+              border: '2px solid var(--border-color)',
+              borderTopColor: 'var(--accent-forest)',
               borderRadius: '50%',
               animation: 'spin 1s linear infinite',
               marginBottom: '8px'
@@ -121,19 +125,19 @@ export const EnvironmentalPanel: React.FC<EnvironmentalPanelProps> = ({
       {!isLoading && timeline && !timeline.isAvailable && (
         <div
           style={{
-            padding: '16px',
-            backgroundColor: 'rgba(239, 68, 68, 0.1)',
-            border: '1px solid rgba(239, 68, 68, 0.3)',
-            borderRadius: '8px',
-            color: '#F87171',
+            padding: '14px',
+            backgroundColor: 'var(--status-error-bg)',
+            border: '1px solid var(--status-error-border)',
+            borderRadius: 'var(--radius-sm)',
+            color: 'var(--status-error)',
             fontSize: '13px',
             textAlign: 'center'
           }}
         >
-          <div style={{ fontWeight: 700, marginBottom: '4px' }}>
+          <div style={{ fontWeight: 600, marginBottom: '4px', fontSize: '0.78rem' }}>
             ENVIRONMENTAL DATA UNAVAILABLE
           </div>
-          <div style={{ fontSize: '11px', color: '#FCA5A5' }}>
+          <div style={{ fontSize: '0.72rem', color: 'var(--text-secondary)' }}>
             {timeline.errorMessage || 'Unable to connect to Open-Meteo weather service.'}
           </div>
         </div>
@@ -148,42 +152,42 @@ export const EnvironmentalPanel: React.FC<EnvironmentalPanelProps> = ({
               display: 'flex',
               justifyContent: 'space-between',
               alignItems: 'center',
-              marginBottom: '16px',
-              backgroundColor: 'rgba(255, 255, 255, 0.04)',
+              backgroundColor: 'var(--bg-surface-secondary)',
+              border: '1px solid var(--border-color)',
               padding: '8px 12px',
-              borderRadius: '8px'
+              borderRadius: 'var(--radius-sm)',
             }}
           >
             <div>
-              <div style={{ fontSize: '11px', color: '#94A3B8', textTransform: 'uppercase' }}>
+              <div style={{ fontSize: '0.66rem', color: 'var(--text-secondary)', fontWeight: 600, letterSpacing: '0.04em', textTransform: 'uppercase' }}>
                 LOCATION & TIME
               </div>
-              <div style={{ fontSize: '13px', fontWeight: 600, color: '#E2E8F0' }}>
+              <div style={{ fontSize: '0.82rem', fontWeight: 600, color: 'var(--text-primary)', marginTop: '1px' }}>
                 {timeline.locationName || `Lat ${timeline.location.latitude.toFixed(2)}°, Lng ${timeline.location.longitude.toFixed(2)}°`}
               </div>
-              <div style={{ fontSize: '10px', color: '#38BDF8', marginTop: '2px' }}>
+              <div style={{ fontSize: '0.68rem', color: 'var(--text-secondary)', marginTop: '1px' }}>
                 {new Date(currentObs.timestamp).toUTCString()}
               </div>
             </div>
             <span
               style={{
-                fontSize: '10px',
-                fontWeight: 700,
+                fontSize: '0.66rem',
+                fontWeight: 600,
                 padding: '2px 8px',
-                borderRadius: '9999px',
-                letterSpacing: '0.05em',
+                borderRadius: 'var(--radius-full)',
+                letterSpacing: '0.04em',
                 backgroundColor:
                   currentObs.provenance === EnvironmentalProvenance.OBSERVED
-                    ? 'rgba(16, 185, 129, 0.2)'
-                    : 'rgba(245, 158, 11, 0.2)',
+                    ? 'var(--status-success-bg)'
+                    : 'var(--status-warning-bg)',
                 color:
                   currentObs.provenance === EnvironmentalProvenance.OBSERVED
-                    ? '#34D399'
-                    : '#FBBF24',
+                    ? 'var(--status-success)'
+                    : 'var(--status-warning)',
                 border:
                   currentObs.provenance === EnvironmentalProvenance.OBSERVED
-                    ? '1px solid rgba(16, 185, 129, 0.4)'
-                    : '1px solid rgba(245, 158, 11, 0.4)'
+                    ? '1px solid var(--status-success-border)'
+                    : '1px solid var(--status-warning-border)',
               }}
             >
               {currentObs.provenance}
@@ -195,21 +199,20 @@ export const EnvironmentalPanel: React.FC<EnvironmentalPanelProps> = ({
             style={{
               display: 'grid',
               gridTemplateColumns: '1fr 1fr',
-              gap: '10px',
-              marginBottom: '16px'
+              gap: '8px',
             }}
           >
             {/* Temperature */}
             <div
               style={{
-                backgroundColor: 'rgba(30, 41, 59, 0.6)',
-                padding: '12px',
-                borderRadius: '10px',
-                border: '1px solid rgba(255, 255, 255, 0.05)'
+                backgroundColor: 'var(--bg-surface-secondary)',
+                padding: '10px 12px',
+                borderRadius: 'var(--radius-sm)',
+                border: '1px solid var(--border-color)',
               }}
             >
-              <div style={{ fontSize: '11px', color: '#94A3B8' }}>Temperature</div>
-              <div style={{ fontSize: '20px', fontWeight: 700, color: '#F97316' }}>
+              <div style={{ fontSize: '0.68rem', color: 'var(--text-secondary)', fontWeight: 500 }}>Temperature</div>
+              <div style={{ fontSize: '1.2rem', fontWeight: 700, color: 'var(--color-fire)', marginTop: '2px' }}>
                 {currentObs.temperature.toFixed(1)} °C
               </div>
             </div>
@@ -217,32 +220,32 @@ export const EnvironmentalPanel: React.FC<EnvironmentalPanelProps> = ({
             {/* Relative Humidity */}
             <div
               style={{
-                backgroundColor: 'rgba(30, 41, 59, 0.6)',
-                padding: '12px',
-                borderRadius: '10px',
-                border: '1px solid rgba(255, 255, 255, 0.05)'
+                backgroundColor: 'var(--bg-surface-secondary)',
+                padding: '10px 12px',
+                borderRadius: 'var(--radius-sm)',
+                border: '1px solid var(--border-color)',
               }}
             >
-              <div style={{ fontSize: '11px', color: '#94A3B8' }}>Relative Humidity</div>
-              <div style={{ fontSize: '20px', fontWeight: 700, color: '#06B6D4' }}>
+              <div style={{ fontSize: '0.68rem', color: 'var(--text-secondary)', fontWeight: 500 }}>Relative Humidity</div>
+              <div style={{ fontSize: '1.2rem', fontWeight: 700, color: 'var(--accent-blue)', marginTop: '2px' }}>
                 {Math.round(currentObs.relativeHumidity)} %
               </div>
             </div>
 
-            {/* 1-Hour Dead Fuel Moisture (Simard EMC) */}
+            {/* 1-Hour Dead Fuel Moisture */}
             <div
               style={{
-                backgroundColor: 'rgba(30, 41, 59, 0.6)',
-                padding: '12px',
-                borderRadius: '10px',
-                border: '1px solid rgba(255, 255, 255, 0.05)'
+                backgroundColor: 'var(--bg-surface-secondary)',
+                padding: '10px 12px',
+                borderRadius: 'var(--radius-sm)',
+                border: '1px solid var(--border-color)',
               }}
             >
-              <div style={{ fontSize: '11px', color: '#94A3B8' }}>1-Hr Fuel Moisture</div>
-              <div style={{ fontSize: '20px', fontWeight: 700, color: '#EAB308' }}>
+              <div style={{ fontSize: '0.68rem', color: 'var(--text-secondary)', fontWeight: 500 }}>1-Hr Fuel Moisture</div>
+              <div style={{ fontSize: '1.2rem', fontWeight: 700, color: 'var(--color-dry)', marginTop: '2px' }}>
                 {computeEquilibriumMoistureContent(currentObs.temperature, currentObs.relativeHumidity).toFixed(1)} %
               </div>
-              <div style={{ fontSize: '9px', color: '#64748B', marginTop: '2px' }}>
+              <div style={{ fontSize: '0.62rem', color: 'var(--text-secondary)', marginTop: '2px' }}>
                 Simard / Rothermel EMC
               </div>
             </div>
@@ -250,14 +253,14 @@ export const EnvironmentalPanel: React.FC<EnvironmentalPanelProps> = ({
             {/* Precipitation */}
             <div
               style={{
-                backgroundColor: 'rgba(30, 41, 59, 0.6)',
-                padding: '12px',
-                borderRadius: '10px',
-                border: '1px solid rgba(255, 255, 255, 0.05)'
+                backgroundColor: 'var(--bg-surface-secondary)',
+                padding: '10px 12px',
+                borderRadius: 'var(--radius-sm)',
+                border: '1px solid var(--border-color)',
               }}
             >
-              <div style={{ fontSize: '11px', color: '#94A3B8' }}>Precipitation</div>
-              <div style={{ fontSize: '20px', fontWeight: 700, color: '#60A5FA' }}>
+              <div style={{ fontSize: '0.68rem', color: 'var(--text-secondary)', fontWeight: 500 }}>Precipitation</div>
+              <div style={{ fontSize: '1.2rem', fontWeight: 700, color: 'var(--accent-forest)', marginTop: '2px' }}>
                 {currentObs.precipitation.toFixed(1)} mm
               </div>
             </div>
@@ -265,14 +268,18 @@ export const EnvironmentalPanel: React.FC<EnvironmentalPanelProps> = ({
             {/* Pressure */}
             <div
               style={{
-                backgroundColor: 'rgba(30, 41, 59, 0.6)',
-                padding: '12px',
-                borderRadius: '10px',
-                border: '1px solid rgba(255, 255, 255, 0.05)'
+                gridColumn: 'span 2',
+                backgroundColor: 'var(--bg-surface-secondary)',
+                padding: '8px 12px',
+                borderRadius: 'var(--radius-sm)',
+                border: '1px solid var(--border-color)',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'space-between',
               }}
             >
-              <div style={{ fontSize: '11px', color: '#94A3B8' }}>Surface Pressure</div>
-              <div style={{ fontSize: '20px', fontWeight: 700, color: '#A7F3D0' }}>
+              <div style={{ fontSize: '0.68rem', color: 'var(--text-secondary)', fontWeight: 500 }}>Surface Pressure</div>
+              <div style={{ fontSize: '1rem', fontWeight: 700, color: 'var(--text-primary)' }}>
                 {Math.round(currentObs.surfacePressure || 1013)} hPa
               </div>
             </div>
@@ -281,24 +288,23 @@ export const EnvironmentalPanel: React.FC<EnvironmentalPanelProps> = ({
           {/* Wind Direction & Speed Visualization Box */}
           <div
             style={{
-              backgroundColor: 'rgba(30, 41, 59, 0.8)',
-              padding: '14px',
-              borderRadius: '12px',
-              border: '1px solid rgba(56, 189, 248, 0.2)',
-              marginBottom: '16px',
+              backgroundColor: 'var(--bg-surface-secondary)',
+              padding: '12px',
+              borderRadius: 'var(--radius-sm)',
+              border: '1px solid var(--border-color)',
               display: 'flex',
               alignItems: 'center',
-              justifyContent: 'space-between'
+              justifyContent: 'space-between',
             }}
           >
             <div>
-              <div style={{ fontSize: '11px', color: '#94A3B8', textTransform: 'uppercase' }}>
+              <div style={{ fontSize: '0.66rem', color: 'var(--text-secondary)', fontWeight: 600, letterSpacing: '0.04em', textTransform: 'uppercase' }}>
                 WIND VECTOR ({new Date(currentObs.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false })} UTC)
               </div>
-              <div style={{ fontSize: '22px', fontWeight: 800, color: '#38BDF8' }}>
-                {currentObs.windSpeed.toFixed(1)} <span style={{ fontSize: '13px' }}>km/h</span>
+              <div style={{ fontSize: '1.25rem', fontWeight: 700, color: 'var(--accent-forest)', marginTop: '2px' }}>
+                {currentObs.windSpeed.toFixed(1)} <span style={{ fontSize: '0.75rem', fontWeight: 500, color: 'var(--text-secondary)' }}>km/h</span>
               </div>
-              <div style={{ fontSize: '13px', fontWeight: 600, color: '#CBD5E1' }}>
+              <div style={{ fontSize: '0.75rem', fontWeight: 600, color: 'var(--text-secondary)', marginTop: '1px' }}>
                 {currentObs.windDirectionCardinal} ({Math.round(currentObs.windDirection)}°)
               </div>
             </div>
@@ -307,23 +313,24 @@ export const EnvironmentalPanel: React.FC<EnvironmentalPanelProps> = ({
             <div
               style={{
                 position: 'relative',
-                width: '64px',
-                height: '64px',
+                width: '60px',
+                height: '60px',
                 borderRadius: '50%',
-                backgroundColor: 'rgba(15, 23, 42, 0.9)',
-                border: '2px solid rgba(56, 189, 248, 0.4)',
+                backgroundColor: 'var(--bg-surface)',
+                border: '1.5px solid var(--border-color)',
                 display: 'flex',
                 alignItems: 'center',
-                justifyContent: 'center'
+                justifyContent: 'center',
+                boxShadow: 'var(--shadow-sm)',
               }}
             >
               <div
                 style={{
                   position: 'absolute',
                   top: '2px',
-                  fontSize: '9px',
-                  fontWeight: 800,
-                  color: '#38BDF8'
+                  fontSize: '8px',
+                  fontWeight: 700,
+                  color: 'var(--accent-forest)',
                 }}
               >
                 N
@@ -331,9 +338,10 @@ export const EnvironmentalPanel: React.FC<EnvironmentalPanelProps> = ({
               <div
                 style={{
                   position: 'absolute',
-                  right: '4px',
-                  fontSize: '8px',
-                  color: '#64748B'
+                  right: '3px',
+                  fontSize: '7px',
+                  fontWeight: 600,
+                  color: 'var(--text-secondary)',
                 }}
               >
                 E
@@ -342,8 +350,9 @@ export const EnvironmentalPanel: React.FC<EnvironmentalPanelProps> = ({
                 style={{
                   position: 'absolute',
                   bottom: '2px',
-                  fontSize: '8px',
-                  color: '#64748B'
+                  fontSize: '7px',
+                  fontWeight: 600,
+                  color: 'var(--text-secondary)',
                 }}
               >
                 S
@@ -351,9 +360,10 @@ export const EnvironmentalPanel: React.FC<EnvironmentalPanelProps> = ({
               <div
                 style={{
                   position: 'absolute',
-                  left: '4px',
-                  fontSize: '8px',
-                  color: '#64748B'
+                  left: '3px',
+                  fontSize: '7px',
+                  fontWeight: 600,
+                  color: 'var(--text-secondary)',
                 }}
               >
                 W
@@ -363,13 +373,13 @@ export const EnvironmentalPanel: React.FC<EnvironmentalPanelProps> = ({
               <div
                 style={{
                   width: '2px',
-                  height: '36px',
+                  height: '34px',
                   transform: `rotate(${currentObs.windDirection}deg)`,
                   transformOrigin: 'center center',
                   display: 'flex',
                   flexDirection: 'column',
                   alignItems: 'center',
-                  transition: 'transform 0.3s ease'
+                  transition: 'transform 0.3s ease',
                 }}
               >
                 <div
@@ -378,10 +388,10 @@ export const EnvironmentalPanel: React.FC<EnvironmentalPanelProps> = ({
                     height: 0,
                     borderLeft: '4px solid transparent',
                     borderRight: '4px solid transparent',
-                    borderBottom: '10px solid #F97316'
+                    borderBottom: '9px solid var(--color-fire)',
                   }}
                 />
-                <div style={{ width: '2px', height: '26px', backgroundColor: '#F97316' }} />
+                <div style={{ width: '2px', height: '25px', backgroundColor: 'var(--color-fire)' }} />
               </div>
             </div>
           </div>
@@ -389,24 +399,24 @@ export const EnvironmentalPanel: React.FC<EnvironmentalPanelProps> = ({
           {/* Time Scrubber */}
           <div
             style={{
-              backgroundColor: 'rgba(15, 23, 42, 0.6)',
-              padding: '12px',
-              borderRadius: '10px',
-              marginBottom: '16px',
-              border: '1px solid rgba(255, 255, 255, 0.05)'
+              backgroundColor: 'var(--bg-surface-secondary)',
+              padding: '10px 12px',
+              borderRadius: 'var(--radius-sm)',
+              border: '1px solid var(--border-color)',
             }}
           >
             <div
               style={{
                 display: 'flex',
                 justifyContent: 'space-between',
-                fontSize: '11px',
-                color: '#94A3B8',
-                marginBottom: '8px'
+                fontSize: '0.68rem',
+                color: 'var(--text-secondary)',
+                marginBottom: '6px',
+                fontWeight: 500,
               }}
             >
-              <span>TIME SELECTION</span>
-              <span style={{ color: '#F8FAFC', fontWeight: 600 }}>
+              <span style={{ textTransform: 'uppercase', letterSpacing: '0.04em', fontWeight: 600 }}>TIME SELECTION</span>
+              <span style={{ color: 'var(--text-primary)', fontWeight: 600 }}>
                 {currentObs.formattedTime} UTC
               </span>
             </div>
@@ -419,8 +429,8 @@ export const EnvironmentalPanel: React.FC<EnvironmentalPanelProps> = ({
               onChange={(e) => onSelectIndex(parseInt(e.target.value, 10))}
               style={{
                 width: '100%',
-                accentColor: '#38BDF8',
-                cursor: 'pointer'
+                accentColor: 'var(--accent-forest)',
+                cursor: 'pointer',
               }}
             />
 
@@ -428,13 +438,13 @@ export const EnvironmentalPanel: React.FC<EnvironmentalPanelProps> = ({
               style={{
                 display: 'flex',
                 justifyContent: 'space-between',
-                fontSize: '10px',
-                color: '#64748B',
-                marginTop: '4px'
+                fontSize: '0.62rem',
+                color: 'var(--text-secondary)',
+                marginTop: '4px',
               }}
             >
               <span>{timeline.observations[0]?.formattedTime}</span>
-              <span>NOW</span>
+              <span style={{ fontWeight: 600, color: 'var(--accent-forest)' }}>NOW</span>
               <span>{timeline.observations[timeline.observations.length - 1]?.formattedTime}</span>
             </div>
           </div>
@@ -442,17 +452,17 @@ export const EnvironmentalPanel: React.FC<EnvironmentalPanelProps> = ({
           {/* Provenance & Data Source Disclaimer */}
           <div
             style={{
-              fontSize: '10px',
-              color: '#64748B',
-              borderTop: '1px solid rgba(255, 255, 255, 0.1)',
+              fontSize: '0.66rem',
+              color: 'var(--text-secondary)',
+              borderTop: '1px solid var(--border-color)',
               paddingTop: '8px',
               display: 'flex',
               justifyContent: 'space-between',
-              alignItems: 'center'
+              alignItems: 'center',
             }}
           >
             <div>
-              Source: <span style={{ color: '#94A3B8' }}>{currentObs.source}</span>
+              Source: <span style={{ color: 'var(--text-primary)', fontWeight: 500 }}>{currentObs.source}</span>
             </div>
             <div>Hourly UTC</div>
           </div>

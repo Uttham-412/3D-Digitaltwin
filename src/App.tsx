@@ -699,22 +699,21 @@ export function App() {
             onClick={() => setIsDetectionPanelOpen(true)}
             className="glass-button"
             style={{
-              padding: '7px 12px',
+              padding: '6px 12px',
               fontSize: '0.74rem',
               fontWeight: 600,
-              color: '#f8fafc',
-              borderColor: 'rgba(255, 255, 255, 0.12)',
-              background: 'rgba(15, 20, 30, 0.92)',
-              backdropFilter: 'blur(16px)',
-              boxShadow: '0 8px 24px rgba(0, 0, 0, 0.5)',
-              borderRadius: '8px',
+              color: 'var(--text-primary)',
+              borderColor: 'var(--border-color)',
+              background: 'var(--bg-surface)',
+              boxShadow: 'var(--shadow-floating)',
+              borderRadius: 'var(--radius-sm)',
               display: 'flex',
               alignItems: 'center',
               gap: '8px',
               cursor: 'pointer',
             }}
           >
-            <Satellite size={14} color="var(--accent-cyan)" />
+            <Satellite size={14} color="var(--accent-blue)" />
             <span>Fire assessment</span>
             <span
               style={{
@@ -722,8 +721,9 @@ export function App() {
                 fontWeight: 600,
                 padding: '2px 6px',
                 borderRadius: '4px',
-                background: assessmentRequest.status === 'COMPLETED' ? 'rgba(16, 185, 129, 0.2)' : 'rgba(56, 189, 248, 0.2)',
-                color: assessmentRequest.status === 'COMPLETED' ? '#34d399' : '#7dd3fc',
+                background: assessmentRequest.status === 'COMPLETED' ? 'var(--status-success-bg)' : 'var(--accent-blue-subtle)',
+                color: assessmentRequest.status === 'COMPLETED' ? 'var(--status-success)' : 'var(--accent-blue)',
+                border: assessmentRequest.status === 'COMPLETED' ? '1px solid var(--status-success-border)' : '1px solid var(--accent-blue-border)',
               }}
             >
               {assessmentRequest.status === 'COMPLETED' ? 'Ready' : 'In progress'}

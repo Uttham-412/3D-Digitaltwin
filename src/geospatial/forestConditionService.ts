@@ -89,15 +89,15 @@ export class ForestConditionService {
   private samplingData: RasterSamplingData | null = null;
   private loadPromise: Promise<void> | null = null;
 
-  // Colors aligned with Land8Fire scientific visual design system
+  // Colors aligned with Digital Twin geospatial visual design system
   public readonly CATEGORY_COLORS: Record<ForestConditionClass, string> = {
-    'HEALTHY VEGETATION': '#10B981',       // Vibrant Emerald Green
-    'DRY / STRESSED VEGETATION': '#F59E0B', // Amber / Warning Gold
-    'PREDICTED BURNED AREA': '#EF4444',     // Bright Red (AI Model Prediction)
-    'CONFIRMED BURNED AREA': '#DC2626',     // Dark Crimson (Copernicus EMS Ground Truth)
-    'WATER': '#38BDF8',                     // Hydro Cyan / Sky Blue
-    'NON-BURNABLE / URBAN': '#94A3B8',      // Slate / Concrete Neutral
-    'UNVERIFIED / INSUFFICIENT DATA': '#64748B' // Muted Gray
+    'HEALTHY VEGETATION': '#159B72',       // Healthy vegetation
+    'DRY / STRESSED VEGETATION': '#D99118', // Dry / stressed vegetation
+    'PREDICTED BURNED AREA': '#B84A45',     // Burned area / fire accent
+    'CONFIRMED BURNED AREA': '#B84A45',     // Burned area accent
+    'WATER': '#2B7294',                     // Muted Hydro Blue
+    'NON-BURNABLE / URBAN': '#69796F',      // Secondary text neutral
+    'UNVERIFIED / INSUFFICIENT DATA': '#7E8F84' // Muted Forest Gray
   };
 
   private constructor() {

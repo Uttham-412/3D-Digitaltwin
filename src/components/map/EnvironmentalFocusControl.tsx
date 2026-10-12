@@ -12,24 +12,23 @@ export const EnvironmentalFocusControl: React.FC<EnvironmentalFocusControlProps>
   return (
     <button
       onClick={onToggle}
+      className="glass-button"
       style={{
-        backgroundColor: isOpen ? 'rgba(56, 189, 248, 0.25)' : 'rgba(15, 23, 42, 0.85)',
-        backdropFilter: 'blur(12px)',
-        WebkitBackdropFilter: 'blur(12px)',
+        backgroundColor: isOpen ? 'var(--accent-forest-subtle)' : 'var(--bg-surface)',
         border: isOpen
-          ? '1px solid rgba(56, 189, 248, 0.6)'
-          : '1px solid rgba(255, 255, 255, 0.15)',
-        borderRadius: '12px',
-        padding: '10px 14px',
-        color: isOpen ? '#38BDF8' : '#F8FAFC',
-        fontSize: '12px',
+          ? '1px solid var(--accent-forest-border)'
+          : '1px solid var(--border-color)',
+        borderRadius: 'var(--radius-md)',
+        padding: '8px 14px',
+        color: isOpen ? 'var(--accent-forest-dark)' : 'var(--text-primary)',
+        fontSize: '0.78rem',
         fontWeight: 600,
         cursor: 'pointer',
         display: 'flex',
         alignItems: 'center',
         gap: '8px',
-        boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.3)',
-        transition: 'all 0.2s ease-in-out'
+        boxShadow: 'var(--shadow-card)',
+        transition: 'all 0.15s ease-in-out'
       }}
       title="Toggle Time-Aware Environmental Intelligence Panel"
     >
@@ -38,7 +37,7 @@ export const EnvironmentalFocusControl: React.FC<EnvironmentalFocusControlProps>
         height="16"
         viewBox="0 0 24 24"
         fill="none"
-        stroke="currentColor"
+        stroke={isOpen ? 'var(--accent-forest-dark)' : 'var(--accent-forest)'}
         strokeWidth="2"
         strokeLinecap="round"
         strokeLinejoin="round"

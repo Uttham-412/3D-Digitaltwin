@@ -80,7 +80,7 @@ export const CameraControls: React.FC<CameraControlsProps> = ({ onSelectLocation
         <Minus size={20} />
       </button>
 
-      <div style={{ height: '1px', background: 'rgba(255,255,255,0.1)', margin: '4px 0' }} />
+      <div style={{ height: '1px', background: 'var(--bg-surface-border)', margin: '4px 0' }} />
 
       <button
         onClick={handleResetCamera}
@@ -88,7 +88,7 @@ export const CameraControls: React.FC<CameraControlsProps> = ({ onSelectLocation
         title="Reset View to Default Globe"
         style={{ width: '40px', height: '40px' }}
       >
-        <Compass size={20} color="var(--accent-cyan)" />
+        <Compass size={20} color="var(--accent-blue)" />
       </button>
 
       <button
@@ -100,7 +100,7 @@ export const CameraControls: React.FC<CameraControlsProps> = ({ onSelectLocation
         <Move3d size={20} />
       </button>
 
-      <div style={{ height: '1px', background: 'rgba(255,255,255,0.1)', margin: '4px 0' }} />
+      <div style={{ height: '1px', background: 'var(--bg-surface-border)', margin: '4px 0' }} />
 
       <AmazonRegionControl onSelectLocation={onSelectLocation} />
       <FireFocusControl onSelectLocation={onSelectLocation} />

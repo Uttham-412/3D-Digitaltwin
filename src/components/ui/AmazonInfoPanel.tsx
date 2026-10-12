@@ -22,8 +22,8 @@ export const AmazonInfoPanel: React.FC = () => {
         padding: '16px',
         zIndex: 25,
         borderRadius: 'var(--radius-md)',
-        border: '1px solid rgba(16, 185, 129, 0.3)',
-        boxShadow: '0 8px 32px rgba(0, 0, 0, 0.5)',
+        border: '1px solid var(--accent-forest-border)',
+        boxShadow: 'var(--shadow-card)',
       }}
     >
       {/* Header Bar */}
@@ -42,14 +42,14 @@ export const AmazonInfoPanel: React.FC = () => {
               width: '32px',
               height: '32px',
               borderRadius: '8px',
-              background: 'rgba(16, 185, 129, 0.2)',
-              border: '1px solid rgba(16, 185, 129, 0.4)',
+              background: 'var(--accent-forest-subtle)',
+              border: '1px solid var(--accent-forest-border)',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
             }}
           >
-            <Trees size={18} color="#34d399" />
+            <Trees size={18} color="var(--accent-forest)" />
           </div>
           <div>
             <h2 style={{ fontSize: '0.9rem', fontWeight: 600, color: 'var(--text-primary)' }}>
@@ -71,7 +71,7 @@ export const AmazonInfoPanel: React.FC = () => {
       </div>
 
       {isExpanded && (
-        <div style={{ marginTop: '14px', paddingTop: '12px', borderTop: '1px solid rgba(255,255,255,0.08)' }}>
+        <div style={{ marginTop: '14px', paddingTop: '12px', borderTop: '1px solid var(--bg-surface-border)' }}>
           {/* Scientific Provenance Badge */}
           <div
             style={{
@@ -80,22 +80,23 @@ export const AmazonInfoPanel: React.FC = () => {
               gap: '6px',
               padding: '6px 10px',
               borderRadius: 'var(--radius-sm)',
-              background: 'rgba(16, 185, 129, 0.12)',
-              border: '1px solid rgba(16, 185, 129, 0.25)',
+              background: 'var(--accent-forest-subtle)',
+              border: '1px solid var(--accent-forest-border)',
               marginBottom: '12px',
               fontSize: '0.72rem',
-              color: '#34d399',
+              color: 'var(--accent-forest)',
               fontWeight: 500,
             }}
           >
             <ShieldCheck size={14} />
-            <span>PROVENANCE: {AMAZON_RAINFOREST_REGION.provenance.classification} / {AMAZON_RAINFOREST_REGION.provenance.type}</span>
+            <span>Provenance: {AMAZON_RAINFOREST_REGION.provenance.classification} / {AMAZON_RAINFOREST_REGION.provenance.type}</span>
           </div>
 
           {/* Region Details */}
           <div
             style={{
-              background: 'rgba(0, 0, 0, 0.35)',
+              background: 'var(--bg-surface-subtle)',
+              border: '1px solid var(--bg-surface-border)',
               padding: '10px 12px',
               borderRadius: 'var(--radius-md)',
               fontSize: '0.75rem',
@@ -119,7 +120,7 @@ export const AmazonInfoPanel: React.FC = () => {
 
             <div style={{ display: 'flex', justifyContent: 'space-between' }}>
               <span style={{ color: 'var(--text-muted)' }}>Center Coords:</span>
-              <span style={{ fontFamily: 'var(--font-mono)', color: 'var(--accent-cyan)' }}>
+              <span style={{ fontFamily: 'var(--font-mono)', color: 'var(--accent-blue)', fontWeight: 600 }}>
                 3.1190° S, 60.0217° W
               </span>
             </div>
@@ -147,13 +148,14 @@ export const AmazonInfoPanel: React.FC = () => {
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'space-between',
-                  padding: '4px 8px',
-                  background: 'rgba(255,255,255,0.02)',
+                  padding: '6px 8px',
+                  background: 'var(--bg-surface-subtle)',
+                  border: '1px solid var(--bg-surface-border)',
                   borderRadius: '4px',
                 }}
               >
                 <span style={{ color: 'var(--text-secondary)' }}>Satellite Imagery</span>
-                <span style={{ color: '#34d399', fontWeight: 600, display: 'flex', alignItems: 'center', gap: '4px' }}>
+                <span style={{ color: 'var(--status-success)', fontWeight: 600, display: 'flex', alignItems: 'center', gap: '4px' }}>
                   <CheckCircle2 size={12} /> {AMAZON_RAINFOREST_REGION.dataSources.imagery.includes('Cesium') ? 'AVAILABLE' : 'STANDBY'}
                 </span>
               </div>
@@ -163,13 +165,14 @@ export const AmazonInfoPanel: React.FC = () => {
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'space-between',
-                  padding: '4px 8px',
-                  background: 'rgba(255,255,255,0.02)',
+                  padding: '6px 8px',
+                  background: 'var(--bg-surface-subtle)',
+                  border: '1px solid var(--bg-surface-border)',
                   borderRadius: '4px',
                 }}
               >
                 <span style={{ color: 'var(--text-secondary)' }}>3D World Terrain</span>
-                <span style={{ color: '#34d399', fontWeight: 600, display: 'flex', alignItems: 'center', gap: '4px' }}>
+                <span style={{ color: 'var(--status-success)', fontWeight: 600, display: 'flex', alignItems: 'center', gap: '4px' }}>
                   <CheckCircle2 size={12} /> AVAILABLE
                 </span>
               </div>
@@ -179,8 +182,9 @@ export const AmazonInfoPanel: React.FC = () => {
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'space-between',
-                  padding: '4px 8px',
-                  background: 'rgba(255,255,255,0.02)',
+                  padding: '6px 8px',
+                  background: 'var(--bg-surface-subtle)',
+                  border: '1px solid var(--bg-surface-border)',
                   borderRadius: '4px',
                 }}
               >
@@ -195,13 +199,14 @@ export const AmazonInfoPanel: React.FC = () => {
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'space-between',
-                  padding: '4px 8px',
-                  background: 'rgba(255,255,255,0.02)',
+                  padding: '6px 8px',
+                  background: 'var(--bg-surface-subtle)',
+                  border: '1px solid var(--bg-surface-border)',
                   borderRadius: '4px',
                 }}
               >
-                <span style={{ color: 'var(--text-secondary)' }}>Wildfire AI U-Net</span>
-                <span style={{ color: '#f59e0b', fontWeight: 600, display: 'flex', alignItems: 'center', gap: '4px' }}>
+                <span style={{ color: 'var(--text-secondary)' }}>Wildfire U-Net</span>
+                <span style={{ color: 'var(--status-warning)', fontWeight: 600, display: 'flex', alignItems: 'center', gap: '4px' }}>
                   <AlertCircle size={12} /> NOT CONNECTED YET
                 </span>
               </div>
@@ -218,9 +223,9 @@ export const AmazonInfoPanel: React.FC = () => {
               fontSize: '0.78rem',
               fontWeight: 600,
               gap: '6px',
-              background: 'rgba(16, 185, 129, 0.15)',
-              borderColor: 'rgba(16, 185, 129, 0.35)',
-              color: '#34d399',
+              background: 'var(--accent-forest-subtle)',
+              borderColor: 'var(--accent-forest-border)',
+              color: 'var(--accent-forest)',
             }}
           >
             <Crosshair size={14} />

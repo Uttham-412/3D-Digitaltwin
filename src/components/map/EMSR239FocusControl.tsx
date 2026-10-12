@@ -31,13 +31,13 @@ export const EMSR239FocusControl: React.FC<EMSR239FocusControlProps> = ({ onSele
     <button
       onClick={handleFlyToEMSR239}
       className="glass-button"
-      title="Fly to EMSR239 U-Net AI Layer (Spain)"
+      title="Fly to EMSR239 benchmark layer (Spain)"
       style={{
         width: '40px',
         height: '40px',
-        background: 'rgba(245, 158, 11, 0.15)',
-        borderColor: 'rgba(245, 158, 11, 0.4)',
-        color: '#f59e0b',
+        background: 'var(--status-warning-bg)',
+        borderColor: 'var(--status-warning-border)',
+        color: 'var(--status-warning)',
       }}
     >
       <Cpu size={20} />

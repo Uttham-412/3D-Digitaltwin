@@ -85,16 +85,16 @@ export const UNetInferencePanel: React.FC<UNetInferencePanelProps> = ({
   return (
     <div
       style={{
-        backgroundColor: 'rgba(15, 23, 42, 0.95)',
+        backgroundColor: '#ffffff',
         backdropFilter: 'blur(16px)',
         WebkitBackdropFilter: 'blur(16px)',
-        border: '1px solid rgba(239, 68, 68, 0.45)',
+        border: '1px solid var(--bg-surface-border)',
         borderRadius: '16px',
         padding: '18px',
-        color: '#F8FAFC',
+        color: 'var(--text-primary)',
         fontFamily: 'Inter, system-ui, -apple-system, sans-serif',
         marginBottom: '12px',
-        boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.55)',
+        boxShadow: 'var(--shadow-floating)',
         maxHeight: '80vh',
         overflowY: 'auto'
       }}
@@ -105,7 +105,7 @@ export const UNetInferencePanel: React.FC<UNetInferencePanelProps> = ({
           display: 'flex',
           justifyContent: 'space-between',
           alignItems: 'center',
-          borderBottom: '1px solid rgba(255, 255, 255, 0.1)',
+          borderBottom: '1px solid var(--bg-surface-border)',
           paddingBottom: '10px',
           marginBottom: '14px'
         }}
@@ -453,8 +453,9 @@ export const UNetInferencePanel: React.FC<UNetInferencePanelProps> = ({
           <div
             style={{
               fontSize: '11px',
-              color: '#94A3B8',
-              backgroundColor: 'rgba(0, 0, 0, 0.35)',
+              color: 'var(--text-muted)',
+              backgroundColor: 'var(--bg-surface-subtle)',
+              border: '1px solid var(--bg-surface-border)',
               padding: '10px',
               borderRadius: '8px',
               marginBottom: '12px',

@@ -121,72 +121,72 @@ export const UNetDetectionPanel: React.FC<UNetDetectionPanelProps> = ({
     if (isLocationMismatch) {
       return {
         label: 'Ready to assess',
-        color: '#94a3b8',
-        bg: 'rgba(148, 163, 184, 0.12)',
-        border: 'rgba(148, 163, 184, 0.25)',
+        color: '#475569',
+        bg: '#f1f5f9',
+        border: '#cbd5e1',
       };
     }
     if (isCompleted) {
       return {
         label: 'Assessment completed',
-        color: '#34d399',
-        bg: 'rgba(16, 185, 129, 0.12)',
-        border: 'rgba(16, 185, 129, 0.3)',
+        color: 'var(--status-success)',
+        bg: 'var(--status-success-bg)',
+        border: 'var(--status-success-border)',
       };
     }
     if (isSearching) {
       return {
         label: 'Searching for imagery',
-        color: '#38bdf8',
-        bg: 'rgba(56, 189, 248, 0.12)',
-        border: 'rgba(56, 189, 248, 0.3)',
+        color: 'var(--accent-blue)',
+        bg: 'var(--accent-blue-subtle)',
+        border: 'var(--accent-blue-border)',
       };
     }
     if (isAcquiring) {
       return {
         label: 'Acquiring imagery',
-        color: '#38bdf8',
-        bg: 'rgba(56, 189, 248, 0.12)',
-        border: 'rgba(56, 189, 248, 0.3)',
+        color: 'var(--accent-blue)',
+        bg: 'var(--accent-blue-subtle)',
+        border: 'var(--accent-blue-border)',
       };
     }
     if (isPreprocessing) {
       return {
         label: 'Preparing model input',
-        color: '#fbbf24',
-        bg: 'rgba(245, 158, 11, 0.12)',
-        border: 'rgba(245, 158, 11, 0.3)',
+        color: 'var(--status-warning)',
+        bg: 'var(--status-warning-bg)',
+        border: 'var(--status-warning-border)',
       };
     }
     if (isRunningInference) {
       return {
         label: 'Running U-Net inference',
-        color: '#fbbf24',
-        bg: 'rgba(245, 158, 11, 0.12)',
-        border: 'rgba(245, 158, 11, 0.3)',
+        color: 'var(--status-warning)',
+        bg: 'var(--status-warning-bg)',
+        border: 'var(--status-warning-border)',
       };
     }
     if (isUnavailable) {
       return {
         label: 'Imagery unavailable',
-        color: '#38bdf8',
-        bg: 'rgba(56, 189, 248, 0.12)',
-        border: 'rgba(56, 189, 248, 0.3)',
+        color: 'var(--accent-blue)',
+        bg: 'var(--accent-blue-subtle)',
+        border: 'var(--accent-blue-border)',
       };
     }
     if (isFailed) {
       return {
         label: 'Assessment failed',
-        color: '#f87171',
-        bg: 'rgba(239, 68, 68, 0.12)',
-        border: 'rgba(239, 68, 68, 0.3)',
+        color: 'var(--status-error)',
+        bg: 'var(--status-error-bg)',
+        border: 'var(--status-error-border)',
       };
     }
     return {
       label: 'Ready to assess',
-      color: '#94a3b8',
-      bg: 'rgba(148, 163, 184, 0.12)',
-      border: 'rgba(148, 163, 184, 0.25)',
+      color: '#475569',
+      bg: '#f1f5f9',
+      border: '#cbd5e1',
     };
   };
 
@@ -202,17 +202,17 @@ export const UNetDetectionPanel: React.FC<UNetDetectionPanelProps> = ({
         width: isMinimized ? '340px' : '520px',
         maxWidth: 'calc(100vw - 32px)',
         maxHeight: isMinimized ? '52px' : 'calc(100vh - 100px)',
-        backgroundColor: 'rgba(15, 20, 30, 0.95)',
-        backdropFilter: 'blur(20px)',
-        WebkitBackdropFilter: 'blur(20px)',
-        border: '1px solid rgba(255, 255, 255, 0.1)',
+        backgroundColor: 'var(--bg-surface)',
+        backdropFilter: 'blur(16px)',
+        WebkitBackdropFilter: 'blur(16px)',
+        border: '1px solid var(--border-color)',
         borderRadius: '12px',
-        boxShadow: '0 16px 40px rgba(0, 0, 0, 0.65)',
+        boxShadow: 'var(--shadow-floating)',
         zIndex: 45,
         display: 'flex',
         flexDirection: 'column',
         overflow: 'hidden',
-        color: '#f1f5f9',
+        color: 'var(--text-primary)',
         fontFamily: 'var(--font-sans)',
         transition: 'width 0.2s ease, max-height 0.2s ease',
         pointerEvents: 'auto',
@@ -225,20 +225,20 @@ export const UNetDetectionPanel: React.FC<UNetDetectionPanelProps> = ({
           alignItems: 'center',
           justifyContent: 'space-between',
           padding: '12px 16px',
-          borderBottom: isMinimized ? 'none' : '1px solid rgba(255, 255, 255, 0.08)',
-          background: 'rgba(255, 255, 255, 0.02)',
+          borderBottom: isMinimized ? 'none' : '1px solid var(--border-color)',
+          background: 'var(--bg-surface)',
           userSelect: 'none',
         }}
       >
         <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-          <Satellite size={16} color="var(--accent-cyan)" />
+          <Satellite size={16} color="var(--accent-blue)" />
           <h2
             style={{
               fontSize: '0.88rem',
               fontWeight: 600,
-              letterSpacing: '0.01em',
+              letterSpacing: '-0.01em',
               margin: 0,
-              color: '#f8fafc',
+              color: 'var(--text-primary)',
             }}
           >
             Fire assessment
@@ -266,7 +266,7 @@ export const UNetDetectionPanel: React.FC<UNetDetectionPanelProps> = ({
               width: '24px',
               height: '24px',
               padding: 0,
-              color: '#94a3b8',
+              color: 'var(--text-secondary)',
             }}
             title={isMinimized ? 'Expand panel' : 'Minimize panel'}
           >
@@ -280,7 +280,7 @@ export const UNetDetectionPanel: React.FC<UNetDetectionPanelProps> = ({
               width: '24px',
               height: '24px',
               padding: 0,
-              color: '#94a3b8',
+              color: 'var(--text-secondary)',
             }}
             title="Close panel"
           >
@@ -304,7 +304,7 @@ export const UNetDetectionPanel: React.FC<UNetDetectionPanelProps> = ({
           <div
             style={{
               fontSize: '0.74rem',
-              color: '#94a3b8',
+              color: 'var(--text-muted)',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'space-between',
@@ -312,12 +312,13 @@ export const UNetDetectionPanel: React.FC<UNetDetectionPanelProps> = ({
             }}
           >
             <span>
-              Observed: <strong style={{ color: '#e2e8f0', fontWeight: 500 }}>{formattedAcquisition}</strong>
+              Observed: <strong style={{ color: 'var(--text-primary)', fontWeight: 600 }}>{formattedAcquisition}</strong>
             </span>
             <span
               style={{
                 fontSize: '0.68rem',
-                color: isHistorical ? '#fbbf24' : '#34d399',
+                fontWeight: 600,
+                color: isHistorical ? 'var(--status-warning)' : 'var(--status-success)',
               }}
             >
               {isHistorical ? 'Historical baseline' : 'Temporally aligned'}
@@ -328,19 +329,19 @@ export const UNetDetectionPanel: React.FC<UNetDetectionPanelProps> = ({
           {isLocationMismatch && (
             <div
               style={{
-                backgroundColor: 'rgba(245, 158, 11, 0.1)',
-                border: '1px solid rgba(245, 158, 11, 0.3)',
+                backgroundColor: 'var(--status-warning-bg)',
+                border: '1px solid var(--status-warning-border)',
                 borderRadius: '6px',
                 padding: '8px 10px',
                 fontSize: '0.72rem',
-                color: '#fde68a',
+                color: 'var(--status-warning)',
                 lineHeight: 1.4,
                 display: 'flex',
                 alignItems: 'center',
                 gap: '6px',
               }}
             >
-              <AlertTriangle size={13} color="#f59e0b" style={{ flexShrink: 0 }} />
+              <AlertTriangle size={13} color="var(--accent-amber)" style={{ flexShrink: 0 }} />
               <span>
                 Assessment corresponds to scenario at (
                 {assessmentRequest?.ignitionLat.toFixed(3)}°, {assessmentRequest?.ignitionLon.toFixed(3)}°).
@@ -352,8 +353,8 @@ export const UNetDetectionPanel: React.FC<UNetDetectionPanelProps> = ({
           {isProgress && (
             <div
               style={{
-                backgroundColor: 'rgba(255, 255, 255, 0.02)',
-                border: '1px solid rgba(255, 255, 255, 0.08)',
+                backgroundColor: '#f8fafc',
+                border: '1px solid var(--bg-surface-border)',
                 borderRadius: '8px',
                 padding: '14px',
                 textAlign: 'center',
@@ -364,15 +365,15 @@ export const UNetDetectionPanel: React.FC<UNetDetectionPanelProps> = ({
                   display: 'inline-block',
                   width: '20px',
                   height: '20px',
-                  border: '2px solid rgba(255, 255, 255, 0.15)',
-                  borderTopColor: 'var(--accent-cyan)',
+                  border: '2px solid #e2e8f0',
+                  borderTopColor: 'var(--accent-blue)',
                   borderRadius: '50%',
                   animation: 'spin 0.8s linear infinite',
                   marginBottom: '6px',
                 }}
               />
               <style>{`@keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }`}</style>
-              <div style={{ fontSize: '0.78rem', fontWeight: 600, color: '#f1f5f9' }}>
+              <div style={{ fontSize: '0.78rem', fontWeight: 600, color: 'var(--text-primary)' }}>
                 {isSearching
                   ? 'Searching for Sentinel-2 imagery...'
                   : isAcquiring
@@ -383,7 +384,7 @@ export const UNetDetectionPanel: React.FC<UNetDetectionPanelProps> = ({
                   ? 'Running U-Net inference...'
                   : 'Analyzing Sentinel-2 satellite data...'}
               </div>
-              <div style={{ fontSize: '0.70rem', color: '#94a3b8', marginTop: '4px' }}>
+              <div style={{ fontSize: '0.70rem', color: 'var(--text-muted)', marginTop: '4px' }}>
                 {assessmentRequest?.statusMessage || 'Acquiring multispectral bands and computing U-Net inference.'}
               </div>
             </div>
@@ -393,18 +394,18 @@ export const UNetDetectionPanel: React.FC<UNetDetectionPanelProps> = ({
           {!isProgress && isUnavailable && (
             <div
               style={{
-                backgroundColor: 'rgba(56, 189, 248, 0.08)',
-                border: '1px solid rgba(56, 189, 248, 0.25)',
+                backgroundColor: 'var(--accent-blue-subtle)',
+                border: '1px solid var(--accent-blue-border)',
                 borderRadius: '8px',
                 padding: '12px',
                 fontSize: '0.74rem',
                 lineHeight: 1.4,
-                color: '#bae6fd',
+                color: '#0369a1',
               }}
             >
               <div style={{ fontWeight: 600, marginBottom: '2px' }}>Imagery unavailable</div>
               <div>{assessmentRequest?.statusMessage || 'No suitable Sentinel-2 Level-2A observation could be acquired for this coordinate.'}</div>
-              <div style={{ marginTop: '4px', fontSize: '0.68rem', color: '#94a3b8' }}>
+              <div style={{ marginTop: '4px', fontSize: '0.68rem', color: 'var(--text-muted)' }}>
                 Simulated fire spread continues on the 3D map.
               </div>
               {onRetryAssessment && (
@@ -425,13 +426,13 @@ export const UNetDetectionPanel: React.FC<UNetDetectionPanelProps> = ({
           {!isProgress && isFailed && (
             <div
               style={{
-                backgroundColor: 'rgba(239, 68, 68, 0.08)',
-                border: '1px solid rgba(239, 68, 68, 0.25)',
+                backgroundColor: 'var(--status-error-bg)',
+                border: '1px solid var(--status-error-border)',
                 borderRadius: '8px',
                 padding: '12px',
                 fontSize: '0.74rem',
                 lineHeight: 1.4,
-                color: '#fca5a5',
+                color: 'var(--status-error)',
               }}
             >
               <div style={{ fontWeight: 600, marginBottom: '2px' }}>Assessment failed</div>
@@ -461,7 +462,7 @@ export const UNetDetectionPanel: React.FC<UNetDetectionPanelProps> = ({
                   justifyContent: 'space-between',
                 }}
               >
-                <span style={{ fontSize: '0.70rem', fontWeight: 600, color: '#94a3b8' }}>
+                <span style={{ fontSize: '0.70rem', fontWeight: 600, color: 'var(--text-muted)' }}>
                   Observation view
                 </span>
                 <div
@@ -469,10 +470,10 @@ export const UNetDetectionPanel: React.FC<UNetDetectionPanelProps> = ({
                   aria-label="View selection"
                   style={{
                     display: 'flex',
-                    background: 'rgba(0, 0, 0, 0.35)',
+                    background: 'var(--bg-surface-secondary)',
                     borderRadius: '6px',
                     padding: '2px',
-                    border: '1px solid rgba(255, 255, 255, 0.08)',
+                    border: '1px solid var(--border-color)',
                   }}
                 >
                   {(
@@ -489,15 +490,16 @@ export const UNetDetectionPanel: React.FC<UNetDetectionPanelProps> = ({
                       aria-selected={viewMode === tab.id}
                       onClick={() => setViewMode(tab.id)}
                       style={{
-                        background: viewMode === tab.id ? 'rgba(255, 255, 255, 0.12)' : 'transparent',
-                        color: viewMode === tab.id ? '#ffffff' : '#94a3b8',
+                        background: viewMode === tab.id ? 'var(--bg-surface)' : 'transparent',
+                        color: viewMode === tab.id ? 'var(--text-primary)' : 'var(--text-secondary)',
                         border: 'none',
                         borderRadius: '4px',
                         padding: '3px 8px',
                         fontSize: '0.67rem',
                         fontWeight: viewMode === tab.id ? 600 : 500,
                         cursor: 'pointer',
-                        transition: 'background 0.15s ease',
+                        boxShadow: viewMode === tab.id ? 'var(--shadow-sm)' : 'none',
+                        transition: 'all 0.15s ease',
                       }}
                     >
                       {tab.label}
@@ -518,32 +520,32 @@ export const UNetDetectionPanel: React.FC<UNetDetectionPanelProps> = ({
                   {/* Left: Satellite image */}
                   <div
                     style={{
-                      background: 'rgba(0, 0, 0, 0.3)',
+                      background: 'var(--bg-surface-secondary)',
                       borderRadius: '6px',
-                      border: '1px solid rgba(255, 255, 255, 0.08)',
+                      border: '1px solid var(--border-color)',
                       overflow: 'hidden',
                     }}
                   >
                     <div
                       style={{
-                        padding: '4px 8px',
+                        padding: '5px 8px',
                         fontSize: '0.66rem',
                         fontWeight: 600,
-                        color: '#94a3b8',
-                        borderBottom: '1px solid rgba(255, 255, 255, 0.05)',
-                        background: 'rgba(255, 255, 255, 0.02)',
+                        color: 'var(--text-secondary)',
+                        borderBottom: '1px solid var(--border-color)',
+                        background: 'var(--bg-surface)',
                       }}
                     >
                       Satellite image
                     </div>
-                    <div style={{ height: '150px', background: '#000', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                    <div style={{ height: '150px', background: '#0f172a', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                       <img
                         src={rgbUrl}
                         alt="Sentinel-2 Optical RGB"
                         style={{ width: '100%', height: '100%', objectFit: 'cover' }}
                       />
                     </div>
-                    <div style={{ padding: '4px 8px', fontSize: '0.62rem', color: '#64748b' }}>
+                    <div style={{ padding: '4px 8px', fontSize: '0.62rem', color: 'var(--text-secondary)' }}>
                       Sentinel-2 True Color (10m)
                     </div>
                   </div>
@@ -551,35 +553,35 @@ export const UNetDetectionPanel: React.FC<UNetDetectionPanelProps> = ({
                   {/* Right: Predicted mask */}
                   <div
                     style={{
-                      background: 'rgba(0, 0, 0, 0.3)',
+                      background: 'var(--bg-surface-secondary)',
                       borderRadius: '6px',
-                      border: '1px solid rgba(255, 255, 255, 0.08)',
+                      border: '1px solid var(--border-color)',
                       overflow: 'hidden',
                     }}
                   >
                     <div
                       style={{
-                        padding: '4px 8px',
+                        padding: '5px 8px',
                         fontSize: '0.66rem',
                         fontWeight: 600,
-                        color: '#f87171',
-                        borderBottom: '1px solid rgba(255, 255, 255, 0.05)',
-                        background: 'rgba(255, 255, 255, 0.02)',
+                        color: 'var(--status-error)',
+                        borderBottom: '1px solid var(--border-color)',
+                        background: 'var(--bg-surface)',
                         display: 'flex',
                         justifyContent: 'space-between',
                       }}
                     >
                       <span>Predicted mask</span>
-                      <span style={{ color: '#94a3b8', fontWeight: 400 }}>τ = 0.65</span>
+                      <span style={{ color: 'var(--text-secondary)', fontWeight: 400 }}>τ = 0.65</span>
                     </div>
-                    <div style={{ height: '150px', background: '#000', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                    <div style={{ height: '150px', background: '#0f172a', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                       <img
                         src={binaryMaskUrl}
                         alt="U-Net Predicted Burned Area Mask"
                         style={{ width: '100%', height: '100%', objectFit: 'cover' }}
                       />
                     </div>
-                    <div style={{ padding: '4px 8px', fontSize: '0.62rem', color: '#f87171', fontWeight: 500 }}>
+                    <div style={{ padding: '4px 8px', fontSize: '0.62rem', color: 'var(--status-error)', fontWeight: 600 }}>
                       {burnedPercentage}% burn scar
                     </div>
                   </div>
@@ -590,20 +592,20 @@ export const UNetDetectionPanel: React.FC<UNetDetectionPanelProps> = ({
               {viewMode === 'IMAGE' && (
                 <div
                   style={{
-                    background: 'rgba(0, 0, 0, 0.3)',
+                    background: '#f8fafc',
                     borderRadius: '6px',
-                    border: '1px solid rgba(255, 255, 255, 0.08)',
+                    border: '1px solid var(--bg-surface-border)',
                     overflow: 'hidden',
                   }}
                 >
-                  <div style={{ height: '220px', background: '#000' }}>
+                  <div style={{ height: '220px', background: '#0f172a' }}>
                     <img
                       src={rgbUrl}
                       alt="Sentinel-2 Optical RGB"
                       style={{ width: '100%', height: '100%', objectFit: 'contain' }}
                     />
                   </div>
-                  <div style={{ padding: '6px 10px', fontSize: '0.68rem', color: '#94a3b8' }}>
+                  <div style={{ padding: '6px 10px', fontSize: '0.68rem', color: 'var(--text-muted)' }}>
                     Copernicus Sentinel-2 Level-2A surface reflectance (B04, B03, B02).
                   </div>
                 </div>
@@ -613,20 +615,20 @@ export const UNetDetectionPanel: React.FC<UNetDetectionPanelProps> = ({
               {viewMode === 'MASK' && (
                 <div
                   style={{
-                    background: 'rgba(0, 0, 0, 0.3)',
+                    background: '#f8fafc',
                     borderRadius: '6px',
-                    border: '1px solid rgba(255, 255, 255, 0.08)',
+                    border: '1px solid var(--bg-surface-border)',
                     overflow: 'hidden',
                   }}
                 >
-                  <div style={{ height: '220px', background: '#000' }}>
+                  <div style={{ height: '220px', background: '#0f172a' }}>
                     <img
                       src={binaryMaskUrl}
                       alt="U-Net Predicted Mask"
                       style={{ width: '100%', height: '100%', objectFit: 'contain' }}
                     />
                   </div>
-                  <div style={{ padding: '6px 10px', fontSize: '0.68rem', color: '#f87171' }}>
+                  <div style={{ padding: '6px 10px', fontSize: '0.68rem', color: 'var(--status-error)' }}>
                     Binary burned area segmentation mask at threshold τ = 0.65.
                   </div>
                 </div>
@@ -636,20 +638,20 @@ export const UNetDetectionPanel: React.FC<UNetDetectionPanelProps> = ({
               {viewMode === 'PROBABILITY' && (
                 <div
                   style={{
-                    background: 'rgba(0, 0, 0, 0.3)',
+                    background: '#f8fafc',
                     borderRadius: '6px',
-                    border: '1px solid rgba(255, 255, 255, 0.08)',
+                    border: '1px solid var(--bg-surface-border)',
                     overflow: 'hidden',
                   }}
                 >
-                  <div style={{ height: '220px', background: '#000' }}>
+                  <div style={{ height: '220px', background: '#0f172a' }}>
                     <img
                       src={heatmapUrl}
                       alt="U-Net Probability Colormap"
                       style={{ width: '100%', height: '100%', objectFit: 'contain' }}
                     />
                   </div>
-                  <div style={{ padding: '6px 10px', fontSize: '0.68rem', color: '#fbbf24' }}>
+                  <div style={{ padding: '6px 10px', fontSize: '0.68rem', color: 'var(--status-warning)' }}>
                     Continuous sigmoid confidence colormap (0.0 unburnt to 1.0 high-confidence scar).
                   </div>
                 </div>
@@ -666,61 +668,37 @@ export const UNetDetectionPanel: React.FC<UNetDetectionPanelProps> = ({
               >
                 <div
                   style={{
-                    background: 'rgba(255, 255, 255, 0.03)',
+                    background: 'var(--bg-surface-secondary)',
                     padding: '8px 10px',
                     borderRadius: '6px',
-                    border: '1px solid rgba(255, 255, 255, 0.06)',
+                    border: '1px solid var(--border-color)',
                   }}
                 >
-                  <span style={{ fontSize: '0.65rem', color: '#94a3b8', display: 'block' }}>
+                  <span style={{ fontSize: '0.65rem', color: 'var(--text-secondary)', display: 'block' }}>
                     Predicted burned
                   </span>
-                  <span style={{ fontSize: '1.05rem', fontWeight: 700, color: '#f87171' }}>
+                  <span style={{ fontSize: '1.05rem', fontWeight: 700, color: 'var(--color-fire)' }}>
                     {burnedPercentage}%
                   </span>
                 </div>
 
                 <div
                   style={{
-                    background: 'rgba(255, 255, 255, 0.03)',
+                    background: 'var(--bg-surface-secondary)',
                     padding: '8px 10px',
                     borderRadius: '6px',
-                    border: '1px solid rgba(255, 255, 255, 0.06)',
+                    border: '1px solid var(--border-color)',
                   }}
                 >
-                  <span style={{ fontSize: '0.65rem', color: '#94a3b8', display: 'block' }}>
+                  <span style={{ fontSize: '0.65rem', color: 'var(--text-secondary)', display: 'block' }}>
                     Estimated area
                   </span>
-                  <span style={{ fontSize: '1.05rem', fontWeight: 700, color: '#f1f5f9' }}>
+                  <span style={{ fontSize: '1.05rem', fontWeight: 700, color: 'var(--text-primary)' }}>
                     {burnedAreaHa} ha
                   </span>
                 </div>
               </div>
 
-              {/* 6. One Short Explanation of Temporal Suitability & Scientific Semantics */}
-              <div
-                style={{
-                  backgroundColor: isHistorical ? 'rgba(245, 158, 11, 0.08)' : 'rgba(16, 185, 129, 0.08)',
-                  border: isHistorical ? '1px solid rgba(245, 158, 11, 0.25)' : '1px solid rgba(16, 185, 129, 0.25)',
-                  borderRadius: '6px',
-                  padding: '8px 10px',
-                  fontSize: '0.70rem',
-                  lineHeight: 1.4,
-                  color: isHistorical ? '#fde68a' : '#a7f3d0',
-                }}
-              >
-                {isHistorical ? (
-                  <>
-                    <strong style={{ color: '#fbbf24' }}>Historical baseline: </strong>
-                    Satellite imagery predates the simulation scenario and reflects pre-event surface conditions. The model identifies post-fire scars, not active flames.
-                  </>
-                ) : (
-                  <>
-                    <strong style={{ color: '#34d399' }}>Observation aligned: </strong>
-                    Acquisition is temporally compatible with the event timeline. Model predictions identify burned area spectral signatures and are distinguished from confirmed observations.
-                  </>
-                )}
-              </div>
 
               {/* 3D Map Overlay Control */}
               <div
@@ -729,16 +707,16 @@ export const UNetDetectionPanel: React.FC<UNetDetectionPanelProps> = ({
                   alignItems: 'center',
                   justifyContent: 'space-between',
                   padding: '8px 10px',
-                  background: 'rgba(255, 255, 255, 0.02)',
+                  background: 'var(--bg-surface-secondary)',
                   borderRadius: '6px',
-                  border: '1px solid rgba(255, 255, 255, 0.06)',
+                  border: '1px solid var(--border-color)',
                 }}
               >
                 <div style={{ display: 'flex', flexDirection: 'column' }}>
-                  <span style={{ fontSize: '0.72rem', fontWeight: 600, color: '#f1f5f9' }}>
+                  <span style={{ fontSize: '0.72rem', fontWeight: 600, color: 'var(--text-primary)' }}>
                     3D map overlay
                   </span>
-                  <span style={{ fontSize: '0.64rem', color: '#94a3b8' }}>
+                  <span style={{ fontSize: '0.64rem', color: 'var(--text-secondary)' }}>
                     Off by default to keep simulation unobstructed
                   </span>
                 </div>
@@ -751,9 +729,9 @@ export const UNetDetectionPanel: React.FC<UNetDetectionPanelProps> = ({
                     fontSize: '0.70rem',
                     fontWeight: 600,
                     gap: '6px',
-                    color: showPredictionOnMap ? '#34d399' : '#94a3b8',
-                    borderColor: showPredictionOnMap ? 'rgba(16, 185, 129, 0.4)' : 'rgba(255, 255, 255, 0.1)',
-                    background: showPredictionOnMap ? 'rgba(16, 185, 129, 0.15)' : 'rgba(255, 255, 255, 0.04)',
+                    color: showPredictionOnMap ? 'var(--status-success)' : 'var(--text-secondary)',
+                    borderColor: showPredictionOnMap ? 'var(--status-success-border)' : 'var(--border-color)',
+                    background: showPredictionOnMap ? 'var(--status-success-bg)' : 'var(--bg-surface)',
                   }}
                 >
                   {showPredictionOnMap ? <Eye size={12} /> : <EyeOff size={12} />}
@@ -782,9 +760,9 @@ export const UNetDetectionPanel: React.FC<UNetDetectionPanelProps> = ({
                       key={m.id}
                       onClick={() => onSelectVisualizationMode(m.id)}
                       style={{
-                        background: visualizationMode === m.id ? 'rgba(255, 255, 255, 0.15)' : 'rgba(255, 255, 255, 0.03)',
-                        border: visualizationMode === m.id ? '1px solid var(--accent-cyan)' : '1px solid rgba(255, 255, 255, 0.08)',
-                        color: visualizationMode === m.id ? 'var(--accent-cyan)' : '#94a3b8',
+                        background: visualizationMode === m.id ? 'var(--accent-forest-subtle)' : 'var(--bg-surface)',
+                        border: visualizationMode === m.id ? '1px solid var(--accent-forest)' : '1px solid var(--border-color)',
+                        color: visualizationMode === m.id ? 'var(--accent-forest-dark)' : 'var(--text-secondary)',
                         borderRadius: '4px',
                         padding: '3px 6px',
                         fontSize: '0.64rem',
@@ -801,7 +779,7 @@ export const UNetDetectionPanel: React.FC<UNetDetectionPanelProps> = ({
               {/* 7. Collapsible Technical Details Section */}
               <div
                 style={{
-                  borderTop: '1px solid rgba(255, 255, 255, 0.06)',
+                  borderTop: '1px solid var(--border-color)',
                   paddingTop: '6px',
                 }}
               >
@@ -810,7 +788,7 @@ export const UNetDetectionPanel: React.FC<UNetDetectionPanelProps> = ({
                   style={{
                     background: 'none',
                     border: 'none',
-                    color: '#94a3b8',
+                    color: 'var(--text-secondary)',
                     fontSize: '0.68rem',
                     fontWeight: 500,
                     cursor: 'pointer',
@@ -828,39 +806,40 @@ export const UNetDetectionPanel: React.FC<UNetDetectionPanelProps> = ({
                   <div
                     style={{
                       marginTop: '6px',
-                      background: 'rgba(0, 0, 0, 0.25)',
+                      background: 'var(--bg-surface-secondary)',
                       borderRadius: '6px',
                       padding: '8px 10px',
                       fontSize: '0.66rem',
                       display: 'flex',
                       flexDirection: 'column',
                       gap: '4px',
-                      color: '#94a3b8',
+                      color: 'var(--text-secondary)',
+                      border: '1px solid var(--border-color)',
                     }}
                   >
                     <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                      <span>Checkpoint:</span>
-                      <code style={{ color: '#cbd5e1' }}>land8fire_15ch_unet_full_dataset_best.pth</code>
+                      <span style={{ color: 'var(--text-muted)' }}>Checkpoint:</span>
+                      <code style={{ color: 'var(--text-primary)' }}>land8fire_15ch_unet_full_dataset_best.pth</code>
                     </div>
                     <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                      <span>Threshold:</span>
-                      <span style={{ color: '#cbd5e1' }}>0.65</span>
+                      <span style={{ color: 'var(--text-muted)' }}>Threshold:</span>
+                      <span style={{ color: 'var(--text-primary)' }}>0.65</span>
                     </div>
                     <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                      <span>CRS:</span>
-                      <span style={{ color: '#cbd5e1' }}>{georefOutput?.sourceCrs || 'EPSG:32720'}</span>
+                      <span style={{ color: 'var(--text-muted)' }}>CRS:</span>
+                      <span style={{ color: 'var(--text-primary)' }}>{georefOutput?.sourceCrs || 'EPSG:32720'}</span>
                     </div>
                     <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                      <span>Grid size:</span>
-                      <span style={{ color: '#cbd5e1' }}>256 × 256 px (10m resolution)</span>
+                      <span style={{ color: 'var(--text-muted)' }}>Grid size:</span>
+                      <span style={{ color: 'var(--text-primary)' }}>256 × 256 px (10m resolution)</span>
                     </div>
                     <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                      <span>Source product:</span>
-                      <span style={{ color: '#cbd5e1' }}>Copernicus Sentinel-2 Level-2A</span>
+                      <span style={{ color: 'var(--text-muted)' }}>Source product:</span>
+                      <span style={{ color: 'var(--text-primary)' }}>Copernicus Sentinel-2 Level-2A</span>
                     </div>
                     <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                      <span>Simulation ID:</span>
-                      <code style={{ color: '#cbd5e1' }}>{assessmentRequest?.simulationId || 'sim_manual'}</code>
+                      <span style={{ color: 'var(--text-muted)' }}>Simulation ID:</span>
+                      <code style={{ color: 'var(--text-primary)' }}>{assessmentRequest?.simulationId || 'sim_manual'}</code>
                     </div>
                   </div>
                 )}

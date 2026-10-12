@@ -59,7 +59,7 @@ export const INITIAL_FOREST_CONDITION_CLASSES: Record<ForestConditionCategory, F
     id: 'HEALTHY_VEGETATION',
     displayName: 'Healthy Vegetation',
     description: 'Dense, vigorous photosynthetic canopy identified through multispectral vegetation analysis.',
-    color: '#10B981',
+    color: '#159B72',
     provenance: 'DERIVED',
     source: 'Multispectral vegetation analysis',
     verified: false
@@ -68,7 +68,7 @@ export const INITIAL_FOREST_CONDITION_CLASSES: Record<ForestConditionCategory, F
     id: 'DRY_VEGETATION',
     displayName: 'Dry Vegetation / Fuel',
     description: 'Stressed, moisture-depleted vegetation biomass posing elevated wildfire fuel vulnerability.',
-    color: '#F59E0B',
+    color: '#D99118',
     provenance: 'DERIVED',
     source: 'Vegetation stress / fuel indicators',
     verified: false
@@ -77,7 +77,7 @@ export const INITIAL_FOREST_CONDITION_CLASSES: Record<ForestConditionCategory, F
     id: 'ACTIVE_FIRE',
     displayName: 'Active Fire',
     description: 'Satellite thermal anomaly detections from thermal infrared sensors.',
-    color: '#EF4444',
+    color: '#B84A45',
     provenance: 'OBSERVED',
     source: 'NASA FIRMS satellite thermal observations',
     verified: false
@@ -86,7 +86,7 @@ export const INITIAL_FOREST_CONDITION_CLASSES: Record<ForestConditionCategory, F
     id: 'BURNED_AREA',
     displayName: 'Burned Area',
     description: 'Land8Fire 15-channel PyTorch U-Net satellite burned-area segmentation output.',
-    color: '#991B1B',
+    color: '#B84A45',
     provenance: 'MODEL_PREDICTION',
     source: 'Land8Fire PyTorch U-Net segmentation',
     verified: false

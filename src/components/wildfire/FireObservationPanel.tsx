@@ -26,8 +26,8 @@ export const FireObservationPanel: React.FC<FireObservationPanelProps> = ({ obse
         padding: '16px',
         zIndex: 25,
         borderRadius: 'var(--radius-md)',
-        border: '1px solid rgba(239, 68, 68, 0.35)',
-        boxShadow: '0 8px 32px rgba(239, 68, 68, 0.15)',
+        border: '1px solid var(--status-error-border)',
+        boxShadow: 'var(--shadow-card)',
       }}
     >
       {/* Header */}
@@ -46,15 +46,14 @@ export const FireObservationPanel: React.FC<FireObservationPanelProps> = ({ obse
               width: '32px',
               height: '32px',
               borderRadius: '8px',
-              background: 'rgba(239, 68, 68, 0.2)',
-              border: '1px solid rgba(239, 68, 68, 0.5)',
+              background: 'var(--status-error-bg)',
+              border: '1px solid var(--status-error-border)',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
-              boxShadow: '0 0 12px rgba(239, 68, 68, 0.3)',
             }}
           >
-            <Flame size={18} color="#ef4444" />
+            <Flame size={18} color="var(--status-error)" />
           </div>
           <div>
             <h2 style={{ fontSize: '0.9rem', fontWeight: 600, color: 'var(--text-primary)' }}>
@@ -76,7 +75,7 @@ export const FireObservationPanel: React.FC<FireObservationPanelProps> = ({ obse
       </div>
 
       {isExpanded && (
-        <div style={{ marginTop: '14px', paddingTop: '12px', borderTop: '1px solid rgba(255,255,255,0.08)' }}>
+        <div style={{ marginTop: '14px', paddingTop: '12px', borderTop: '1px solid var(--bg-surface-border)' }}>
           {/* Scientific Provenance Badge */}
           <div
             style={{
@@ -85,22 +84,23 @@ export const FireObservationPanel: React.FC<FireObservationPanelProps> = ({ obse
               gap: '6px',
               padding: '6px 10px',
               borderRadius: 'var(--radius-sm)',
-              background: 'rgba(239, 68, 68, 0.12)',
-              border: '1px solid rgba(239, 68, 68, 0.25)',
+              background: 'var(--status-error-bg)',
+              border: '1px solid var(--status-error-border)',
               marginBottom: '12px',
               fontSize: '0.72rem',
-              color: '#ef4444',
+              color: 'var(--status-error)',
               fontWeight: 500,
             }}
           >
             <ShieldCheck size={14} />
-            <span>PROVENANCE: {observation.classification} / SATELLITE_THERMAL_DETECTION</span>
+            <span>Provenance: {observation.classification} / Thermal Observation</span>
           </div>
 
           {/* Telemetry Metrics */}
           <div
             style={{
-              background: 'rgba(0, 0, 0, 0.35)',
+              background: 'var(--bg-surface-subtle)',
+              border: '1px solid var(--bg-surface-border)',
               padding: '10px 12px',
               borderRadius: 'var(--radius-md)',
               marginBottom: '12px',
@@ -112,14 +112,14 @@ export const FireObservationPanel: React.FC<FireObservationPanelProps> = ({ obse
           >
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
               <span style={{ color: 'var(--text-muted)', display: 'flex', alignItems: 'center', gap: '4px' }}>
-                <Satellite size={12} color="var(--accent-cyan)" /> Satellite Instrument:
+                <Satellite size={12} color="var(--accent-blue)" /> Satellite Instrument:
               </span>
               <strong style={{ color: 'var(--text-primary)' }}>{observation.satelliteInstrument}</strong>
             </div>
 
             <div style={{ display: 'flex', justifyContent: 'space-between' }}>
               <span style={{ color: 'var(--text-muted)' }}>Coordinates:</span>
-              <span style={{ fontFamily: 'var(--font-mono)', color: 'var(--accent-cyan)' }}>
+              <span style={{ fontFamily: 'var(--font-mono)', color: 'var(--accent-blue)' }}>
                 {Math.abs(observation.latitude).toFixed(4)}° S, {Math.abs(observation.longitude).toFixed(4)}° W
               </span>
             </div>
@@ -133,21 +133,21 @@ export const FireObservationPanel: React.FC<FireObservationPanelProps> = ({ obse
 
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
               <span style={{ color: 'var(--text-muted)', display: 'flex', alignItems: 'center', gap: '4px' }}>
-                <Thermometer size={12} color="#f59e0b" /> Brightness Temp:
+                <Thermometer size={12} color="var(--status-warning)" /> Brightness Temp:
               </span>
-              <span style={{ color: '#f59e0b', fontWeight: 600 }}>{observation.brightnessTempK} K</span>
+              <span style={{ color: 'var(--status-warning)', fontWeight: 600 }}>{observation.brightnessTempK} K</span>
             </div>
 
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
               <span style={{ color: 'var(--text-muted)', display: 'flex', alignItems: 'center', gap: '4px' }}>
-                <Zap size={12} color="#ef4444" /> Fire Radiative Power (FRP):
+                <Zap size={12} color="var(--status-error)" /> Fire Radiative Power (FRP):
               </span>
-              <span style={{ color: '#ef4444', fontWeight: 600 }}>{observation.frpMW} MW</span>
+              <span style={{ color: 'var(--status-error)', fontWeight: 600 }}>{observation.frpMW} MW</span>
             </div>
 
             <div style={{ display: 'flex', justifyContent: 'space-between' }}>
               <span style={{ color: 'var(--text-muted)' }}>Detection Confidence:</span>
-              <span style={{ color: '#34d399', fontWeight: 600 }}>{observation.confidence}</span>
+              <span style={{ color: 'var(--status-success)', fontWeight: 600 }}>{observation.confidence}</span>
             </div>
           </div>
 
@@ -156,18 +156,18 @@ export const FireObservationPanel: React.FC<FireObservationPanelProps> = ({ obse
             style={{
               padding: '8px 10px',
               borderRadius: 'var(--radius-sm)',
-              background: 'rgba(245, 158, 11, 0.12)',
-              border: '1px solid rgba(245, 158, 11, 0.25)',
+              background: 'var(--status-warning-bg)',
+              border: '1px solid var(--status-warning-border)',
               marginBottom: '14px',
               fontSize: '0.72rem',
-              color: '#fbbf24',
+              color: 'var(--status-warning)',
               display: 'flex',
               alignItems: 'center',
               gap: '6px',
             }}
           >
             <AlertTriangle size={14} />
-            <span>AI U-NET SEGMENTATION ANALYSIS: NOT RUN</span>
+            <span>U-Net segmentation analysis: Not run</span>
           </div>
 
           {/* Action Trigger */}
@@ -180,9 +180,9 @@ export const FireObservationPanel: React.FC<FireObservationPanelProps> = ({ obse
               fontSize: '0.78rem',
               fontWeight: 600,
               gap: '6px',
-              background: 'rgba(239, 68, 68, 0.15)',
-              borderColor: 'rgba(239, 68, 68, 0.4)',
-              color: '#ef4444',
+              background: 'var(--status-error-bg)',
+              borderColor: 'var(--status-error-border)',
+              color: 'var(--status-error)',
             }}
           >
             <Crosshair size={14} />

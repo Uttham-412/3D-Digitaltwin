@@ -40,9 +40,9 @@ export const FireFocusControl: React.FC<FireFocusControlProps> = ({ onSelectLoca
       style={{
         width: '40px',
         height: '40px',
-        background: 'rgba(239, 68, 68, 0.15)',
-        borderColor: 'rgba(239, 68, 68, 0.4)',
-        color: '#ef4444',
+        background: 'var(--status-error-bg)',
+        borderColor: 'var(--status-error-border)',
+        color: 'var(--status-error)',
       }}
     >
       <Flame size={20} />

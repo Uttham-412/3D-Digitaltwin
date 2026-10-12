@@ -23,7 +23,10 @@ export const ImageryToggle: React.FC<ImageryToggleProps> = ({
         padding: '4px',
         gap: '4px',
         zIndex: 25,
+        backgroundColor: 'var(--bg-surface)',
+        border: '1px solid var(--border-color)',
         borderRadius: 'var(--radius-md)',
+        boxShadow: 'var(--shadow-floating)',
       }}
     >
       <div
@@ -32,14 +35,13 @@ export const ImageryToggle: React.FC<ImageryToggleProps> = ({
           alignItems: 'center',
           gap: '6px',
           padding: '0 8px',
-          color: 'var(--text-muted)',
+          color: 'var(--text-secondary)',
           fontSize: '0.72rem',
           fontWeight: 600,
           letterSpacing: '0.04em',
         }}
       >
-        <Layers size={14} color="var(--accent-cyan)" />
-        <span style={{ display: 'none' }}>BASEMAP</span>
+        <Layers size={14} color="var(--accent-forest)" />
       </div>
 
       <button
@@ -48,17 +50,20 @@ export const ImageryToggle: React.FC<ImageryToggleProps> = ({
         style={{
           padding: '6px 12px',
           fontSize: '0.75rem',
-          fontWeight: 500,
+          fontWeight: currentType === ImageryType.SATELLITE ? 600 : 500,
           gap: '6px',
           background:
             currentType === ImageryType.SATELLITE
-              ? 'rgba(0, 229, 255, 0.2)'
+              ? 'var(--accent-forest-subtle)'
               : 'transparent',
           borderColor:
             currentType === ImageryType.SATELLITE
-              ? 'rgba(0, 229, 255, 0.4)'
+              ? 'var(--accent-forest-border)'
               : 'transparent',
-          color: currentType === ImageryType.SATELLITE ? '#ffffff' : 'var(--text-secondary)',
+          color:
+            currentType === ImageryType.SATELLITE
+              ? 'var(--accent-forest-dark)'
+              : 'var(--text-secondary)',
         }}
       >
         <Satellite size={14} />
@@ -71,17 +76,20 @@ export const ImageryToggle: React.FC<ImageryToggleProps> = ({
         style={{
           padding: '6px 12px',
           fontSize: '0.75rem',
-          fontWeight: 500,
+          fontWeight: currentType === ImageryType.OPEN_STREET_MAP ? 600 : 500,
           gap: '6px',
           background:
             currentType === ImageryType.OPEN_STREET_MAP
-              ? 'rgba(0, 229, 255, 0.2)'
+              ? 'var(--accent-forest-subtle)'
               : 'transparent',
           borderColor:
             currentType === ImageryType.OPEN_STREET_MAP
-              ? 'rgba(0, 229, 255, 0.4)'
+              ? 'var(--accent-forest-border)'
               : 'transparent',
-          color: currentType === ImageryType.OPEN_STREET_MAP ? '#ffffff' : 'var(--text-secondary)',
+          color:
+            currentType === ImageryType.OPEN_STREET_MAP
+              ? 'var(--accent-forest-dark)'
+              : 'var(--text-secondary)',
         }}
       >
         <Map size={14} />

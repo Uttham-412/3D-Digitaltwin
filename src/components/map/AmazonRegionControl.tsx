@@ -35,9 +35,9 @@ export const AmazonRegionControl: React.FC<AmazonRegionControlProps> = ({ onSele
       style={{
         width: '40px',
         height: '40px',
-        background: 'rgba(16, 185, 129, 0.15)',
-        borderColor: 'rgba(16, 185, 129, 0.35)',
-        color: '#34d399',
+        background: 'var(--accent-forest-subtle)',
+        borderColor: 'var(--accent-forest-border)',
+        color: 'var(--accent-forest)',
       }}
     >
       <Trees size={20} />

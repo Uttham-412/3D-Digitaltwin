@@ -1,0 +1,4224 @@
+{
+  "type": "FeatureCollection",
+  "name": "Land8Fire U-Net 15-Channel Burned Area Prediction (unet_b6189346c372)",
+  "crs": {
+    "type": "name",
+    "properties": {
+      "name": "urn:ogc:def:crs:OGC:1.3:CRS84"
+    }
+  },
+  "properties": {
+    "productId": "S2B_MSIL2A_20261001T142709_N0513_R053_T20MRB_20261001T181049",
+    "acquisitionDate": "2026-10-01T14:27:09Z",
+    "modelCheckpoint": "land8fire_15ch_unet_full_dataset_best.pth",
+    "threshold": 0.65,
+    "totalPixels": 65536,
+    "predictedBurnedPixels": 62470,
+    "predictedBurnedPercentage": 95.32,
+    "predictedBurnedAreaHectares": 624.7,
+    "targetGridCrs": "EPSG:32720",
+    "provenance": "DERIVED / U-NET MODEL INFERENCE"
+  },
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "source": "Sentinel-2 L2A (S2B_MSIL2A_20261001T142709_N0513_R053_T20MRB_20261001T181049)",
+        "acquisitionDate": "2026-10-01T14:27:09Z",
+        "model": "Land8Fire U-Net 15-Channel",
+        "modelCheckpoint": "land8fire_15ch_unet_full_dataset_best.pth",
+        "classification": "MODEL_PREDICTION",
+        "threshold": 0.65,
+        "burnProbability": ">= 0.65",
+        "scientificNote": "Model prediction from single-date optical reflection. Not confirmed active fire or ground truth."
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -59.99314357740415,
+              -2.9537196462565025
+            ],
+            [
+              -59.99314333416599,
+              -2.9538099915912985
+            ],
+            [
+              -59.99305347265588,
+              -2.9538097470361326
+            ],
+            [
+              -59.993053715901276,
+              -2.9537194017088284
+            ],
+            [
+              -59.99314357740415,
+              -2.9537196462565025
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "source": "Sentinel-2 L2A (S2B_MSIL2A_20261001T142709_N0513_R053_T20MRB_20261001T181049)",
+        "acquisitionDate": "2026-10-01T14:27:09Z",
+        "model": "Land8Fire U-Net 15-Channel",
+        "modelCheckpoint": "land8fire_15ch_unet_full_dataset_best.pth",
+        "classification": "MODEL_PREDICTION",
+        "threshold": 0.65,
+        "burnProbability": ">= 0.65",
+        "scientificNote": "Model prediction from single-date optical reflection. Not confirmed active fire or ground truth."
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -59.99332281397751,
+              -2.9539008260294017
+            ],
+            [
+              -59.99332257073888,
+              -2.953991171378848
+            ],
+            [
+              -59.99323270919933,
+              -2.95399092682326
+            ],
+            [
+              -59.99323295244519,
+              -2.9539005814813057
+            ],
+            [
+              -59.99332281397751,
+              -2.9539008260294017
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "source": "Sentinel-2 L2A (S2B_MSIL2A_20261001T142709_N0513_R053_T20MRB_20261001T181049)",
+        "acquisitionDate": "2026-10-01T14:27:09Z",
+        "model": "Land8Fire U-Net 15-Channel",
+        "modelCheckpoint": "land8fire_15ch_unet_full_dataset_best.pth",
+        "classification": "MODEL_PREDICTION",
+        "threshold": 0.65,
+        "burnProbability": ">= 0.65",
+        "scientificNote": "Model prediction from single-date optical reflection. Not confirmed active fire or ground truth."
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -59.99314309092036,
+              -2.9539003369259293
+            ],
+            [
+              -59.993142847667265,
+              -2.95399068226039
+            ],
+            [
+              -59.99305298614265,
+              -2.953990437690238
+            ],
+            [
+              -59.993053229402996,
+              -2.9539000923632694
+            ],
+            [
+              -59.99314309092036,
+              -2.9539003369259293
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "source": "Sentinel-2 L2A (S2B_MSIL2A_20261001T142709_N0513_R053_T20MRB_20261001T181049)",
+        "acquisitionDate": "2026-10-01T14:27:09Z",
+        "model": "Land8Fire U-Net 15-Channel",
+        "modelCheckpoint": "land8fire_15ch_unet_full_dataset_best.pth",
+        "classification": "MODEL_PREDICTION",
+        "threshold": 0.65,
+        "burnProbability": ">= 0.65",
+        "scientificNote": "Model prediction from single-date optical reflection. Not confirmed active fire or ground truth."
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -59.99296336789311,
+              -2.953899847793328
+            ],
+            [
+              -59.992963124625525,
+              -2.953990193112804
+            ],
+            [
+              -59.99287326311586,
+              -2.9539899485280885
+            ],
+            [
+              -59.9928735063907,
+              -2.953899603216105
+            ],
+            [
+              -59.99296336789311,
+              -2.953899847793328
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "source": "Sentinel-2 L2A (S2B_MSIL2A_20261001T142709_N0513_R053_T20MRB_20261001T181049)",
+        "acquisitionDate": "2026-10-01T14:27:09Z",
+        "model": "Land8Fire U-Net 15-Channel",
+        "modelCheckpoint": "land8fire_15ch_unet_full_dataset_best.pth",
+        "classification": "MODEL_PREDICTION",
+        "threshold": 0.65,
+        "burnProbability": ">= 0.65",
+        "scientificNote": "Model prediction from single-date optical reflection. Not confirmed active fire or ground truth."
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -59.992602948697204,
+              -2.9542602505977493
+            ],
+            [
+              -59.992602705370736,
+              -2.9543505958865834
+            ],
+            [
+              -59.992512843862,
+              -2.9543503512427614
+            ],
+            [
+              -59.992513087195704,
+              -2.954260005961422
+            ],
+            [
+              -59.992602948697204,
+              -2.9542602505977493
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "source": "Sentinel-2 L2A (S2B_MSIL2A_20261001T142709_N0513_R053_T20MRB_20261001T181049)",
+        "acquisitionDate": "2026-10-01T14:27:09Z",
+        "model": "Land8Fire U-Net 15-Channel",
+        "modelCheckpoint": "land8fire_15ch_unet_full_dataset_best.pth",
+        "classification": "MODEL_PREDICTION",
+        "threshold": 0.65,
+        "burnProbability": ">= 0.65",
+        "scientificNote": "Model prediction from single-date optical reflection. Not confirmed active fire or ground truth."
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -59.99116516557029,
+              -2.954256335542573
+            ],
+            [
+              -59.99116492212793,
+              -2.9543466807114744
+            ],
+            [
+              -59.99107506073881,
+              -2.9543464359511247
+            ],
+            [
+              -59.99107530418841,
+              -2.95425609078972
+            ],
+            [
+              -59.99116516557029,
+              -2.954256335542573
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "source": "Sentinel-2 L2A (S2B_MSIL2A_20261001T142709_N0513_R053_T20MRB_20261001T181049)",
+        "acquisitionDate": "2026-10-01T14:27:09Z",
+        "model": "Land8Fire U-Net 15-Channel",
+        "modelCheckpoint": "land8fire_15ch_unet_full_dataset_best.pth",
+        "classification": "MODEL_PREDICTION",
+        "threshold": 0.65,
+        "burnProbability": ">= 0.65",
+        "scientificNote": "Model prediction from single-date optical reflection. Not confirmed active fire or ground truth."
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -59.98990710690447,
+              -2.954252908339905
+            ],
+            [
+              -59.98990686336071,
+              -2.95434325340382
+            ],
+            [
+              -59.989817002076286,
+              -2.954343008541508
+            ],
+            [
+              -59.9898172456273,
+              -2.954252663485094
+            ],
+            [
+              -59.98990710690447,
+              -2.954252908339905
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "source": "Sentinel-2 L2A (S2B_MSIL2A_20261001T142709_N0513_R053_T20MRB_20261001T181049)",
+        "acquisitionDate": "2026-10-01T14:27:09Z",
+        "model": "Land8Fire U-Net 15-Channel",
+        "modelCheckpoint": "land8fire_15ch_unet_full_dataset_best.pth",
+        "classification": "MODEL_PREDICTION",
+        "threshold": 0.65,
+        "burnProbability": ">= 0.65",
+        "scientificNote": "Model prediction from single-date optical reflection. Not confirmed active fire or ground truth."
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -59.98882877207215,
+              -2.9542499696015083
+            ],
+            [
+              -59.98882852844146,
+              -2.9543403145753993
+            ],
+            [
+              -59.988738667246814,
+              -2.9543400696256907
+            ],
+            [
+              -59.98873891088476,
+              -2.954249724659304
+            ],
+            [
+              -59.98882877207215,
+              -2.9542499696015083
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "source": "Sentinel-2 L2A (S2B_MSIL2A_20261001T142709_N0513_R053_T20MRB_20261001T181049)",
+        "acquisitionDate": "2026-10-01T14:27:09Z",
+        "model": "Land8Fire U-Net 15-Channel",
+        "modelCheckpoint": "land8fire_15ch_unet_full_dataset_best.pth",
+        "classification": "MODEL_PREDICTION",
+        "threshold": 0.65,
+        "burnProbability": ">= 0.65",
+        "scientificNote": "Model prediction from single-date optical reflection. Not confirmed active fire or ground truth."
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -59.990625510412045,
+              -2.9544355571638743
+            ],
+            [
+              -59.99062526691126,
+              -2.9545259022874517
+            ],
+            [
+              -59.990535405552514,
+              -2.9545256574684067
+            ],
+            [
+              -59.99053564906054,
+              -2.9544353123523273
+            ],
+            [
+              -59.990625510412045,
+              -2.9544355571638743
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "source": "Sentinel-2 L2A (S2B_MSIL2A_20261001T142709_N0513_R053_T20MRB_20261001T181049)",
+        "acquisitionDate": "2026-10-01T14:27:09Z",
+        "model": "Land8Fire U-Net 15-Channel",
+        "modelCheckpoint": "land8fire_15ch_unet_full_dataset_best.pth",
+        "classification": "MODEL_PREDICTION",
+        "threshold": 0.65,
+        "burnProbability": ">= 0.65",
+        "scientificNote": "Model prediction from single-date optical reflection. Not confirmed active fire or ground truth."
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -59.99008634241522,
+              -2.9544340881853435
+            ],
+            [
+              -59.99008609887097,
+              -2.954524433263924
+            ],
+            [
+              -59.98999623755711,
+              -2.9545241884011775
+            ],
+            [
+              -59.98999648110859,
+              -2.954433843330096
+            ],
+            [
+              -59.99008634241522,
+              -2.9544340881853435
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "source": "Sentinel-2 L2A (S2B_MSIL2A_20261001T142709_N0513_R053_T20MRB_20261001T181049)",
+        "acquisitionDate": "2026-10-01T14:27:09Z",
+        "model": "Land8Fire U-Net 15-Channel",
+        "modelCheckpoint": "land8fire_15ch_unet_full_dataset_best.pth",
+        "classification": "MODEL_PREDICTION",
+        "threshold": 0.65,
+        "burnProbability": ">= 0.65",
+        "scientificNote": "Model prediction from single-date optical reflection. Not confirmed active fire or ground truth."
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -59.9927816984299,
+              -2.954622121062836
+            ],
+            [
+              -59.992781455088036,
+              -2.954712466365988
+            ],
+            [
+              -59.99269159353537,
+              -2.9547122217067576
+            ],
+            [
+              -59.99269183688448,
+              -2.954621876411099
+            ],
+            [
+              -59.9927816984299,
+              -2.954622121062836
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "source": "Sentinel-2 L2A (S2B_MSIL2A_20261001T142709_N0513_R053_T20MRB_20261001T181049)",
+        "acquisitionDate": "2026-10-01T14:27:09Z",
+        "model": "Land8Fire U-Net 15-Channel",
+        "modelCheckpoint": "land8fire_15ch_unet_full_dataset_best.pth",
+        "classification": "MODEL_PREDICTION",
+        "threshold": 0.65,
+        "burnProbability": ">= 0.65",
+        "scientificNote": "Model prediction from single-date optical reflection. Not confirmed active fire or ground truth."
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -59.99026557798392,
+              -2.9546152680609814
+            ],
+            [
+              -59.99026533443921,
+              -2.954705613154227
+            ],
+            [
+              -59.99017547309588,
+              -2.9547053682910476
+            ],
+            [
+              -59.99017571664785,
+              -2.9546150232053012
+            ],
+            [
+              -59.99026557798392,
+              -2.9546152680609814
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "source": "Sentinel-2 L2A (S2B_MSIL2A_20261001T142709_N0513_R053_T20MRB_20261001T181049)",
+        "acquisitionDate": "2026-10-01T14:27:09Z",
+        "model": "Land8Fire U-Net 15-Channel",
+        "modelCheckpoint": "land8fire_15ch_unet_full_dataset_best.pth",
+        "classification": "MODEL_PREDICTION",
+        "threshold": 0.65,
+        "burnProbability": ">= 0.65",
+        "scientificNote": "Model prediction from single-date optical reflection. Not confirmed active fire or ground truth."
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -59.98882731017571,
+              -2.9547920394423435
+            ],
+            [
+              -59.98882706650012,
+              -2.9548823844152308
+            ],
+            [
+              -59.98873720526201,
+              -2.9548821394205023
+            ],
+            [
+              -59.98873744894486,
+              -2.9547917944551196
+            ],
+            [
+              -59.98882731017571,
+              -2.9547920394423435
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "source": "Sentinel-2 L2A (S2B_MSIL2A_20261001T142709_N0513_R053_T20MRB_20261001T181049)",
+        "acquisitionDate": "2026-10-01T14:27:09Z",
+        "model": "Land8Fire U-Net 15-Channel",
+        "modelCheckpoint": "land8fire_15ch_unet_full_dataset_best.pth",
+        "classification": "MODEL_PREDICTION",
+        "threshold": 0.65,
+        "burnProbability": ">= 0.65",
+        "scientificNote": "Model prediction from single-date optical reflection. Not confirmed active fire or ground truth."
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -59.98900654533018,
+              -2.9549732193705602
+            ],
+            [
+              -59.98900630165411,
+              -2.955063564358119
+            ],
+            [
+              -59.98891644038655,
+              -2.955063319362954
+            ],
+            [
+              -59.98891668406987,
+              -2.9549729743828976
+            ],
+            [
+              -59.98900654533018,
+              -2.9549732193705602
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "source": "Sentinel-2 L2A (S2B_MSIL2A_20261001T142709_N0513_R053_T20MRB_20261001T181049)",
+        "acquisitionDate": "2026-10-01T14:27:09Z",
+        "model": "Land8Fire U-Net 15-Channel",
+        "modelCheckpoint": "land8fire_15ch_unet_full_dataset_best.pth",
+        "classification": "MODEL_PREDICTION",
+        "threshold": 0.65,
+        "burnProbability": ">= 0.65",
+        "scientificNote": "Model prediction from single-date optical reflection. Not confirmed active fire or ground truth."
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -60.001410625035554,
+              -2.9538324595149055
+            ],
+            [
+              -60.001406985563904,
+              -2.95518764984242
+            ],
+            [
+              -60.00131712325858,
+              -2.9551874058451046
+            ],
+            [
+              -60.001318093977275,
+              -2.954826021791334
+            ],
+            [
+              -60.00122823170839,
+              -2.9548257778166223
+            ],
+            [
+              -60.001230415454714,
+              -2.9540126637531103
+            ],
+            [
+              -60.0013202776584,
+              -2.95401290766057
+            ],
+            [
+              -60.0013207628389,
+              -2.953832215629673
+            ],
+            [
+              -60.001410625035554,
+              -2.9538324595149055
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "source": "Sentinel-2 L2A (S2B_MSIL2A_20261001T142709_N0513_R053_T20MRB_20261001T181049)",
+        "acquisitionDate": "2026-10-01T14:27:09Z",
+        "model": "Land8Fire U-Net 15-Channel",
+        "modelCheckpoint": "land8fire_15ch_unet_full_dataset_best.pth",
+        "classification": "MODEL_PREDICTION",
+        "threshold": 0.65,
+        "burnProbability": ">= 0.65",
+        "scientificNote": "Model prediction from single-date optical reflection. Not confirmed active fire or ground truth."
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -59.99071366715922,
+              -2.9550682178821623
+            ],
+            [
+              -59.990713423613336,
+              -2.955158563012067
+            ],
+            [
+              -59.990623562196404,
+              -2.9551583181478143
+            ],
+            [
+              -59.99062380574953,
+              -2.955067973025407
+            ],
+            [
+              -59.99071366715922,
+              -2.9550682178821623
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "source": "Sentinel-2 L2A (S2B_MSIL2A_20261001T142709_N0513_R053_T20MRB_20261001T181049)",
+        "acquisitionDate": "2026-10-01T14:27:09Z",
+        "model": "Land8Fire U-Net 15-Channel",
+        "modelCheckpoint": "land8fire_15ch_unet_full_dataset_best.pth",
+        "classification": "MODEL_PREDICTION",
+        "threshold": 0.65,
+        "burnProbability": ">= 0.65",
+        "scientificNote": "Model prediction from single-date optical reflection. Not confirmed active fire or ground truth."
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -59.99053394434731,
+              -2.9550677281613673
+            ],
+            [
+              -59.99053370078693,
+              -2.9551580732762748
+            ],
+            [
+              -59.99044383938495,
+              -2.955157828397451
+            ],
+            [
+              -59.99044408295258,
+              -2.9550674832900423
+            ],
+            [
+              -59.99053394434731,
+              -2.9550677281613673
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "source": "Sentinel-2 L2A (S2B_MSIL2A_20261001T142709_N0513_R053_T20MRB_20261001T181049)",
+        "acquisitionDate": "2026-10-01T14:27:09Z",
+        "model": "Land8Fire U-Net 15-Channel",
+        "modelCheckpoint": "land8fire_15ch_unet_full_dataset_best.pth",
+        "classification": "MODEL_PREDICTION",
+        "threshold": 0.65,
+        "burnProbability": ">= 0.65",
+        "scientificNote": "Model prediction from single-date optical reflection. Not confirmed active fire or ground truth."
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -59.990354221565326,
+              -2.955067238411433
+            ],
+            [
+              -59.99035397799046,
+              -2.9551575835113426
+            ],
+            [
+              -59.990264116603434,
+              -2.9551573386179486
+            ],
+            [
+              -59.990264360185535,
+              -2.955066993525539
+            ],
+            [
+              -59.990354221565326,
+              -2.955067238411433
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "source": "Sentinel-2 L2A (S2B_MSIL2A_20261001T142709_N0513_R053_T20MRB_20261001T181049)",
+        "acquisitionDate": "2026-10-01T14:27:09Z",
+        "model": "Land8Fire U-Net 15-Channel",
+        "modelCheckpoint": "land8fire_15ch_unet_full_dataset_best.pth",
+        "classification": "MODEL_PREDICTION",
+        "threshold": 0.65,
+        "burnProbability": ">= 0.65",
+        "scientificNote": "Model prediction from single-date optical reflection. Not confirmed active fire or ground truth."
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -59.990803285037764,
+              -2.9551588078690365
+            ],
+            [
+              -59.99080304149165,
+              -2.955249153006273
+            ],
+            [
+              -59.990713180059984,
+              -2.955248908141806
+            ],
+            [
+              -59.990713423613336,
+              -2.955158563012067
+            ],
+            [
+              -59.990803285037764,
+              -2.9551588078690365
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "source": "Sentinel-2 L2A (S2B_MSIL2A_20261001T142709_N0513_R053_T20MRB_20261001T181049)",
+        "acquisitionDate": "2026-10-01T14:27:09Z",
+        "model": "Land8Fire U-Net 15-Channel",
+        "modelCheckpoint": "land8fire_15ch_unet_full_dataset_best.pth",
+        "classification": "MODEL_PREDICTION",
+        "threshold": 0.65,
+        "burnProbability": ">= 0.65",
+        "scientificNote": "Model prediction from single-date optical reflection. Not confirmed active fire or ground truth."
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -59.990623562196404,
+              -2.9551583181478143
+            ],
+            [
+              -59.9906233186358,
+              -2.9552486632700528
+            ],
+            [
+              -59.99053345721908,
+              -2.955248418391015
+            ],
+            [
+              -59.99053370078693,
+              -2.9551580732762748
+            ],
+            [
+              -59.990623562196404,
+              -2.9551583181478143
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "source": "Sentinel-2 L2A (S2B_MSIL2A_20261001T142709_N0513_R053_T20MRB_20261001T181049)",
+        "acquisitionDate": "2026-10-01T14:27:09Z",
+        "model": "Land8Fire U-Net 15-Channel",
+        "modelCheckpoint": "land8fire_15ch_unet_full_dataset_best.pth",
+        "classification": "MODEL_PREDICTION",
+        "threshold": 0.65,
+        "burnProbability": ">= 0.65",
+        "scientificNote": "Model prediction from single-date optical reflection. Not confirmed active fire or ground truth."
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -59.99044383938495,
+              -2.955157828397451
+            ],
+            [
+              -59.99044359580985,
+              -2.9552481735046925
+            ],
+            [
+              -59.99035373440811,
+              -2.955247928611084
+            ],
+            [
+              -59.99035397799046,
+              -2.9551575835113426
+            ],
+            [
+              -59.99044383938495,
+              -2.955157828397451
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "source": "Sentinel-2 L2A (S2B_MSIL2A_20261001T142709_N0513_R053_T20MRB_20261001T181049)",
+        "acquisitionDate": "2026-10-01T14:27:09Z",
+        "model": "Land8Fire U-Net 15-Channel",
+        "modelCheckpoint": "land8fire_15ch_unet_full_dataset_best.pth",
+        "classification": "MODEL_PREDICTION",
+        "threshold": 0.65,
+        "burnProbability": ">= 0.65",
+        "scientificNote": "Model prediction from single-date optical reflection. Not confirmed active fire or ground truth."
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -59.990264116603434,
+              -2.9551573386179486
+            ],
+            [
+              -59.99026387301383,
+              -2.95524768371019
+            ],
+            [
+              -59.99017401162703,
+              -2.955247438802012
+            ],
+            [
+              -59.990174255223884,
+              -2.9551570937172693
+            ],
+            [
+              -59.990264116603434,
+              -2.9551573386179486
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "source": "Sentinel-2 L2A (S2B_MSIL2A_20261001T142709_N0513_R053_T20MRB_20261001T181049)",
+        "acquisitionDate": "2026-10-01T14:27:09Z",
+        "model": "Land8Fire U-Net 15-Channel",
+        "modelCheckpoint": "land8fire_15ch_unet_full_dataset_best.pth",
+        "classification": "MODEL_PREDICTION",
+        "threshold": 0.65,
+        "burnProbability": ">= 0.65",
+        "scientificNote": "Model prediction from single-date optical reflection. Not confirmed active fire or ground truth."
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -59.99727284117902,
+              -2.955357109778499
+            ],
+            [
+              -59.9972725981397,
+              -2.9554474554547094
+            ],
+            [
+              -59.997182736155665,
+              -2.9554472110998216
+            ],
+            [
+              -59.99718297920223,
+              -2.955356865431094
+            ],
+            [
+              -59.99727284117902,
+              -2.955357109778499
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "source": "Sentinel-2 L2A (S2B_MSIL2A_20261001T142709_N0513_R053_T20MRB_20261001T181049)",
+        "acquisitionDate": "2026-10-01T14:27:09Z",
+        "model": "Land8Fire U-Net 15-Channel",
+        "modelCheckpoint": "land8fire_15ch_unet_full_dataset_best.pth",
+        "classification": "MODEL_PREDICTION",
+        "threshold": 0.65,
+        "burnProbability": ">= 0.65",
+        "scientificNote": "Model prediction from single-date optical reflection. Not confirmed active fire or ground truth."
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -59.99098252083831,
+              -2.9553399878654183
+            ],
+            [
+              -59.99098227729172,
+              -2.955430333017316
+            ],
+            [
+              -59.990892415830615,
+              -2.9554300881524234
+            ],
+            [
+              -59.99089265938444,
+              -2.955339743008023
+            ],
+            [
+              -59.99098252083831,
+              -2.9553399878654183
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "source": "Sentinel-2 L2A (S2B_MSIL2A_20261001T142709_N0513_R053_T20MRB_20261001T181049)",
+        "acquisitionDate": "2026-10-01T14:27:09Z",
+        "model": "Land8Fire U-Net 15-Channel",
+        "modelCheckpoint": "land8fire_15ch_unet_full_dataset_best.pth",
+        "classification": "MODEL_PREDICTION",
+        "threshold": 0.65,
+        "burnProbability": ">= 0.65",
+        "scientificNote": "Model prediction from single-date optical reflection. Not confirmed active fire or ground truth."
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -60.001406014754956,
+              -2.955549033923404
+            ],
+            [
+              -60.0014057720341,
+              -2.9556393799432312
+            ],
+            [
+              -60.00131590969252,
+              -2.955639135908555
+            ],
+            [
+              -60.001316152420635,
+              -2.9555487898961985
+            ],
+            [
+              -60.001406014754956,
+              -2.955549033923404
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "source": "Sentinel-2 L2A (S2B_MSIL2A_20261001T142709_N0513_R053_T20MRB_20261001T181049)",
+        "acquisitionDate": "2026-10-01T14:27:09Z",
+        "model": "Land8Fire U-Net 15-Channel",
+        "modelCheckpoint": "land8fire_15ch_unet_full_dataset_best.pth",
+        "classification": "MODEL_PREDICTION",
+        "threshold": 0.65,
+        "burnProbability": ">= 0.65",
+        "scientificNote": "Model prediction from single-date optical reflection. Not confirmed active fire or ground truth."
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -60.001405529305764,
+              -2.9557297259628927
+            ],
+            [
+              -60.00140528656999,
+              -2.955820071982386
+            ],
+            [
+              -60.00131542421394,
+              -2.955819827932764
+            ],
+            [
+              -60.001315666956955,
+              -2.9557294819207436
+            ],
+            [
+              -60.001405529305764,
+              -2.9557297259628927
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "source": "Sentinel-2 L2A (S2B_MSIL2A_20261001T142709_N0513_R053_T20MRB_20261001T181049)",
+        "acquisitionDate": "2026-10-01T14:27:09Z",
+        "model": "Land8Fire U-Net 15-Channel",
+        "modelCheckpoint": "land8fire_15ch_unet_full_dataset_best.pth",
+        "classification": "MODEL_PREDICTION",
+        "threshold": 0.65,
+        "burnProbability": ">= 0.65",
+        "scientificNote": "Model prediction from single-date optical reflection. Not confirmed active fire or ground truth."
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -59.99655297313975,
+              -2.955716537259634
+            ],
+            [
+              -59.9965527300126,
+              -2.955806882875309
+            ],
+            [
+              -59.99646286805929,
+              -2.955806638432198
+            ],
+            [
+              -59.996463111193684,
+              -2.955716292824007
+            ],
+            [
+              -59.99655297313975,
+              -2.955716537259634
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "source": "Sentinel-2 L2A (S2B_MSIL2A_20261001T142709_N0513_R053_T20MRB_20261001T181049)",
+        "acquisitionDate": "2026-10-01T14:27:09Z",
+        "model": "Land8Fire U-Net 15-Channel",
+        "modelCheckpoint": "land8fire_15ch_unet_full_dataset_best.pth",
+        "classification": "MODEL_PREDICTION",
+        "threshold": 0.65,
+        "burnProbability": ">= 0.65",
+        "scientificNote": "Model prediction from single-date optical reflection. Not confirmed active fire or ground truth."
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -59.993675934302544,
+              -2.95625078395935
+            ],
+            [
+              -59.99367569089865,
+              -2.9563411293344144
+            ],
+            [
+              -59.99358582914082,
+              -2.956340884613179
+            ],
+            [
+              -59.99358607255196,
+              -2.9562505392456075
+            ],
+            [
+              -59.993675934302544,
+              -2.95625078395935
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "source": "Sentinel-2 L2A (S2B_MSIL2A_20261001T142709_N0513_R053_T20MRB_20261001T181049)",
+        "acquisitionDate": "2026-10-01T14:27:09Z",
+        "model": "Land8Fire U-Net 15-Channel",
+        "modelCheckpoint": "land8fire_15ch_unet_full_dataset_best.pth",
+        "classification": "MODEL_PREDICTION",
+        "threshold": 0.65,
+        "burnProbability": ">= 0.65",
+        "scientificNote": "Model prediction from single-date optical reflection. Not confirmed active fire or ground truth."
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -59.99349621080885,
+              -2.956250294524575
+            ],
+            [
+              -59.99349596739045,
+              -2.956340639884656
+            ],
+            [
+              -59.99340610564756,
+              -2.956340395148845
+            ],
+            [
+              -59.993406349073204,
+              -2.9562500497962567
+            ],
+            [
+              -59.99349621080885,
+              -2.956250294524575
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "source": "Sentinel-2 L2A (S2B_MSIL2A_20261001T142709_N0513_R053_T20MRB_20261001T181049)",
+        "acquisitionDate": "2026-10-01T14:27:09Z",
+        "model": "Land8Fire U-Net 15-Channel",
+        "modelCheckpoint": "land8fire_15ch_unet_full_dataset_best.pth",
+        "classification": "MODEL_PREDICTION",
+        "threshold": 0.65,
+        "burnProbability": ">= 0.65",
+        "scientificNote": "Model prediction from single-date optical reflection. Not confirmed active fire or ground truth."
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -59.992957040507086,
+              -2.9562488260453446
+            ],
+            [
+              -59.99295679704519,
+              -2.956339171360471
+            ],
+            [
+              -59.99286693534713,
+              -2.956338926580932
+            ],
+            [
+              -59.992867178816276,
+              -2.9562485812732984
+            ],
+            [
+              -59.992957040507086,
+              -2.9562488260453446
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "source": "Sentinel-2 L2A (S2B_MSIL2A_20261001T142709_N0513_R053_T20MRB_20261001T181049)",
+        "acquisitionDate": "2026-10-01T14:27:09Z",
+        "model": "Land8Fire U-Net 15-Channel",
+        "modelCheckpoint": "land8fire_15ch_unet_full_dataset_best.pth",
+        "classification": "MODEL_PREDICTION",
+        "threshold": 0.65,
+        "burnProbability": ">= 0.65",
+        "scientificNote": "Model prediction from single-date optical reflection. Not confirmed active fire or ground truth."
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -59.99358582914082,
+              -2.956340884613179
+            ],
+            [
+              -59.993585585722194,
+              -2.9564312299805846
+            ],
+            [
+              -59.993495723964585,
+              -2.9564309852445696
+            ],
+            [
+              -59.99349596739045,
+              -2.956340639884656
+            ],
+            [
+              -59.99358582914082,
+              -2.956340884613179
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "source": "Sentinel-2 L2A (S2B_MSIL2A_20261001T142709_N0513_R053_T20MRB_20261001T181049)",
+        "acquisitionDate": "2026-10-01T14:27:09Z",
+        "model": "Land8Fire U-Net 15-Channel",
+        "modelCheckpoint": "land8fire_15ch_unet_full_dataset_best.pth",
+        "classification": "MODEL_PREDICTION",
+        "threshold": 0.65,
+        "burnProbability": ">= 0.65",
+        "scientificNote": "Model prediction from single-date optical reflection. Not confirmed active fire or ground truth."
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -59.99421461823467,
+              -2.9564329429286156
+            ],
+            [
+              -59.994214374859325,
+              -2.956523288348288
+            ],
+            [
+              -59.99412451304218,
+              -2.956523043655801
+            ],
+            [
+              -59.99412475642476,
+              -2.956432698243619
+            ],
+            [
+              -59.99421461823467,
+              -2.9564329429286156
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "source": "Sentinel-2 L2A (S2B_MSIL2A_20261001T142709_N0513_R053_T20MRB_20261001T181049)",
+        "acquisitionDate": "2026-10-01T14:27:09Z",
+        "model": "Land8Fire U-Net 15-Channel",
+        "modelCheckpoint": "land8fire_15ch_unet_full_dataset_best.pth",
+        "classification": "MODEL_PREDICTION",
+        "threshold": 0.65,
+        "burnProbability": ">= 0.65",
+        "scientificNote": "Model prediction from single-date optical reflection. Not confirmed active fire or ground truth."
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -59.993675447487284,
+              -2.9564314747093112
+            ],
+            [
+              -59.993675204068445,
+              -2.9565218200840393
+            ],
+            [
+              -59.993585342296115,
+              -2.9565215753478213
+            ],
+            [
+              -59.993585585722194,
+              -2.9564312299805846
+            ],
+            [
+              -59.993675447487284,
+              -2.9564314747093112
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "source": "Sentinel-2 L2A (S2B_MSIL2A_20261001T142709_N0513_R053_T20MRB_20261001T181049)",
+        "acquisitionDate": "2026-10-01T14:27:09Z",
+        "model": "Land8Fire U-Net 15-Channel",
+        "modelCheckpoint": "land8fire_15ch_unet_full_dataset_best.pth",
+        "classification": "MODEL_PREDICTION",
+        "threshold": 0.65,
+        "burnProbability": ">= 0.65",
+        "scientificNote": "Model prediction from single-date optical reflection. Not confirmed active fire or ground truth."
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -59.993495723964585,
+              -2.9564309852445696
+            ],
+            [
+              -59.99349548053125,
+              -2.9565213306043154
+            ],
+            [
+              -59.993405618773856,
+              -2.9565210858535207
+            ],
+            [
+              -59.993405862214445,
+              -2.956430740501267
+            ],
+            [
+              -59.993495723964585,
+              -2.9564309852445696
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "source": "Sentinel-2 L2A (S2B_MSIL2A_20261001T142709_N0513_R053_T20MRB_20261001T181049)",
+        "acquisitionDate": "2026-10-01T14:27:09Z",
+        "model": "Land8Fire U-Net 15-Channel",
+        "modelCheckpoint": "land8fire_15ch_unet_full_dataset_best.pth",
+        "classification": "MODEL_PREDICTION",
+        "threshold": 0.65,
+        "burnProbability": ">= 0.65",
+        "scientificNote": "Model prediction from single-date optical reflection. Not confirmed active fire or ground truth."
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -59.99349523709044,
+              -2.956611675963894
+            ],
+            [
+              -59.99349499364216,
+              -2.956702021323305
+            ],
+            [
+              -59.993405131870276,
+              -2.9567017765575265
+            ],
+            [
+              -59.99340537532579,
+              -2.9566114312056073
+            ],
+            [
+              -59.99349523709044,
+              -2.956611675963894
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "source": "Sentinel-2 L2A (S2B_MSIL2A_20261001T142709_N0513_R053_T20MRB_20261001T181049)",
+        "acquisitionDate": "2026-10-01T14:27:09Z",
+        "model": "Land8Fire U-Net 15-Channel",
+        "modelCheckpoint": "land8fire_15ch_unet_full_dataset_best.pth",
+        "classification": "MODEL_PREDICTION",
+        "threshold": 0.65,
+        "burnProbability": ">= 0.65",
+        "scientificNote": "Model prediction from single-date optical reflection. Not confirmed active fire or ground truth."
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -59.99331551356863,
+              -2.956611186440032
+            ],
+            [
+              -59.99331527010586,
+              -2.956701531784459
+            ],
+            [
+              -59.99322540834891,
+              -2.956701287004103
+            ],
+            [
+              -59.993225651818946,
+              -2.956610941667168
+            ],
+            [
+              -59.99331551356863,
+              -2.956611186440032
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "source": "Sentinel-2 L2A (S2B_MSIL2A_20261001T142709_N0513_R053_T20MRB_20261001T181049)",
+        "acquisitionDate": "2026-10-01T14:27:09Z",
+        "model": "Land8Fire U-Net 15-Channel",
+        "modelCheckpoint": "land8fire_15ch_unet_full_dataset_best.pth",
+        "classification": "MODEL_PREDICTION",
+        "threshold": 0.65,
+        "burnProbability": ">= 0.65",
+        "scientificNote": "Model prediction from single-date optical reflection. Not confirmed active fire or ground truth."
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -59.993405131870276,
+              -2.9567017765575265
+            ],
+            [
+              -59.99340488840726,
+              -2.9567921219092783
+            ],
+            [
+              -59.99331502663561,
+              -2.956791877128719
+            ],
+            [
+              -59.99331527010586,
+              -2.956701531784459
+            ],
+            [
+              -59.993405131870276,
+              -2.9567017765575265
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "source": "Sentinel-2 L2A (S2B_MSIL2A_20261001T142709_N0513_R053_T20MRB_20261001T181049)",
+        "acquisitionDate": "2026-10-01T14:27:09Z",
+        "model": "Land8Fire U-Net 15-Channel",
+        "modelCheckpoint": "land8fire_15ch_unet_full_dataset_best.pth",
+        "classification": "MODEL_PREDICTION",
+        "threshold": 0.65,
+        "burnProbability": ">= 0.65",
+        "scientificNote": "Model prediction from single-date optical reflection. Not confirmed active fire or ground truth."
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -59.9936744737671,
+              -2.9567928562072217
+            ],
+            [
+              -59.993674230318376,
+              -2.9568832015812805
+            ],
+            [
+              -59.993584368517034,
+              -2.9568829568150967
+            ],
+            [
+              -59.99358461197301,
+              -2.9567926114485292
+            ],
+            [
+              -59.9936744737671,
+              -2.9567928562072217
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "source": "Sentinel-2 L2A (S2B_MSIL2A_20261001T142709_N0513_R053_T20MRB_20261001T181049)",
+        "acquisitionDate": "2026-10-01T14:27:09Z",
+        "model": "Land8Fire U-Net 15-Channel",
+        "modelCheckpoint": "land8fire_15ch_unet_full_dataset_best.pth",
+        "classification": "MODEL_PREDICTION",
+        "threshold": 0.65,
+        "burnProbability": ">= 0.65",
+        "scientificNote": "Model prediction from single-date optical reflection. Not confirmed active fire or ground truth."
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -59.99403343417122,
+              -2.956974525976975
+            ],
+            [
+              -59.99403319073656,
+              -2.957064871380664
+            ],
+            [
+              -59.99394332889083,
+              -2.9570646266286555
+            ],
+            [
+              -59.99394357233275,
+              -2.9569742812324598
+            ],
+            [
+              -59.99403343417122,
+              -2.956974525976975
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "source": "Sentinel-2 L2A (S2B_MSIL2A_20261001T142709_N0513_R053_T20MRB_20261001T181049)",
+        "acquisitionDate": "2026-10-01T14:27:09Z",
+        "model": "Land8Fire U-Net 15-Channel",
+        "modelCheckpoint": "land8fire_15ch_unet_full_dataset_best.pth",
+        "classification": "MODEL_PREDICTION",
+        "threshold": 0.65,
+        "burnProbability": ">= 0.65",
+        "scientificNote": "Model prediction from single-date optical reflection. Not confirmed active fire or ground truth."
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -59.993314052679864,
+              -2.9571532585040825
+            ],
+            [
+              -59.99331380917225,
+              -2.957243603847505
+            ],
+            [
+              -59.9932239473718,
+              -2.957243359022196
+            ],
+            [
+              -59.99322419088667,
+              -2.9571530136862654
+            ],
+            [
+              -59.993314052679864,
+              -2.9571532585040825
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "source": "Sentinel-2 L2A (S2B_MSIL2A_20261001T142709_N0513_R053_T20MRB_20261001T181049)",
+        "acquisitionDate": "2026-10-01T14:27:09Z",
+        "model": "Land8Fire U-Net 15-Channel",
+        "modelCheckpoint": "land8fire_15ch_unet_full_dataset_best.pth",
+        "classification": "MODEL_PREDICTION",
+        "threshold": 0.65,
+        "burnProbability": ">= 0.65",
+        "scientificNote": "Model prediction from single-date optical reflection. Not confirmed active fire or ground truth."
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -59.993851762699244,
+              -2.957696799585617
+            ],
+            [
+              -59.993851519190315,
+              -2.9577871449729844
+            ],
+            [
+              -59.993761657301526,
+              -2.9577869001464707
+            ],
+            [
+              -59.99376190081771,
+              -2.957696554766594
+            ],
+            [
+              -59.993851762699244,
+              -2.957696799585617
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "source": "Sentinel-2 L2A (S2B_MSIL2A_20261001T142709_N0513_R053_T20MRB_20261001T181049)",
+        "acquisitionDate": "2026-10-01T14:27:09Z",
+        "model": "Land8Fire U-Net 15-Channel",
+        "modelCheckpoint": "land8fire_15ch_unet_full_dataset_best.pth",
+        "classification": "MODEL_PREDICTION",
+        "threshold": 0.65,
+        "burnProbability": ">= 0.65",
+        "scientificNote": "Model prediction from single-date optical reflection. Not confirmed active fire or ground truth."
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -60.000317949106844,
+              -2.9591599421914094
+            ],
+            [
+              -60.000317706000814,
+              -2.959250288114861
+            ],
+            [
+              -60.000227843458624,
+              -2.9592500436937503
+            ],
+            [
+              -60.00022808657191,
+              -2.9591596977777725
+            ],
+            [
+              -60.000317949106844,
+              -2.9591599421914094
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "source": "Sentinel-2 L2A (S2B_MSIL2A_20261001T142709_N0513_R053_T20MRB_20261001T181049)",
+        "acquisitionDate": "2026-10-01T14:27:09Z",
+        "model": "Land8Fire U-Net 15-Channel",
+        "modelCheckpoint": "land8fire_15ch_unet_full_dataset_best.pth",
+        "classification": "MODEL_PREDICTION",
+        "threshold": 0.65,
+        "burnProbability": ">= 0.65",
+        "scientificNote": "Model prediction from single-date optical reflection. Not confirmed active fire or ground truth."
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -60.0010523892231,
+              -2.953379753962203
+            ],
+            [
+              -60.0010521466521,
+              -2.953470099956152
+            ],
+            [
+              -60.000782560260824,
+              -2.953469368280902
+            ],
+            [
+              -60.000782317660665,
+              -2.9535597142522656
+            ],
+            [
+              -59.99997355882416,
+              -2.9535575187660656
+            ],
+            [
+              -59.99997331615136,
+              -2.9536478646699904
+            ],
+            [
+              -59.99988345408845,
+              -2.9536476206831965
+            ],
+            [
+              -59.99988321140095,
+              -2.953737966579478
+            ],
+            [
+              -59.99997307347111,
+              -2.9537382105737473
+            ],
+            [
+              -59.99997234538561,
+              -2.9540092482840157
+            ],
+            [
+              -60.00006220748493,
+              -2.9540094922934292
+            ],
+            [
+              -60.0000619647821,
+              -2.954099838203993
+            ],
+            [
+              -60.00015182689615,
+              -2.9541000822136
+            ],
+            [
+              -60.0001515841931,
+              -2.954190428131472
+            ],
+            [
+              -60.00024144632182,
+              -2.954190672141272
+            ],
+            [
+              -60.00024120361857,
+              -2.9542810180664514
+            ],
+            [
+              -60.000331065762005,
+              -2.954281262076443
+            ],
+            [
+              -60.000330337629244,
+              -2.954552299873405
+            ],
+            [
+              -60.00024047546406,
+              -2.9545520558409892
+            ],
+            [
+              -60.00024023273099,
+              -2.9546424017655
+            ],
+            [
+              -60.00015037056603,
+              -2.9546421577183253
+            ],
+            [
+              -60.00015012781825,
+              -2.9547325036351935
+            ],
+            [
+              -60.0000602656535,
+              -2.9547322595732606
+            ],
+            [
+              -60.00006002289103,
+              -2.954822605482487
+            ],
+            [
+              -59.999970160726484,
+              -2.9548223614057925
+            ],
+            [
+              -59.9999699179493,
+              -2.9549127073073755
+            ],
+            [
+              -59.99988005578498,
+              -2.9549124632159214
+            ],
+            [
+              -59.99987981299309,
+              -2.9550028091098626
+            ],
+            [
+              -59.999789950828976,
+              -2.9550025650036473
+            ],
+            [
+              -59.9997897080224,
+              -2.9550929108899453
+            ],
+            [
+              -59.99969984585848,
+              -2.9550926667689703
+            ],
+            [
+              -59.9996996030372,
+              -2.9551830126476233
+            ],
+            [
+              -59.99960974087351,
+              -2.9551827685118863
+            ],
+            [
+              -59.99960901234317,
+              -2.955453806124415
+            ],
+            [
+              -59.999698874528605,
+              -2.9554540502825826
+            ],
+            [
+              -59.99969790307942,
+              -2.9558154337935183
+            ],
+            [
+              -59.999608040865,
+              -2.9558151896054454
+            ],
+            [
+              -59.99960731217808,
+              -2.956086227214462
+            ],
+            [
+              -59.999517449949366,
+              -2.9560859829966724
+            ],
+            [
+              -59.9995169641063,
+              -2.9562666747202266
+            ],
+            [
+              -59.99942710187055,
+              -2.9562664304801967
+            ],
+            [
+              -59.99942685893059,
+              -2.956356776334246
+            ],
+            [
+              -59.99933699669504,
+              -2.9563565320794507
+            ],
+            [
+              -59.99933675374037,
+              -2.9564468779258553
+            ],
+            [
+              -59.99924689150503,
+              -2.956446633656294
+            ],
+            [
+              -59.99924543357689,
+              -2.9569887086863456
+            ],
+            [
+              -59.99906570904159,
+              -2.9569882200356252
+            ],
+            [
+              -59.999065466012965,
+              -2.957078565858426
+            ],
+            [
+              -59.99888574149299,
+              -2.957078077163591
+            ],
+            [
+              -59.99888549844241,
+              -2.9571684229712685
+            ],
+            [
+              -59.99852604946295,
+              -2.9571674454642016
+            ],
+            [
+              -59.99852556328139,
+              -2.957348137019223
+            ],
+            [
+              -59.99861542552957,
+              -2.9573483814218826
+            ],
+            [
+              -59.99861518243486,
+              -2.9574387272066223
+            ],
+            [
+              -59.99870504469775,
+              -2.957438971609471
+            ],
+            [
+              -59.99870480160283,
+              -2.9575293174015216
+            ],
+            [
+              -59.99906425075797,
+              -2.95753029496992
+            ],
+            [
+              -59.9990640076846,
+              -2.9576206407917174
+            ],
+            [
+              -59.999243732321425,
+              -2.957621129547125
+            ],
+            [
+              -59.9992434892551,
+              -2.9577114753837095
+            ],
+            [
+              -59.99942321393626,
+              -2.957711964124907
+            ],
+            [
+              -59.999422484736066,
+              -2.9579830016785214
+            ],
+            [
+              -59.99951234710958,
+              -2.957983246060613
+            ],
+            [
+              -59.99951210403519,
+              -2.95807359191896
+            ],
+            [
+              -59.99942224165441,
+              -2.9580733475293903
+            ],
+            [
+              -59.9994219985653,
+              -2.9581636933800928
+            ],
+            [
+              -59.999511860953334,
+              -2.958163937777139
+            ],
+            [
+              -59.99951161786402,
+              -2.9582542836351506
+            ],
+            [
+              -59.99942175546874,
+              -2.9582540392306282
+            ],
+            [
+              -59.99942151236472,
+              -2.958344385080995
+            ],
+            [
+              -59.99951137476726,
+              -2.9583446294929954
+            ],
+            [
+              -59.99951113166304,
+              -2.9584349753506713
+            ],
+            [
+              -59.99942126925325,
+              -2.9584347309311947
+            ],
+            [
+              -59.99942078300791,
+              -2.958615422631093
+            ],
+            [
+              -59.99933092059108,
+              -2.958615178189368
+            ],
+            [
+              -59.99933067744997,
+              -2.958705524031589
+            ],
+            [
+              -59.999240815033325,
+              -2.958705279575093
+            ],
+            [
+              -59.99924032871424,
+              -2.9588859712440776
+            ],
+            [
+              -59.999150466290544,
+              -2.9588857267653323
+            ],
+            [
+              -59.99914973673421,
+              -2.9591567642451206
+            ],
+            [
+              -59.999239599179674,
+              -2.9591570087462977
+            ],
+            [
+              -59.99923911278601,
+              -2.9593377004136068
+            ],
+            [
+              -59.999508700210676,
+              -2.959338433918232
+            ],
+            [
+              -59.99950894338946,
+              -2.959248088062229
+            ],
+            [
+              -59.999688668362026,
+              -2.959248577013882
+            ],
+            [
+              -59.99968891151884,
+              -2.9591582311427596
+            ],
+            [
+              -60.00013822404442,
+              -2.9591594533568415
+            ],
+            [
+              -60.00013798092388,
+              -2.959249799265344
+            ],
+            [
+              -60.000227843458624,
+              -2.9592500436937503
+            ],
+            [
+              -60.00022760033788,
+              -2.9593403896095607
+            ],
+            [
+              -60.00031746288733,
+              -2.9593406340381465
+            ],
+            [
+              -60.000317219766394,
+              -2.959430979961264
+            ],
+            [
+              -60.000407082330554,
+              -2.9594312243900287
+            ],
+            [
+              -60.000406839209425,
+              -2.9595215703204527
+            ],
+            [
+              -60.000676426968404,
+              -2.9595223035853953
+            ],
+            [
+              -60.00067667006777,
+              -2.9594319576325487
+            ],
+            [
+              -60.00076653266175,
+              -2.9594322020321298
+            ],
+            [
+              -60.00076677574642,
+              -2.9593418560716405
+            ],
+            [
+              -60.00094650094222,
+              -2.9593423448339697
+            ],
+            [
+              -60.00094698706014,
+              -2.959161652882596
+            ],
+            [
+              -60.001036849654724,
+              -2.95916189723787
+            ],
+            [
+              -60.00103709269524,
+              -2.95907155125446
+            ],
+            [
+              -60.00112695529001,
+              -2.9590717955949666
+            ],
+            [
+              -60.00112719831584,
+              -2.958981449603914
+            ],
+            [
+              -60.001217060910804,
+              -2.9589816939296534
+            ],
+            [
+              -60.001224105207214,
+              -2.956361659899636
+            ],
+            [
+              -60.00131396759932,
+              -2.9563619040013784
+            ],
+            [
+              -60.00131469594016,
+              -2.9560908659678247
+            ],
+            [
+              -60.001404558317965,
+              -2.956091110039862
+            ],
+            [
+              -60.001349503820315,
+              -2.9765093060315353
+            ],
+            [
+              -59.97834455815831,
+              -2.976446151765043
+            ],
+            [
+              -59.97840736860228,
+              -2.9533180667015855
+            ],
+            [
+              -60.0010523892231,
+              -2.953379753962203
+            ]
+          ],
+          [
+            [
+              -59.99557032686852,
+              -2.9535455552167367
+            ],
+            [
+              -59.99350350988634,
+              -2.95353993364435
+            ],
+            [
+              -59.993503266692095,
+              -2.95363027900945
+            ],
+            [
+              -59.993413405166564,
+              -2.9536300344983935
+            ],
+            [
+              -59.99341364836806,
+              -2.9535396891407855
+            ],
+            [
+              -59.99332378685725,
+              -2.953539444629941
+            ],
+            [
+              -59.993323543648515,
+              -2.9536297899800568
+            ],
+            [
+              -59.993053959139196,
+              -2.9536290563813568
+            ],
+            [
+              -59.993053715901276,
+              -2.9537194017088284
+            ],
+            [
+              -59.99296385440587,
+              -2.953719157153873
+            ],
+            [
+              -59.992963611153236,
+              -2.953809502473684
+            ],
+            [
+              -59.99287374965806,
+              -2.9538092579039543
+            ],
+            [
+              -59.9928735063907,
+              -2.953899603216105
+            ],
+            [
+              -59.99278364489575,
+              -2.9538993586315994
+            ],
+            [
+              -59.99278340161367,
+              -2.9539897039360894
+            ],
+            [
+              -59.99287326311586,
+              -2.9539899485280885
+            ],
+            [
+              -59.99287301983355,
+              -2.954080293839904
+            ],
+            [
+              -59.99278315832413,
+              -2.9540800492404116
+            ],
+            [
+              -59.992782915027114,
+              -2.9541703945445676
+            ],
+            [
+              -59.992693053517904,
+              -2.9541701499303006
+            ],
+            [
+              -59.99269329682217,
+              -2.954079804633638
+            ],
+            [
+              -59.992603435327695,
+              -2.95407956001958
+            ],
+            [
+              -59.992603192016176,
+              -2.954169905308749
+            ],
+            [
+              -59.99251333052193,
+              -2.954169660679916
+            ],
+            [
+              -59.992513087195704,
+              -2.954260005961422
+            ],
+            [
+              -59.992423225701685,
+              -2.954259761317812
+            ],
+            [
+              -59.99242298236074,
+              -2.9543501065916566
+            ],
+            [
+              -59.992512843862,
+              -2.9543503512427614
+            ],
+            [
+              -59.992512600520826,
+              -2.954440696523933
+            ],
+            [
+              -59.992602462036814,
+              -2.9544409411752492
+            ],
+            [
+              -59.99260221869542,
+              -2.9545312864637476
+            ],
+            [
+              -59.99251235717219,
+              -2.954531041804938
+            ],
+            [
+              -59.99251211381606,
+              -2.954621387085776
+            ],
+            [
+              -59.99260197534653,
+              -2.9546216317520795
+            ],
+            [
+              -59.992601731990185,
+              -2.9547119770402444
+            ],
+            [
+              -59.99269159353537,
+              -2.9547122217067576
+            ],
+            [
+              -59.99269135017879,
+              -2.9548025670022477
+            ],
+            [
+              -59.992781211738695,
+              -2.9548028116689715
+            ],
+            [
+              -59.99278096838189,
+              -2.9548931569717882
+            ],
+            [
+              -59.992870829956516,
+              -2.9548934016387207
+            ],
+            [
+              -59.99287058659948,
+              -2.954983746948864
+            ],
+            [
+              -59.992960448188825,
+              -2.954983991616005
+            ],
+            [
+              -59.99296020483156,
+              -2.9550743369334755
+            ],
+            [
+              -59.992870343234976,
+              -2.9550740922588408
+            ],
+            [
+              -59.99287009986299,
+              -2.955164437568649
+            ],
+            [
+              -59.99295996146682,
+              -2.9551646822507767
+            ],
+            [
+              -59.992958257704416,
+              -2.9557970994672034
+            ],
+            [
+              -59.99286839604986,
+              -2.9557968547326228
+            ],
+            [
+              -59.99286815261808,
+              -2.9558872000410927
+            ],
+            [
+              -59.99277829096375,
+              -2.955886955291733
+            ],
+            [
+              -59.99277804751725,
+              -2.955977300592542
+            ],
+            [
+              -59.99268818586313,
+              -2.9559770558284013
+            ],
+            [
+              -59.99268794240192,
+              -2.95606740112155
+            ],
+            [
+              -59.992777804063294,
+              -2.9560676458931843
+            ],
+            [
+              -59.992777560601844,
+              -2.956157991193658
+            ],
+            [
+              -59.99268769893324,
+              -2.9561577464145303
+            ],
+            [
+              -59.99268745545708,
+              -2.9562480917073435
+            ],
+            [
+              -59.992597593788695,
+              -2.956247846913435
+            ],
+            [
+              -59.99259735029781,
+              -2.956338192198587
+            ],
+            [
+              -59.99250748862964,
+              -2.956337947389896
+            ],
+            [
+              -59.99250724512404,
+              -2.9564282926673866
+            ],
+            [
+              -59.99241738345611,
+              -2.956428047843914
+            ],
+            [
+              -59.99241713993578,
+              -2.9565183931137424
+            ],
+            [
+              -59.99223741660783,
+              -2.9565179034299427
+            ],
+            [
+              -59.992236929515755,
+              -2.9566985939391186
+            ],
+            [
+              -59.992147067848485,
+              -2.9566983490712966
+            ],
+            [
+              -59.992146824283985,
+              -2.956788694318139
+            ],
+            [
+              -59.992236685958495,
+              -2.956788939193456
+            ],
+            [
+              -59.99223619882157,
+              -2.956969629701628
+            ],
+            [
+              -59.99241592222201,
+              -2.956970119460375
+            ],
+            [
+              -59.992416165779716,
+              -2.9568797741913833
+            ],
+            [
+              -59.99286547437538,
+              -2.956880998423214
+            ],
+            [
+              -59.99286571788936,
+              -2.9567906531165855
+            ],
+            [
+              -59.99295557962366,
+              -2.9567908979335904
+            ],
+            [
+              -59.992955336116935,
+              -2.956881243247712
+            ],
+            [
+              -59.99304519786596,
+              -2.9568814880649215
+            ],
+            [
+              -59.99304544136543,
+              -2.9567911427433065
+            ],
+            [
+              -59.993135303114684,
+              -2.956791387545733
+            ],
+            [
+              -59.99313505962246,
+              -2.95688173287484
+            ],
+            [
+              -59.993224921386435,
+              -2.95688197767747
+            ],
+            [
+              -59.993225164871404,
+              -2.9567916323408703
+            ],
+            [
+              -59.99331502663561,
+              -2.956791877128719
+            ],
+            [
+              -59.99331478315787,
+              -2.9568822224728106
+            ],
+            [
+              -59.993404644936795,
+              -2.9568824672608622
+            ],
+            [
+              -59.99340488840726,
+              -2.9567921219092783
+            ],
+            [
+              -59.99349475018641,
+              -2.9567923666825484
+            ],
+            [
+              -59.99349401977432,
+              -2.9570634027592737
+            ],
+            [
+              -59.99340415797343,
+              -2.957063157963528
+            ],
+            [
+              -59.99340440145885,
+              -2.9569728126122796
+            ],
+            [
+              -59.99331453967268,
+              -2.9569725678167353
+            ],
+            [
+              -59.99331429618,
+              -2.957062913160493
+            ],
+            [
+              -59.99322443439406,
+              -2.957062668350167
+            ],
+            [
+              -59.99322419088667,
+              -2.9571530136862654
+            ],
+            [
+              -59.99313432910095,
+              -2.957152768861158
+            ],
+            [
+              -59.99313359851218,
+              -2.957423804845968
+            ],
+            [
+              -59.99322346031966,
+              -2.957424049693553
+            ],
+            [
+              -59.993223216782376,
+              -2.957514395028981
+            ],
+            [
+              -59.99331307860458,
+              -2.9575146398767687
+            ],
+            [
+              -59.99331283506707,
+              -2.9576049852195214
+            ],
+            [
+              -59.993402696904006,
+              -2.957605230067509
+            ],
+            [
+              -59.99340294043426,
+              -2.9575148847172636
+            ],
+            [
+              -59.9934928022714,
+              -2.957515129550469
+            ],
+            [
+              -59.99349255874839,
+              -2.9576054749082057
+            ],
+            [
+              -59.99358242060026,
+              -2.9576057197416117
+            ],
+            [
+              -59.99358217707705,
+              -2.9576960651066733
+            ],
+            [
+              -59.993672038943636,
+              -2.9576963099402795
+            ],
+            [
+              -59.993671795420205,
+              -2.957786655312664
+            ],
+            [
+              -59.993761657301526,
+              -2.9577869001464707
+            ],
+            [
+              -59.99376141377787,
+              -2.957877245526179
+            ],
+            [
+              -59.99385127567391,
+              -2.9578774903601834
+            ],
+            [
+              -59.993851519190315,
+              -2.9577871449729844
+            ],
+            [
+              -59.99394138108658,
+              -2.957787389792207
+            ],
+            [
+              -59.99394162458825,
+              -2.9576970443973494
+            ],
+            [
+              -59.99403148648472,
+              -2.95769728920179
+            ],
+            [
+              -59.994031729971695,
+              -2.957606943799273
+            ],
+            [
+              -59.994121591868385,
+              -2.957607188588933
+            ],
+            [
+              -59.99412183534062,
+              -2.9575168431787597
+            ],
+            [
+              -59.994211697237525,
+              -2.957517087953637
+            ],
+            [
+              -59.994211940695045,
+              -2.9574267425358065
+            ],
+            [
+              -59.99412207880539,
+              -2.9574264977684184
+            ],
+            [
+              -59.994122322262676,
+              -2.9573361523579105
+            ],
+            [
+              -59.99421218414509,
+              -2.957336397117808
+            ],
+            [
+              -59.99421242758766,
+              -2.957246051699642
+            ],
+            [
+              -59.9941225657125,
+              -2.9572458069472347
+            ],
+            [
+              -59.99412280915485,
+              -2.957155461536392
+            ],
+            [
+              -59.99403294729442,
+              -2.9571552167841837
+            ],
+            [
+              -59.99403319073656,
+              -2.957064871380664
+            ],
+            [
+              -59.994123052589735,
+              -2.9570651161253805
+            ],
+            [
+              -59.99412329601715,
+              -2.9569747707142024
+            ],
+            [
+              -59.99403343417122,
+              -2.956974525976975
+            ],
+            [
+              -59.99403367759841,
+              -2.956884180573121
+            ],
+            [
+              -59.9941235394371,
+              -2.956884425302857
+            ],
+            [
+              -59.99412378284957,
+              -2.956794079891344
+            ],
+            [
+              -59.99421364468847,
+              -2.9567943246063013
+            ],
+            [
+              -59.994213888086236,
+              -2.9567039791871306
+            ],
+            [
+              -59.99412402625458,
+              -2.956703734479664
+            ],
+            [
+              -59.99412426965211,
+              -2.956613389067816
+            ],
+            [
+              -59.99421413147652,
+              -2.9566136337677933
+            ],
+            [
+              -59.994214374859325,
+              -2.956523288348288
+            ],
+            [
+              -59.99430423668396,
+              -2.956523533033487
+            ],
+            [
+              -59.99430496676583,
+              -2.956252496751496
+            ],
+            [
+              -59.994394828576176,
+              -2.9562527414069377
+            ],
+            [
+              -59.994394585230275,
+              -2.9563430868419243
+            ],
+            [
+              -59.994484447055335,
+              -2.9563433314975676
+            ],
+            [
+              -59.994484690394,
+              -2.9562529860550906
+            ],
+            [
+              -59.994574552219284,
+              -2.9562532306959564
+            ],
+            [
+              -59.99457430888788,
+              -2.9563435761459216
+            ],
+            [
+              -59.99466417072788,
+              -2.9563438207869885
+            ],
+            [
+              -59.99466441405204,
+              -2.956253475329534
+            ],
+            [
+              -59.99475427589227,
+              -2.956253719955824
+            ],
+            [
+              -59.99475354591913,
+              -2.9565247563501513
+            ],
+            [
+              -59.99484340778857,
+              -2.956525000991619
+            ],
+            [
+              -59.994843164456505,
+              -2.956615346463549
+            ],
+            [
+              -59.99475330257982,
+              -2.9566151018145925
+            ],
+            [
+              -59.994753059233034,
+              -2.9567054472788654
+            ],
+            [
+              -59.99484292111698,
+              -2.9567056919353107
+            ],
+            [
+              -59.99484267776997,
+              -2.9567960374069053
+            ],
+            [
+              -59.994932539668625,
+              -2.956796282063549
+            ],
+            [
+              -59.99493205296671,
+              -2.9569769730212125
+            ],
+            [
+              -59.99511177681545,
+              -2.9569774623425844
+            ],
+            [
+              -59.995111533467785,
+              -2.957067807836141
+            ],
+            [
+              -59.99520139541059,
+              -2.9570680524933795
+            ],
+            [
+              -59.995201638751,
+              -2.956977706992336
+            ],
+            [
+              -59.99529150069404,
+              -2.956977951634798
+            ],
+            [
+              -59.99529125736088,
+              -2.9570682971433295
+            ],
+            [
+              -59.99538111931864,
+              -2.9570685417859885
+            ],
+            [
+              -59.99538136264453,
+              -2.9569781962699704
+            ],
+            [
+              -59.99565094854084,
+              -2.956978930131749
+            ],
+            [
+              -59.995651191837524,
+              -2.956888584593103
+            ],
+            [
+              -59.99574105381063,
+              -2.9568888291916307
+            ],
+            [
+              -59.99574129709261,
+              -2.95679848364533
+            ],
+            [
+              -59.99592102104673,
+              -2.9567989728055446
+            ],
+            [
+              -59.995921507559274,
+              -2.9566182816824993
+            ],
+            [
+              -59.996011369533036,
+              -2.9566185262367015
+            ],
+            [
+              -59.996011612770864,
+              -2.956528180667442
+            ],
+            [
+              -59.99610147474485,
+              -2.95652842520687
+            ],
+            [
+              -59.99610171796794,
+              -2.956438079629958
+            ],
+            [
+              -59.99619157994215,
+              -2.9564383241546115
+            ],
+            [
+              -59.99619182315054,
+              -2.956347978570047
+            ],
+            [
+              -59.99628168512495,
+              -2.9563482230799276
+            ],
+            [
+              -59.996281928318616,
+              -2.9562578774877104
+            ],
+            [
+              -59.9965515142649,
+              -2.956258610951172
+            ],
+            [
+              -59.99655175742936,
+              -2.956168265336334
+            ],
+            [
+              -59.99664161941914,
+              -2.956168509802095
+            ],
+            [
+              -59.99664186256889,
+              -2.956078164179605
+            ],
+            [
+              -59.99673172455888,
+              -2.9560784086305945
+            ],
+            [
+              -59.996731481416376,
+              -2.9561687542605677
+            ],
+            [
+              -59.996821343421075,
+              -2.9561689987117528
+            ],
+            [
+              -59.99682158655634,
+              -2.956078653074297
+            ],
+            [
+              -59.99691144856124,
+              -2.956078897510711
+            ],
+            [
+              -59.99691169168179,
+              -2.9559885518656035
+            ],
+            [
+              -59.99682182968413,
+              -2.955988307436672
+            ],
+            [
+              -59.99682207280446,
+              -2.955897961798881
+            ],
+            [
+              -59.9967322108215,
+              -2.9558977173701457
+            ],
+            [
+              -59.996731967693925,
+              -2.9559880630004547
+            ],
+            [
+              -59.996642105711196,
+              -2.9559878185569484
+            ],
+            [
+              -59.99664283509328,
+              -2.955716781687975
+            ],
+            [
+              -59.99655297313975,
+              -2.955716537259634
+            ],
+            [
+              -59.99655321625943,
+              -2.955626191643792
+            ],
+            [
+              -59.99664307820571,
+              -2.9556264360646485
+            ],
+            [
+              -59.99664380749823,
+              -2.955355399193667
+            ],
+            [
+              -59.996913393316646,
+              -2.9553561323451656
+            ],
+            [
+              -59.99691315024835,
+              -2.9554464779914453
+            ],
+            [
+              -59.99700301220999,
+              -2.9554467223681895
+            ],
+            [
+              -59.99700325527104,
+              -2.9553563767144273
+            ],
+            [
+              -59.99709311723291,
+              -2.9553566210764037
+            ],
+            [
+              -59.99709287417909,
+              -2.955446966737649
+            ],
+            [
+              -59.997182736155665,
+              -2.9554472110998216
+            ],
+            [
+              -59.99718249310165,
+              -2.955537556768383
+            ],
+            [
+              -59.997272355092925,
+              -2.955537801130752
+            ],
+            [
+              -59.99727211203867,
+              -2.9556281468066268
+            ],
+            [
+              -59.99736197404466,
+              -2.9556283911691925
+            ],
+            [
+              -59.997362217091656,
+              -2.955538045485835
+            ],
+            [
+              -59.99745207909786,
+              -2.9555382898336324
+            ],
+            [
+              -59.99745183605811,
+              -2.9556286355244725
+            ],
+            [
+              -59.997541698079026,
+              -2.955628879872465
+            ],
+            [
+              -59.99754194111153,
+              -2.955538534174144
+            ],
+            [
+              -59.997631803132656,
+              -2.955538778507369
+            ],
+            [
+              -59.9976315601074,
+              -2.9556291242131723
+            ],
+            [
+              -59.997721422143236,
+              -2.9556293685465924
+            ],
+            [
+              -59.99772166516125,
+              -2.9555390228333085
+            ],
+            [
+              -59.9978115271973,
+              -2.955539267151961
+            ],
+            [
+              -59.99781177020059,
+              -2.9554489214310284
+            ],
+            [
+              -59.99790163223686,
+              -2.955449165734913
+            ],
+            [
+              -59.997901875225445,
+              -2.955358820006333
+            ],
+            [
+              -59.99799173726193,
+              -2.955359064295452
+            ],
+            [
+              -59.99799198023581,
+              -2.9552687185592235
+            ],
+            [
+              -59.99790211820657,
+              -2.955268474277585
+            ],
+            [
+              -59.997902361180245,
+              -2.955178128548669
+            ],
+            [
+              -59.997812499165725,
+              -2.9551778842672265
+            ],
+            [
+              -59.997812742139175,
+              -2.955087538545625
+            ],
+            [
+              -59.99772288013936,
+              -2.955087294264377
+            ],
+            [
+              -59.99772312311259,
+              -2.954996948550089
+            ],
+            [
+              -59.99763326112748,
+              -2.9549967042690377
+            ],
+            [
+              -59.9976335041005,
+              -2.9549063585620643
+            ],
+            [
+              -59.9975436421301,
+              -2.95490611428121
+            ],
+            [
+              -59.997543885102914,
+              -2.954815768581551
+            ],
+            [
+              -59.99745402314721,
+              -2.954815524300894
+            ],
+            [
+              -59.9974542661198,
+              -2.954725178608549
+            ],
+            [
+              -59.99736440417881,
+              -2.9547249343280897
+            ],
+            [
+              -59.997364647151194,
+              -2.954634588643059
+            ],
+            [
+              -59.99727478522491,
+              -2.954634344362798
+            ],
+            [
+              -59.997275028197066,
+              -2.9545439986850828
+            ],
+            [
+              -59.99718516628549,
+              -2.9545437544050204
+            ],
+            [
+              -59.99718565222191,
+              -2.9543630630640525
+            ],
+            [
+              -59.997005928450115,
+              -2.9543625745120075
+            ],
+            [
+              -59.99700617142162,
+              -2.954272228856238
+            ],
+            [
+              -59.996916309554166,
+              -2.9542719845767746
+            ],
+            [
+              -59.99691606657542,
+              -2.9543623302250603
+            ],
+            [
+              -59.996466757313875,
+              -2.9543611086810757
+            ],
+            [
+              -59.99646700032885,
+              -2.954270763070209
+            ],
+            [
+              -59.99637713850618,
+              -2.954270518747047
+            ],
+            [
+              -59.99637738152093,
+              -2.9541801731434973
+            ],
+            [
+              -59.99628751971296,
+              -2.9541799288205364
+            ],
+            [
+              -59.996287762727476,
+              -2.9540895832243046
+            ],
+            [
+              -59.996197900934234,
+              -2.9540893389015466
+            ],
+            [
+              -59.99619814394853,
+              -2.953998993312632
+            ],
+            [
+              -59.996108282169985,
+              -2.953998748990076
+            ],
+            [
+              -59.99610876819068,
+              -2.9538180578267164
+            ],
+            [
+              -59.99592904468496,
+              -2.9538175691896997
+            ],
+            [
+              -59.995929287698594,
+              -2.95372722362274
+            ],
+            [
+              -59.99565970251773,
+              -2.953726490635059
+            ],
+            [
+              -59.99565994554562,
+              -2.9536361450903903
+            ],
+            [
+              -59.995570083840846,
+              -2.953635900754087
+            ],
+            [
+              -59.99557032686852,
+              -2.9535455552167367
+            ]
+          ],
+          [
+            [
+              -59.99107579106518,
+              -2.9540754004664107
+            ],
+            [
+              -59.99098592970527,
+              -2.9540751557212714
+            ],
+            [
+              -59.99098568626337,
+              -2.954165500875512
+            ],
+            [
+              -59.99089582490369,
+              -2.9541652561155924
+            ],
+            [
+              -59.99089606835282,
+              -2.954074910968849
+            ],
+            [
+              -59.99080620700786,
+              -2.9540746662091446
+            ],
+            [
+              -59.99080596355148,
+              -2.9541650113483895
+            ],
+            [
+              -59.99071610220676,
+              -2.954164766573904
+            ],
+            [
+              -59.99071634567037,
+              -2.954074421442159
+            ],
+            [
+              -59.99062648434037,
+              -2.9540741766678886
+            ],
+            [
+              -59.9906262408695,
+              -2.954164521792136
+            ],
+            [
+              -59.990536379539726,
+              -2.9541642770030863
+            ],
+            [
+              -59.990536623017846,
+              -2.954073931886337
+            ],
+            [
+              -59.990446761702785,
+              -2.954073687097505
+            ],
+            [
+              -59.990446518217446,
+              -2.9541640322067537
+            ],
+            [
+              -59.990356656902634,
+              -2.954163787403138
+            ],
+            [
+              -59.99035690039523,
+              -2.954073442301388
+            ],
+            [
+              -59.99026703909513,
+              -2.9540731974979892
+            ],
+            [
+              -59.9902667955953,
+              -2.95416354259224
+            ],
+            [
+              -59.99017693429545,
+              -2.9541632977740595
+            ],
+            [
+              -59.99017717780253,
+              -2.95407295268731
+            ],
+            [
+              -59.990087316517396,
+              -2.9540727078693467
+            ],
+            [
+              -59.990087073003075,
+              -2.954163052948597
+            ],
+            [
+              -59.98981748917083,
+              -2.9541623184285126
+            ],
+            [
+              -59.9898172456273,
+              -2.954252663485094
+            ],
+            [
+              -59.9897273843576,
+              -2.954252418623
+            ],
+            [
+              -59.98972714079935,
+              -2.954342763671913
+            ],
+            [
+              -59.989817002076286,
+              -2.954343008541508
+            ],
+            [
+              -59.98981675851778,
+              -2.9544333535977545
+            ],
+            [
+              -59.98990661980945,
+              -2.9544335984675674
+            ],
+            [
+              -59.98990637625072,
+              -2.954523943531147
+            ],
+            [
+              -59.98999623755711,
+              -2.9545241884011775
+            ],
+            [
+              -59.989995993998136,
+              -2.954614533472091
+            ],
+            [
+              -59.99008585531924,
+              -2.9546147783423384
+            ],
+            [
+              -59.99008561176004,
+              -2.9547051234205846
+            ],
+            [
+              -59.99017547309588,
+              -2.9547053682910476
+            ],
+            [
+              -59.99017522953645,
+              -2.954795713376627
+            ],
+            [
+              -59.99026509088701,
+              -2.9547959582473067
+            ],
+            [
+              -59.99026533443921,
+              -2.954705613154227
+            ],
+            [
+              -59.990355195789995,
+              -2.954705858010123
+            ],
+            [
+              -59.99035543932747,
+              -2.9546155129093776
+            ],
+            [
+              -59.990445300678495,
+              -2.954615757750489
+            ],
+            [
+              -59.99044505714827,
+              -2.9547061028587347
+            ],
+            [
+              -59.99053491851404,
+              -2.954706347700063
+            ],
+            [
+              -59.99053516203701,
+              -2.9546160025843187
+            ],
+            [
+              -59.990625023403005,
+              -2.9546162474108635
+            ],
+            [
+              -59.99062526691126,
+              -2.9545259022874517
+            ],
+            [
+              -59.99071512827748,
+              -2.954526147099215
+            ],
+            [
+              -59.99071537177102,
+              -2.9544358019681383
+            ],
+            [
+              -59.99080523313748,
+              -2.954436046765119
+            ],
+            [
+              -59.99080498965119,
+              -2.954526391903694
+            ],
+            [
+              -59.99089485103237,
+              -2.9545266367008898
+            ],
+            [
+              -59.990895094511416,
+              -2.954436291554816
+            ],
+            [
+              -59.99098495589283,
+              -2.954436536337231
+            ],
+            [
+              -59.990984712421024,
+              -2.954526881490802
+            ],
+            [
+              -59.99107457381717,
+              -2.954527126273431
+            ],
+            [
+              -59.99107481728172,
+              -2.9544367811123617
+            ],
+            [
+              -59.991164678678096,
+              -2.954437025880209
+            ],
+            [
+              -59.99116492212793,
+              -2.9543466807114744
+            ],
+            [
+              -59.99125478352454,
+              -2.9543469254645416
+            ],
+            [
+              -59.99125502695965,
+              -2.9542565802881424
+            ],
+            [
+              -59.99116516557029,
+              -2.954256335542573
+            ],
+            [
+              -59.99116540900517,
+              -2.9541659903735042
+            ],
+            [
+              -59.99107554763054,
+              -2.954165745628149
+            ],
+            [
+              -59.99107579106518,
+              -2.9540754004664107
+            ]
+          ],
+          [
+            [
+              -59.98882901569536,
+              -2.95415962462745
+            ],
+            [
+              -59.98873915451521,
+              -2.954159379692749
+            ],
+            [
+              -59.98873891088476,
+              -2.954249724659304
+            ],
+            [
+              -59.988649049704854,
+              -2.9542494797098175
+            ],
+            [
+              -59.98864880605966,
+              -2.954339824668701
+            ],
+            [
+              -59.988738667246814,
+              -2.9543400696256907
+            ],
+            [
+              -59.98873842360139,
+              -2.9544304145919114
+            ],
+            [
+              -59.98882828480327,
+              -2.9544306595491228
+            ],
+            [
+              -59.98882852844146,
+              -2.9543403145753993
+            ],
+            [
+              -59.988918389643565,
+              -2.954340559517824
+            ],
+            [
+              -59.988918633267026,
+              -2.9542502145364296
+            ],
+            [
+              -59.98882877207215,
+              -2.9542499696015083
+            ],
+            [
+              -59.98882901569536,
+              -2.95415962462745
+            ]
+          ],
+          [
+            [
+              -59.98891814601263,
+              -2.954430904499051
+            ],
+            [
+              -59.98882828480327,
+              -2.9544306595491228
+            ],
+            [
+              -59.9888280411576,
+              -2.954521004522679
+            ],
+            [
+              -59.98891790237421,
+              -2.9545212494801096
+            ],
+            [
+              -59.98891814601263,
+              -2.954430904499051
+            ]
+          ],
+          [
+            [
+              -59.988917658728305,
+              -2.954611594461003
+            ],
+            [
+              -59.988827797504456,
+              -2.9546113494960684
+            ],
+            [
+              -59.988827553843834,
+              -2.95470169446929
+            ],
+            [
+              -59.988917415074916,
+              -2.954701939441727
+            ],
+            [
+              -59.988917658728305,
+              -2.954611594461003
+            ]
+          ],
+          [
+            [
+              -59.988827553843834,
+              -2.95470169446929
+            ],
+            [
+              -59.98873769262021,
+              -2.9547014494895683
+            ],
+            [
+              -59.98873744894486,
+              -2.9547917944551196
+            ],
+            [
+              -59.98864758772148,
+              -2.95479154946061
+            ],
+            [
+              -59.9886463691962,
+              -2.955243274248336
+            ],
+            [
+              -59.98855650794408,
+              -2.955243029209023
+            ],
+            [
+              -59.988556264209336,
+              -2.9553333741585623
+            ],
+            [
+              -59.988466402957464,
+              -2.9553331291044613
+            ],
+            [
+              -59.98846615920798,
+              -2.9554234740463294
+            ],
+            [
+              -59.988556020467094,
+              -2.955423719107934
+            ],
+            [
+              -59.98855577671739,
+              -2.9555140640571382
+            ],
+            [
+              -59.9888253605614,
+              -2.955514799220753
+            ],
+            [
+              -59.98882560428939,
+              -2.9554244542490378
+            ],
+            [
+              -59.988915465578444,
+              -2.9554246992815005
+            ],
+            [
+              -59.9889157092917,
+              -2.955334354302115
+            ],
+            [
+              -59.98900557058099,
+              -2.95533459931979
+            ],
+            [
+              -59.98900581427952,
+              -2.955244254332733
+            ],
+            [
+              -59.988915952997466,
+              -2.9552440093225614
+            ],
+            [
+              -59.988916196695754,
+              -2.9551536643428413
+            ],
+            [
+              -59.989006057970556,
+              -2.95515390934551
+            ],
+            [
+              -59.98900630165411,
+              -2.955063564358119
+            ],
+            [
+              -59.98909616292915,
+              -2.9550638093460004
+            ],
+            [
+              -59.98909640659799,
+              -2.954973464350938
+            ],
+            [
+              -59.98900654533018,
+              -2.9549732193705602
+            ],
+            [
+              -59.98900678899877,
+              -2.954882874382834
+            ],
+            [
+              -59.9889169277457,
+              -2.954882629402675
+            ],
+            [
+              -59.98891717141405,
+              -2.9547922844222843
+            ],
+            [
+              -59.98882731017571,
+              -2.9547920394423435
+            ],
+            [
+              -59.988827553843834,
+              -2.95470169446929
+            ]
+          ],
+          [
+            [
+              -59.990354952245056,
+              -2.954796203110702
+            ],
+            [
+              -59.99026509088701,
+              -2.9547959582473067
+            ],
+            [
+              -59.99026484732733,
+              -2.9548863033402175
+            ],
+            [
+              -59.990354708692614,
+              -2.9548865482111126
+            ],
+            [
+              -59.990354952245056,
+              -2.954796203110702
+            ]
+          ],
+          [
+            [
+              -59.99089363352497,
+              -2.9549783624287485
+            ],
+            [
+              -59.99080377210756,
+              -2.9549781175940604
+            ],
+            [
+              -59.9908035285764,
+              -2.955068462731633
+            ],
+            [
+              -59.990893390001055,
+              -2.955068707573818
+            ],
+            [
+              -59.99089363352497,
+              -2.9549783624287485
+            ]
+          ],
+          [
+            [
+              -59.99071391069763,
+              -2.9549778727520897
+            ],
+            [
+              -59.990624049295185,
+              -2.9549776279028332
+            ],
+            [
+              -59.99062380574953,
+              -2.955067973025407
+            ],
+            [
+              -59.99053394434731,
+              -2.9550677281613673
+            ],
+            [
+              -59.99053418790021,
+              -2.954977383046292
+            ],
+            [
+              -59.99044432651272,
+              -2.9549771381824668
+            ],
+            [
+              -59.99044408295258,
+              -2.9550674832900423
+            ],
+            [
+              -59.990354221565326,
+              -2.955067238411433
+            ],
+            [
+              -59.99035446513271,
+              -2.9549768933113563
+            ],
+            [
+              -59.990264603760174,
+              -2.954976648432962
+            ],
+            [
+              -59.990264360185535,
+              -2.955066993525539
+            ],
+            [
+              -59.990174498813246,
+              -2.95506674863236
+            ],
+            [
+              -59.990174255223884,
+              -2.9551570937172693
+            ],
+            [
+              -59.99008439385181,
+              -2.955156848809305
+            ],
+            [
+              -59.99008415024773,
+              -2.9552471938865477
+            ],
+            [
+              -59.9899942888759,
+              -2.955246948963799
+            ],
+            [
+              -59.98999404525709,
+              -2.955337294033373
+            ],
+            [
+              -59.990083906636166,
+              -2.9553375389636227
+            ],
+            [
+              -59.990083663017124,
+              -2.9554278840405295
+            ],
+            [
+              -59.99017352441092,
+              -2.9554281289709943
+            ],
+            [
+              -59.990173768022714,
+              -2.955337783886586
+            ],
+            [
+              -59.990263629416766,
+              -2.9553380288022644
+            ],
+            [
+              -59.990263385812206,
+              -2.955428373894172
+            ],
+            [
+              -59.99035324722097,
+              -2.9554286188100654
+            ],
+            [
+              -59.99035349081828,
+              -2.9553382737106584
+            ],
+            [
+              -59.990443352227274,
+              -2.955338518611766
+            ],
+            [
+              -59.990443108637216,
+              -2.9554288637186725
+            ],
+            [
+              -59.99053297006093,
+              -2.9554291086199944
+            ],
+            [
+              -59.99053321364375,
+              -2.9553387635055883
+            ],
+            [
+              -59.990623075067695,
+              -2.955339008392125
+            ],
+            [
+              -59.99062283149213,
+              -2.95542935351403
+            ],
+            [
+              -59.99071269293082,
+              -2.9554295984007797
+            ],
+            [
+              -59.990712936499136,
+              -2.9553392532713763
+            ],
+            [
+              -59.99080279793804,
+              -2.955339498143343
+            ],
+            [
+              -59.99080255437698,
+              -2.955429843280245
+            ],
+            [
+              -59.990892415830615,
+              -2.9554300881524234
+            ],
+            [
+              -59.99089217226931,
+              -2.955520433296656
+            ],
+            [
+              -59.990982033737666,
+              -2.9555206781690475
+            ],
+            [
+              -59.99098227729172,
+              -2.955430333017316
+            ],
+            [
+              -59.99107213876032,
+              -2.9554305778749237
+            ],
+            [
+              -59.9910728693559,
+              -2.9551595423962334
+            ],
+            [
+              -59.99098300790904,
+              -2.9551592975611194
+            ],
+            [
+              -59.990982764377414,
+              -2.955249642713352
+            ],
+            [
+              -59.99089290293078,
+              -2.955249397863455
+            ],
+            [
+              -59.99089314646966,
+              -2.95515905271872
+            ],
+            [
+              -59.990803285037764,
+              -2.9551588078690365
+            ],
+            [
+              -59.9908035285764,
+              -2.955068462731633
+            ],
+            [
+              -59.99071366715922,
+              -2.9550682178821623
+            ],
+            [
+              -59.99071391069763,
+              -2.9549778727520897
+            ]
+          ],
+          [
+            [
+              -59.99017474239512,
+              -2.954976403547282
+            ],
+            [
+              -59.990084881037546,
+              -2.954976158654319
+            ],
+            [
+              -59.99008463744842,
+              -2.9550665037318957
+            ],
+            [
+              -59.990174498813246,
+              -2.95506674863236
+            ],
+            [
+              -59.99017474239512,
+              -2.954976403547282
+            ]
+          ],
+          [
+            [
+              -59.99808208523167,
+              -2.9551786170896994
+            ],
+            [
+              -59.997992223202225,
+              -2.955178372822827
+            ],
+            [
+              -59.99799198023581,
+              -2.9552687185592235
+            ],
+            [
+              -59.9980818422725,
+              -2.955268962833576
+            ],
+            [
+              -59.99808208523167,
+              -2.9551786170896994
+            ]
+          ],
+          [
+            [
+              -59.99808159930586,
+              -2.9553593085772856
+            ],
+            [
+              -59.99799173726193,
+              -2.955359064295452
+            ],
+            [
+              -59.997991494280576,
+              -2.955449410031514
+            ],
+            [
+              -59.99808135633177,
+              -2.955449654320829
+            ],
+            [
+              -59.99808159930586,
+              -2.9553593085772856
+            ]
+          ],
+          [
+            [
+              -59.99107189521351,
+              -2.955520923034152
+            ],
+            [
+              -59.990982033737666,
+              -2.9555206781690475
+            ],
+            [
+              -59.990981790176136,
+              -2.9556110233206105
+            ],
+            [
+              -59.99107165165921,
+              -2.955611268193214
+            ],
+            [
+              -59.99107189521351,
+              -2.955520923034152
+            ]
+          ],
+          [
+            [
+              -59.99772069304446,
+              -2.9559004056854414
+            ],
+            [
+              -59.99763083098688,
+              -2.955900161329577
+            ],
+            [
+              -59.99763058793178,
+              -2.9559905070347114
+            ],
+            [
+              -59.997720449996606,
+              -2.955990751398057
+            ],
+            [
+              -59.99772069304446,
+              -2.9559004056854414
+            ]
+          ],
+          [
+            [
+              -59.99718152081091,
+              -2.9558989394409494
+            ],
+            [
+              -59.99709165879809,
+              -2.9558986950413626
+            ],
+            [
+              -59.99709141569951,
+              -2.955989040701604
+            ],
+            [
+              -59.99718127771956,
+              -2.955989285108673
+            ],
+            [
+              -59.99718152081091,
+              -2.9558989394409494
+            ]
+          ],
+          [
+            [
+              -59.99700179679276,
+              -2.9558984506344896
+            ],
+            [
+              -59.99691193479487,
+              -2.955898206220328
+            ],
+            [
+              -59.99691169168179,
+              -2.9559885518656035
+            ],
+            [
+              -59.99700155368692,
+              -2.9559887962872478
+            ],
+            [
+              -59.99700179679276,
+              -2.9558984506344896
+            ]
+          ],
+          [
+            [
+              -59.99124869521656,
+              -2.9566055548201353
+            ],
+            [
+              -59.9911588336388,
+              -2.9566053098796323
+            ],
+            [
+              -59.99115859000202,
+              -2.9566956550441827
+            ],
+            [
+              -59.99124845158704,
+              -2.9566958999921824
+            ],
+            [
+              -59.99124869521656,
+              -2.9566055548201353
+            ]
+          ],
+          [
+            [
+              -59.992146824283985,
+              -2.956788694318139
+            ],
+            [
+              -59.99205696261696,
+              -2.956788449435532
+            ],
+            [
+              -59.99205671903773,
+              -2.956878794674712
+            ],
+            [
+              -59.992146580712,
+              -2.9568790395648135
+            ],
+            [
+              -59.992146824283985,
+              -2.956788694318139
+            ]
+          ],
+          [
+            [
+              -59.99160765439391,
+              -2.9567872249131626
+            ],
+            [
+              -59.99151779277173,
+              -2.9567869799868207
+            ],
+            [
+              -59.991517549149,
+              -2.956877325181025
+            ],
+            [
+              -59.99160741077842,
+              -2.956877570114862
+            ],
+            [
+              -59.99160765439391,
+              -2.9567872249131626
+            ]
+          ],
+          [
+            [
+              -59.97861537589188,
+              -2.9759951742199497
+            ],
+            [
+              -59.97852551379942,
+              -2.9759949266403827
+            ],
+            [
+              -59.97852477497851,
+              -2.9762659588695453
+            ],
+            [
+              -59.97870449921471,
+              -2.9762664540665162
+            ],
+            [
+              -59.97870474548125,
+              -2.97617610997524
+            ],
+            [
+              -59.978614883366696,
+              -2.9761758623879513
+            ],
+            [
+              -59.97861537589188,
+              -2.9759951742199497
+            ]
+          ]
+        ]
+      }
+    }
+  ]
+}

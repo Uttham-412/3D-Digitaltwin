@@ -51,8 +51,8 @@ export const ComparisonPanel: React.FC<ComparisonPanelProps> = ({
         maxWidth: 'calc(100vw - 32px)',
         padding: '12px 14px',
         borderRadius: 'var(--radius-md)',
-        border: '1px solid rgba(255, 255, 255, 0.1)',
-        boxShadow: '0 12px 32px rgba(0, 0, 0, 0.55)',
+        border: '1px solid var(--bg-surface-border)',
+        boxShadow: 'var(--shadow-card)',
         display: 'flex',
         flexDirection: 'column',
         gap: '10px',
@@ -70,7 +70,7 @@ export const ComparisonPanel: React.FC<ComparisonPanelProps> = ({
         onClick={() => setIsExpanded(!isExpanded)}
       >
         <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-          <Layers size={14} color="var(--accent-cyan)" />
+          <Layers size={14} color="var(--accent-blue)" />
           <h3
             style={{
               margin: 0,
@@ -84,7 +84,7 @@ export const ComparisonPanel: React.FC<ComparisonPanelProps> = ({
         </div>
 
         <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-          <span style={{ color: '#94a3b8', display: 'flex', alignItems: 'center' }}>
+          <span style={{ color: 'var(--text-muted)', display: 'flex', alignItems: 'center' }}>
             {isExpanded ? <ChevronDown size={14} /> : <ChevronRight size={14} />}
           </span>
           {onClose && (
@@ -94,7 +94,7 @@ export const ComparisonPanel: React.FC<ComparisonPanelProps> = ({
                 onClose();
               }}
               className="glass-button"
-              style={{ width: '20px', height: '20px', padding: 0 }}
+              style={{ width: '20px', height: '20px', padding: 0, color: 'var(--text-secondary)' }}
               title="Close panel"
             >
               <X size={12} />
@@ -108,12 +108,13 @@ export const ComparisonPanel: React.FC<ComparisonPanelProps> = ({
           {/* Observation vs Clock Timing Line */}
           <div
             style={{
-              backgroundColor: 'rgba(0, 0, 0, 0.25)',
+              backgroundColor: '#f8fafc',
+              border: '1px solid var(--bg-surface-border)',
               padding: '8px 10px',
               borderRadius: 'var(--radius-sm)',
               fontSize: '0.68rem',
               lineHeight: 1.4,
-              color: '#94a3b8',
+              color: 'var(--text-muted)',
               display: 'flex',
               flexDirection: 'column',
               gap: '2px',
@@ -121,11 +122,11 @@ export const ComparisonPanel: React.FC<ComparisonPanelProps> = ({
           >
             <div style={{ display: 'flex', justifyContent: 'space-between' }}>
               <span>Simulation time:</span>
-              <span style={{ color: '#e2e8f0' }}>{new Date(simulationClockTime).toLocaleTimeString()}</span>
+              <span style={{ color: 'var(--text-primary)', fontWeight: 600 }}>{new Date(simulationClockTime).toLocaleTimeString()}</span>
             </div>
             <div style={{ display: 'flex', justifyContent: 'space-between' }}>
               <span>Acquisition:</span>
-              <span style={{ color: isHistoricalObservation ? '#fbbf24' : '#64748b' }}>
+              <span style={{ color: isHistoricalObservation ? 'var(--status-warning)' : 'var(--text-muted)', fontWeight: 500 }}>
                 {isHistoricalObservation ? 'Historical pre-event baseline' : 'Unavailable'}
               </span>
             </div>
@@ -136,14 +137,14 @@ export const ComparisonPanel: React.FC<ComparisonPanelProps> = ({
             {/* 1. Fire Simulation Layer */}
             <div style={layerRowStyle}>
               <div>
-                <span style={{ fontSize: '0.72rem', fontWeight: 600, color: '#f97316' }}>
+                <span style={{ fontSize: '0.72rem', fontWeight: 600, color: '#ea580c' }}>
                   Fire simulation
                 </span>
-                <span style={{ fontSize: '0.62rem', color: '#94a3b8', display: 'block' }}>
+                <span style={{ fontSize: '0.62rem', color: 'var(--text-muted)', display: 'block' }}>
                   Evolving perimeter
                 </span>
               </div>
-              <button onClick={onToggleSimulation} style={toggleBtnStyle(showSimulation, '#f97316')}>
+              <button onClick={onToggleSimulation} style={toggleBtnStyle(showSimulation, '#ea580c')}>
                 {showSimulation ? <Eye size={11} /> : <EyeOff size={11} />}
                 <span>{showSimulation ? 'Visible' : 'Hidden'}</span>
               </button>
@@ -152,17 +153,17 @@ export const ComparisonPanel: React.FC<ComparisonPanelProps> = ({
             {/* 2. U-Net Model Prediction Layer */}
             <div style={layerRowStyle}>
               <div>
-                <span style={{ fontSize: '0.72rem', fontWeight: 600, color: '#ef4444' }}>
+                <span style={{ fontSize: '0.72rem', fontWeight: 600, color: '#dc2626' }}>
                   U-Net prediction
                 </span>
-                <span style={{ fontSize: '0.62rem', color: '#94a3b8', display: 'block' }}>
+                <span style={{ fontSize: '0.62rem', color: 'var(--text-muted)', display: 'block' }}>
                   Burned area mask (τ = 0.65)
                 </span>
               </div>
               <button
                 onClick={isSatelliteAvailable ? onTogglePrediction : undefined}
                 disabled={!isSatelliteAvailable}
-                style={toggleBtnStyle(showPrediction && isSatelliteAvailable, '#ef4444', !isSatelliteAvailable)}
+                style={toggleBtnStyle(showPrediction && isSatelliteAvailable, '#dc2626', !isSatelliteAvailable)}
               >
                 {showPrediction && isSatelliteAvailable ? <Eye size={11} /> : <EyeOff size={11} />}
                 <span>{showPrediction && isSatelliteAvailable ? 'Visible' : 'Hidden'}</span>
@@ -173,14 +174,14 @@ export const ComparisonPanel: React.FC<ComparisonPanelProps> = ({
             {unetOutput?.waterMaskUrl && onToggleWaterContext && (
               <div style={layerRowStyle}>
                 <div>
-                  <span style={{ fontSize: '0.72rem', fontWeight: 600, color: '#00e5ff' }}>
+                  <span style={{ fontSize: '0.72rem', fontWeight: 600, color: 'var(--accent-blue)' }}>
                     Water boundaries
                   </span>
-                  <span style={{ fontSize: '0.62rem', color: '#94a3b8', display: 'block' }}>
+                  <span style={{ fontSize: '0.62rem', color: 'var(--text-muted)', display: 'block' }}>
                     ESA WorldCover 10m
                   </span>
                 </div>
-                <button onClick={onToggleWaterContext} style={toggleBtnStyle(showWaterContext, '#00e5ff')}>
+                <button onClick={onToggleWaterContext} style={toggleBtnStyle(showWaterContext, 'var(--accent-blue)')}>
                   {showWaterContext ? <Eye size={11} /> : <EyeOff size={11} />}
                   <span>{showWaterContext ? 'Visible' : 'Hidden'}</span>
                 </button>
@@ -191,14 +192,14 @@ export const ComparisonPanel: React.FC<ComparisonPanelProps> = ({
             {isGroundTruthAvailable && (
               <div style={layerRowStyle}>
                 <div>
-                  <span style={{ fontSize: '0.72rem', fontWeight: 600, color: '#10b981' }}>
+                  <span style={{ fontSize: '0.72rem', fontWeight: 600, color: 'var(--accent-forest)' }}>
                     Ground truth
                   </span>
-                  <span style={{ fontSize: '0.62rem', color: '#94a3b8', display: 'block' }}>
+                  <span style={{ fontSize: '0.62rem', color: 'var(--text-muted)', display: 'block' }}>
                     Copernicus EMS delimitation
                   </span>
                 </div>
-                <button onClick={onToggleGroundTruth} style={toggleBtnStyle(showGroundTruth, '#10b981')}>
+                <button onClick={onToggleGroundTruth} style={toggleBtnStyle(showGroundTruth, 'var(--accent-forest)')}>
                   {showGroundTruth ? <Eye size={11} /> : <EyeOff size={11} />}
                   <span>{showGroundTruth ? 'Visible' : 'Hidden'}</span>
                 </button>
@@ -210,10 +211,10 @@ export const ComparisonPanel: React.FC<ComparisonPanelProps> = ({
           {comparisonMetrics && (
             <div
               style={{
-                backgroundColor: 'rgba(0, 0, 0, 0.25)',
+                backgroundColor: '#f8fafc',
+                border: '1px solid var(--bg-surface-border)',
                 padding: '8px 10px',
                 borderRadius: 'var(--radius-sm)',
-                border: '1px solid rgba(255, 255, 255, 0.05)',
               }}
             >
               <div
@@ -224,7 +225,7 @@ export const ComparisonPanel: React.FC<ComparisonPanelProps> = ({
                   marginBottom: '6px',
                 }}
               >
-                <span style={{ fontSize: '0.68rem', fontWeight: 600, color: '#94a3b8' }}>
+                <span style={{ fontSize: '0.68rem', fontWeight: 600, color: 'var(--text-muted)' }}>
                   Spatial overlap
                 </span>
                 <span
@@ -235,9 +236,10 @@ export const ComparisonPanel: React.FC<ComparisonPanelProps> = ({
                     borderRadius: '3px',
                     backgroundColor:
                       comparisonMetrics.status === 'compatible'
-                        ? 'rgba(16, 185, 129, 0.15)'
-                        : 'rgba(100, 116, 139, 0.15)',
-                    color: comparisonMetrics.status === 'compatible' ? '#34d399' : '#94a3b8',
+                        ? 'var(--status-success-bg)'
+                        : '#f1f5f9',
+                    color: comparisonMetrics.status === 'compatible' ? 'var(--status-success)' : 'var(--text-muted)',
+                    border: comparisonMetrics.status === 'compatible' ? '1px solid var(--status-success-border)' : '1px solid #cbd5e1',
                   }}
                 >
                   {comparisonMetrics.status === 'compatible' ? 'Compatible' : 'Incompatible'}
@@ -247,14 +249,14 @@ export const ComparisonPanel: React.FC<ComparisonPanelProps> = ({
               {comparisonMetrics.status === 'compatible' ? (
                 <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '6px' }}>
                   <div style={metricBoxStyle}>
-                    <span style={{ fontSize: '0.60rem', color: '#94a3b8', display: 'block' }}>IoU overlap</span>
-                    <span style={{ fontSize: '0.85rem', fontWeight: 700, color: '#38bdf8' }}>
+                    <span style={{ fontSize: '0.60rem', color: 'var(--text-muted)', display: 'block' }}>IoU overlap</span>
+                    <span style={{ fontSize: '0.85rem', fontWeight: 700, color: 'var(--accent-blue)' }}>
                       {(comparisonMetrics.iou * 100).toFixed(1)}%
                     </span>
                   </div>
                   <div style={metricBoxStyle}>
-                    <span style={{ fontSize: '0.60rem', color: '#94a3b8', display: 'block' }}>Intersection</span>
-                    <span style={{ fontSize: '0.85rem', fontWeight: 700, color: '#34d399' }}>
+                    <span style={{ fontSize: '0.60rem', color: 'var(--text-muted)', display: 'block' }}>Intersection</span>
+                    <span style={{ fontSize: '0.85rem', fontWeight: 700, color: 'var(--accent-forest)' }}>
                       {comparisonMetrics.intersectionAreaHectares} ha
                     </span>
                   </div>
@@ -263,13 +265,13 @@ export const ComparisonPanel: React.FC<ComparisonPanelProps> = ({
                 <div
                   style={{
                     fontSize: '0.66rem',
-                    color: '#94a3b8',
+                    color: 'var(--text-muted)',
                     display: 'flex',
                     alignItems: 'center',
                     gap: '4px',
                   }}
                 >
-                  <AlertCircle size={12} color="#f59e0b" />
+                  <AlertCircle size={12} color="var(--accent-amber)" />
                   <span>{comparisonMetrics.message || 'Comparison unavailable for current selection.'}</span>
                 </div>
               )}
@@ -285,29 +287,33 @@ const layerRowStyle: React.CSSProperties = {
   display: 'flex',
   justifyContent: 'space-between',
   alignItems: 'center',
-  backgroundColor: 'rgba(255, 255, 255, 0.02)',
-  padding: '5px 8px',
-  borderRadius: '4px',
+  backgroundColor: '#ffffff',
+  border: '1px solid var(--bg-surface-border)',
+  boxShadow: 'var(--shadow-sm)',
+  padding: '6px 10px',
+  borderRadius: 'var(--radius-sm)',
 };
 
 const metricBoxStyle: React.CSSProperties = {
-  backgroundColor: 'rgba(255, 255, 255, 0.03)',
-  padding: '4px 6px',
-  borderRadius: '4px',
+  backgroundColor: '#ffffff',
+  border: '1px solid var(--bg-surface-border)',
+  boxShadow: 'var(--shadow-sm)',
+  padding: '5px 8px',
+  borderRadius: 'var(--radius-sm)',
 };
 
-function toggleBtnStyle(active: boolean, color: string, disabled: boolean = false): React.CSSProperties {
+function toggleBtnStyle(active: boolean, _color: string, disabled: boolean = false): React.CSSProperties {
   return {
-    background: disabled ? 'rgba(255, 255, 255, 0.02)' : active ? `${color}20` : 'transparent',
-    border: `1px solid ${disabled ? 'rgba(255, 255, 255, 0.08)' : active ? color : 'rgba(255, 255, 255, 0.12)'}`,
-    color: disabled ? '#64748b' : active ? color : '#94a3b8',
+    background: disabled ? '#f8fafc' : active ? 'var(--status-success-bg)' : '#ffffff',
+    border: `1px solid ${disabled ? 'var(--bg-surface-border)' : active ? 'var(--status-success-border)' : 'var(--bg-surface-border-strong)'}`,
+    color: disabled ? 'var(--text-muted)' : active ? 'var(--status-success)' : 'var(--text-secondary)',
     borderRadius: '4px',
-    padding: '2px 6px',
+    padding: '2px 7px',
     fontSize: '0.64rem',
     fontWeight: 600,
     cursor: disabled ? 'not-allowed' : 'pointer',
     display: 'flex',
     alignItems: 'center',
-    gap: '3px',
+    gap: '4px',
   };
 }

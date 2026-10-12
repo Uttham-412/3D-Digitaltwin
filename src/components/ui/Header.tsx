@@ -1,5 +1,5 @@
 import React from 'react';
-import { Flame, Globe, Mountain, Key, MapPin } from 'lucide-react';
+import { Globe, Mountain, Key, MapPin } from 'lucide-react';
 import { SelectedLocation } from '../../geospatial/coordinates';
 
 interface HeaderProps {
@@ -35,78 +35,71 @@ export const Header: React.FC<HeaderProps> = ({
         padding: '0 20px',
         zIndex: 30,
         borderRadius: 'var(--radius-md)',
+        background: 'var(--bg-surface)',
+        borderColor: 'var(--border-color)',
+        boxShadow: 'var(--shadow-card)',
       }}
     >
       {/* Brand Title */}
       <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-        <div
-          style={{
-            width: '34px',
-            height: '34px',
-            borderRadius: '8px',
-            background: 'rgba(255, 255, 255, 0.06)',
-            border: '1px solid rgba(255, 255, 255, 0.12)',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-          }}
-        >
-          <Flame size={18} color="#f97316" />
-        </div>
         <div>
           <h1
             style={{
-              fontSize: '1.05rem',
+              fontSize: '1.02rem',
               fontWeight: 700,
-              letterSpacing: '0.04em',
-              lineHeight: 1.1,
+              letterSpacing: '-0.015em',
+              lineHeight: 1.2,
               display: 'flex',
               alignItems: 'center',
-              gap: '8px',
+              gap: '10px',
               margin: 0,
+              color: 'var(--text-primary)',
             }}
           >
-            DIGITAL TWIN
+            Digital Twin
             <span
               style={{
                 fontSize: '0.62rem',
                 fontWeight: 600,
-                color: '#34d399',
-                border: '1px solid rgba(16, 185, 129, 0.3)',
-                background: 'rgba(16, 185, 129, 0.1)',
-                padding: '2px 6px',
+                color: 'var(--accent-forest-dark)',
+                border: '1px solid var(--accent-forest-border)',
+                background: 'var(--accent-forest-subtle)',
+                padding: '2px 8px',
                 borderRadius: '4px',
-                letterSpacing: '0.06em',
-                textTransform: 'uppercase',
+                letterSpacing: '0.02em',
               }}
             >
               Study Region Active
             </span>
           </h1>
-          <p style={{ fontSize: '0.70rem', color: 'var(--text-muted)', margin: 0, marginTop: '2px' }}>
+          <p style={{ fontSize: '0.68rem', color: 'var(--text-secondary)', margin: 0, marginTop: '2px', fontWeight: 400 }}>
             Geospatial Wildfire Monitoring & Simulation
           </p>
         </div>
       </div>
 
       {/* Real-time Telemetry & Engine Status Pills */}
-      <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+      <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
         {/* Coordinates Readout */}
         <div
           className="glass-panel"
           style={{
-            padding: '4px 12px',
-            fontSize: '0.78rem',
+            padding: '5px 12px',
+            fontSize: '0.74rem',
             fontFamily: 'var(--font-mono)',
             display: 'flex',
             alignItems: 'center',
             gap: '8px',
-            background: 'rgba(0, 0, 0, 0.4)',
+            background: 'var(--bg-surface-elevated)',
+            border: '1px solid var(--border-color)',
+            color: 'var(--text-secondary)',
+            boxShadow: 'var(--shadow-sm)',
+            borderRadius: 'var(--radius-sm)',
           }}
         >
-          <Globe size={14} color="var(--accent-cyan)" />
-          <span>{coordinates}</span>
-          <span style={{ color: 'var(--text-muted)' }}>|</span>
+          <Globe size={13} color="var(--accent-forest)" />
+          <span style={{ color: 'var(--text-primary)', fontWeight: 600 }}>{coordinates}</span>
+          <span style={{ color: 'var(--border-color-strong)' }}>|</span>
           <span style={{ color: 'var(--text-secondary)' }}>ALT {altitude}</span>
         </div>
 
@@ -114,18 +107,20 @@ export const Header: React.FC<HeaderProps> = ({
         <div
           className="glass-panel hide-on-mobile"
           style={{
-            padding: '4px 10px',
-            fontSize: '0.72rem',
+            padding: '5px 10px',
+            fontSize: '0.70rem',
             fontWeight: 500,
             display: 'flex',
             alignItems: 'center',
             gap: '6px',
-            background: isTerrainLoaded ? 'rgba(16, 185, 129, 0.15)' : 'rgba(245, 158, 11, 0.15)',
-            borderColor: isTerrainLoaded ? 'rgba(16, 185, 129, 0.3)' : 'rgba(245, 158, 11, 0.3)',
-            color: isTerrainLoaded ? '#34d399' : '#fbbf24',
+            background: isTerrainLoaded ? 'var(--status-success-bg)' : 'var(--status-warning-bg)',
+            borderColor: isTerrainLoaded ? 'var(--status-success-border)' : 'var(--status-warning-border)',
+            color: isTerrainLoaded ? 'var(--status-success)' : 'var(--status-warning)',
+            boxShadow: 'none',
+            borderRadius: 'var(--radius-sm)',
           }}
         >
-          <Mountain size={14} />
+          <Mountain size={13} />
           <span>{isTerrainLoaded ? '3D Terrain Active' : 'Ellipsoid Baseline'}</span>
         </div>
 
@@ -134,18 +129,20 @@ export const Header: React.FC<HeaderProps> = ({
           <div
             className="glass-panel hide-on-mobile"
             style={{
-              padding: '4px 10px',
-              fontSize: '0.72rem',
+              padding: '5px 10px',
+              fontSize: '0.70rem',
               fontWeight: 500,
               display: 'flex',
               alignItems: 'center',
               gap: '6px',
-              background: 'rgba(0, 229, 255, 0.15)',
-              borderColor: 'rgba(0, 229, 255, 0.35)',
-              color: 'var(--accent-cyan)',
+              background: 'var(--accent-blue-subtle)',
+              borderColor: 'var(--accent-blue-border)',
+              color: 'var(--accent-blue)',
+              boxShadow: 'none',
+              borderRadius: 'var(--radius-sm)',
             }}
           >
-            <MapPin size={14} />
+            <MapPin size={13} />
             <span>Target Selected</span>
           </div>
         )}
@@ -154,19 +151,21 @@ export const Header: React.FC<HeaderProps> = ({
         <div
           className="glass-panel hide-on-mobile"
           style={{
-            padding: '4px 10px',
-            fontSize: '0.72rem',
+            padding: '5px 10px',
+            fontSize: '0.70rem',
             fontWeight: 500,
             display: 'flex',
             alignItems: 'center',
             gap: '6px',
-            background: hasToken ? 'rgba(59, 130, 246, 0.15)' : 'rgba(107, 114, 128, 0.15)',
-            borderColor: hasToken ? 'rgba(59, 130, 246, 0.3)' : 'rgba(107, 114, 128, 0.3)',
-            color: hasToken ? '#60a5fa' : '#9ca3af',
+            background: hasToken ? 'var(--bg-surface-secondary)' : 'var(--bg-surface)',
+            borderColor: 'var(--border-color)',
+            color: hasToken ? 'var(--text-primary)' : 'var(--text-muted)',
+            boxShadow: 'none',
+            borderRadius: 'var(--radius-sm)',
           }}
         >
-          <Key size={14} />
-          <span>{hasToken ? 'Ion Token Connected' : 'Ion Token Pending'}</span>
+          <Key size={13} />
+          <span>{hasToken ? 'Ion Connected' : 'Ion Pending'}</span>
         </div>
       </div>
     </header>

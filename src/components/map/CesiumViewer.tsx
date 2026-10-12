@@ -85,16 +85,18 @@ export const CesiumViewerComponent: React.FC<CesiumViewerProps> = ({
           <div style={{ textAlign: 'center' }}>
             <div
               style={{
-                width: 40,
-                height: 40,
-                border: '3px solid rgba(255,255,255,0.1)',
-                borderTopColor: 'var(--accent-cyan)',
+                width: 36,
+                height: 36,
+                border: '3px solid var(--bg-surface-border)',
+                borderTopColor: 'var(--accent-forest)',
                 borderRadius: '50%',
                 animation: 'spin 1s linear infinite',
                 margin: '0 auto 12px auto',
               }}
             />
-            <p style={{ fontSize: '0.9rem', letterSpacing: '0.05em' }}>INITIALIZING 3D ENGINE...</p>
+            <p style={{ fontSize: '0.85rem', fontWeight: 500, color: 'var(--text-secondary)', letterSpacing: '0.02em' }}>
+              Initializing 3D terrain and globe...
+            </p>
           </div>
           <style>{`@keyframes spin { 100% { transform: rotate(360deg); } }`}</style>
         </div>

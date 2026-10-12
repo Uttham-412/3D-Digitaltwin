@@ -41,8 +41,8 @@ export const EMSR239InfoPanel: React.FC = () => {
         padding: '16px',
         zIndex: 25,
         borderRadius: 'var(--radius-md)',
-        border: '1px solid rgba(245, 158, 11, 0.35)',
-        boxShadow: '0 8px 32px rgba(0, 0, 0, 0.5)',
+        border: '1px solid var(--status-warning-border)',
+        boxShadow: 'var(--shadow-card)',
       }}
     >
       {/* Header */}
@@ -61,19 +61,18 @@ export const EMSR239InfoPanel: React.FC = () => {
               width: '32px',
               height: '32px',
               borderRadius: '8px',
-              background: 'rgba(245, 158, 11, 0.2)',
-              border: '1px solid rgba(245, 158, 11, 0.4)',
+              background: 'var(--status-warning-bg)',
+              border: '1px solid var(--status-warning-border)',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
-              boxShadow: '0 0 12px rgba(245, 158, 11, 0.3)',
             }}
           >
-            <Cpu size={18} color="#f59e0b" />
+            <Cpu size={18} color="var(--status-warning)" />
           </div>
           <div>
             <h2 style={{ fontSize: '0.9rem', fontWeight: 600, color: 'var(--text-primary)' }}>
-              AI Wildfire Layer — EMSR239
+              Wildfire Layer — EMSR239
             </h2>
             <p style={{ fontSize: '0.7rem', color: 'var(--text-muted)' }}>
               Almadén de la Plata, Spain (Patch 433)
@@ -91,7 +90,7 @@ export const EMSR239InfoPanel: React.FC = () => {
       </div>
 
       {isExpanded && (
-        <div style={{ marginTop: '14px', paddingTop: '12px', borderTop: '1px solid rgba(255,255,255,0.08)' }}>
+        <div style={{ marginTop: '14px', paddingTop: '12px', borderTop: '1px solid var(--bg-surface-border)' }}>
           {/* Provenance Pill */}
           <div
             style={{
@@ -100,22 +99,23 @@ export const EMSR239InfoPanel: React.FC = () => {
               gap: '6px',
               padding: '6px 10px',
               borderRadius: 'var(--radius-sm)',
-              background: 'rgba(245, 158, 11, 0.12)',
-              border: '1px solid rgba(245, 158, 11, 0.25)',
+              background: 'var(--status-warning-bg)',
+              border: '1px solid var(--status-warning-border)',
               marginBottom: '12px',
               fontSize: '0.72rem',
-              color: '#f59e0b',
+              color: 'var(--status-warning)',
               fontWeight: 500,
             }}
           >
             <ShieldCheck size={14} />
-            <span>PROVENANCE: DERIVED / 15-CHANNEL U-NET INFERENCE</span>
+            <span>Provenance: Derived / 15-channel U-Net inference</span>
           </div>
 
           {/* Model Specification Grid */}
           <div
             style={{
-              background: 'rgba(0, 0, 0, 0.35)',
+              background: 'var(--bg-surface-subtle)',
+              border: '1px solid var(--bg-surface-border)',
               padding: '10px 12px',
               borderRadius: 'var(--radius-md)',
               fontSize: '0.75rem',
@@ -126,13 +126,13 @@ export const EMSR239InfoPanel: React.FC = () => {
             }}
           >
             <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-              <span style={{ color: 'var(--text-muted)' }}>AI Model:</span>
+              <span style={{ color: 'var(--text-muted)' }}>Model:</span>
               <strong style={{ color: 'var(--text-primary)' }}>15-ch U-Net (Epoch 8)</strong>
             </div>
 
             <div style={{ display: 'flex', justifyContent: 'space-between' }}>
               <span style={{ color: 'var(--text-muted)' }}>Inference Threshold:</span>
-              <span style={{ fontFamily: 'var(--font-mono)', color: 'var(--accent-cyan)' }}>
+              <span style={{ fontFamily: 'var(--font-mono)', color: 'var(--accent-blue)', fontWeight: 600 }}>
                 0.65 (Frozen)
               </span>
             </div>
@@ -152,15 +152,15 @@ export const EMSR239InfoPanel: React.FC = () => {
             </div>
 
             <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-              <span style={{ color: 'var(--text-muted)' }}>AI Prediction Density:</span>
-              <span style={{ color: '#ef4444', fontWeight: 600 }}>
+              <span style={{ color: 'var(--text-muted)' }}>Predicted Burned Area:</span>
+              <span style={{ color: 'var(--status-error)', fontWeight: 600 }}>
                 36.33% (23,811 pixels)
               </span>
             </div>
 
             <div style={{ display: 'flex', justifyContent: 'space-between' }}>
               <span style={{ color: 'var(--text-muted)' }}>Observed Ground Truth:</span>
-              <span style={{ color: '#34d399', fontWeight: 600 }}>
+              <span style={{ color: 'var(--status-success)', fontWeight: 600 }}>
                 36.88% (24,172 pixels)
               </span>
             </div>
@@ -196,8 +196,8 @@ export const EMSR239InfoPanel: React.FC = () => {
                   textAlign: 'left',
                 }}
               >
-                {showPrediction ? <CheckSquare size={16} color="#ef4444" /> : <Square size={16} color="var(--text-muted)" />}
-                <span>AI Predicted Burned Area (Amber/Red)</span>
+                {showPrediction ? <CheckSquare size={16} color="var(--status-error)" /> : <Square size={16} color="var(--text-muted)" />}
+                <span>Predicted Burned Area (Amber/Red)</span>
               </button>
 
               <button
@@ -213,7 +213,7 @@ export const EMSR239InfoPanel: React.FC = () => {
                   textAlign: 'left',
                 }}
               >
-                {showGroundTruth ? <CheckSquare size={16} color="#10b981" /> : <Square size={16} color="var(--text-muted)" />}
+                {showGroundTruth ? <CheckSquare size={16} color="var(--status-success)" /> : <Square size={16} color="var(--text-muted)" />}
                 <span>Observed Ground Truth (Green)</span>
               </button>
 
@@ -230,8 +230,8 @@ export const EMSR239InfoPanel: React.FC = () => {
                   textAlign: 'left',
                 }}
               >
-                {showBoundary ? <CheckSquare size={16} color="var(--accent-cyan)" /> : <Square size={16} color="var(--text-muted)" />}
-                <span>Patch 433 Boundary Outline (Cyan)</span>
+                {showBoundary ? <CheckSquare size={16} color="var(--accent-blue)" /> : <Square size={16} color="var(--text-muted)" />}
+                <span>Patch 433 Boundary Outline (Blue)</span>
               </button>
             </div>
           </div>
@@ -241,11 +241,11 @@ export const EMSR239InfoPanel: React.FC = () => {
             style={{
               padding: '8px 10px',
               borderRadius: 'var(--radius-sm)',
-              background: 'rgba(59, 130, 246, 0.12)',
-              border: '1px solid rgba(59, 130, 246, 0.25)',
+              background: 'var(--accent-blue-subtle)',
+              border: '1px solid var(--accent-blue-border)',
               marginBottom: '14px',
               fontSize: '0.7rem',
-              color: '#60a5fa',
+              color: 'var(--accent-blue)',
               display: 'flex',
               alignItems: 'flex-start',
               gap: '6px',
@@ -268,9 +268,9 @@ export const EMSR239InfoPanel: React.FC = () => {
               fontSize: '0.78rem',
               fontWeight: 600,
               gap: '6px',
-              background: 'rgba(245, 158, 11, 0.15)',
-              borderColor: 'rgba(245, 158, 11, 0.35)',
-              color: '#f59e0b',
+              background: 'var(--status-warning-bg)',
+              borderColor: 'var(--status-warning-border)',
+              color: 'var(--status-warning)',
             }}
           >
             <Crosshair size={14} />

@@ -73,16 +73,17 @@ export const LocationPanel: React.FC<LocationPanelProps> = ({
         position: 'relative',
         width: '360px',
         maxWidth: 'calc(100vw - 32px)',
-        padding: '14px 16px',
+        padding: '16px',
         zIndex: 35,
         borderRadius: 'var(--radius-md)',
+        background: 'var(--bg-surface)',
         border: isSimulatedFireActive
-          ? '1px solid rgba(249, 115, 22, 0.4)'
-          : '1px solid rgba(255, 255, 255, 0.1)',
-        boxShadow: '0 12px 32px rgba(0, 0, 0, 0.55)',
+          ? '1px solid var(--accent-fire)'
+          : '1px solid var(--border-color)',
+        boxShadow: 'var(--shadow-card)',
         display: 'flex',
         flexDirection: 'column',
-        gap: '10px',
+        gap: '12px',
       }}
     >
       {/* Location Header */}
@@ -96,14 +97,14 @@ export const LocationPanel: React.FC<LocationPanelProps> = ({
         <div style={{ display: 'flex', alignItems: 'center', gap: '8px', minWidth: 0 }}>
           <MapPin
             size={16}
-            color={isSimulatedFireActive ? '#f97316' : isInAmazon ? '#34d399' : '#fbbf24'}
+            color={isSimulatedFireActive ? 'var(--accent-fire)' : isInAmazon ? 'var(--accent-forest)' : 'var(--accent-amber)'}
             style={{ flexShrink: 0 }}
           />
           <div style={{ minWidth: 0 }}>
             <h2
               style={{
-                fontSize: '0.88rem',
-                fontWeight: 600,
+                fontSize: '0.90rem',
+                fontWeight: 700,
                 color: 'var(--text-primary)',
                 margin: 0,
                 whiteSpace: 'nowrap',
@@ -116,8 +117,8 @@ export const LocationPanel: React.FC<LocationPanelProps> = ({
             <span
               style={{
                 fontSize: '0.64rem',
-                color: isInAmazon ? '#34d399' : '#fbbf24',
-                fontWeight: 500,
+                color: isInAmazon ? 'var(--accent-forest)' : 'var(--accent-amber)',
+                fontWeight: 600,
               }}
             >
               {isInAmazon ? 'Amazon study region' : 'Outside study region'}
@@ -140,23 +141,25 @@ export const LocationPanel: React.FC<LocationPanelProps> = ({
         style={{
           display: 'grid',
           gridTemplateColumns: '1fr 1fr',
-          gap: '8px',
-          background: 'rgba(0, 0, 0, 0.25)',
-          padding: '8px 10px',
+          gap: '10px',
+          background: 'var(--bg-surface-secondary)',
+          padding: '9px 12px',
           borderRadius: 'var(--radius-sm)',
-          border: '1px solid rgba(255, 255, 255, 0.05)',
+          border: '1px solid var(--border-color)',
         }}
       >
         <div>
-          <span style={{ fontSize: '0.62rem', color: 'var(--text-muted)', display: 'block' }}>
+          <span style={{ fontSize: '0.62rem', color: 'var(--text-secondary)', display: 'block', fontWeight: 500 }}>
             Coordinates
           </span>
           <span
             style={{
               fontSize: '0.74rem',
-              fontWeight: 500,
+              fontWeight: 600,
               fontFamily: 'var(--font-mono)',
-              color: 'var(--accent-cyan)',
+              color: 'var(--text-primary)',
+              display: 'block',
+              marginTop: '1px',
             }}
           >
             {formatCoordinates(location.latitude, location.longitude)}
@@ -164,16 +167,18 @@ export const LocationPanel: React.FC<LocationPanelProps> = ({
         </div>
 
         <div>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '3px' }}>
-            <Mountain size={11} color="var(--text-muted)" />
-            <span style={{ fontSize: '0.62rem', color: 'var(--text-muted)' }}>Elevation</span>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+            <Mountain size={11} color="var(--accent-forest)" />
+            <span style={{ fontSize: '0.62rem', color: 'var(--text-secondary)', fontWeight: 500 }}>Elevation</span>
           </div>
           <span
             style={{
               fontSize: '0.74rem',
-              fontWeight: 500,
+              fontWeight: 600,
               fontFamily: 'var(--font-mono)',
               color: 'var(--text-primary)',
+              display: 'block',
+              marginTop: '1px',
             }}
           >
             {heightVal.toLocaleString()} m
@@ -185,11 +190,11 @@ export const LocationPanel: React.FC<LocationPanelProps> = ({
       {!isInAmazon && (
         <div
           style={{
-            backgroundColor: 'rgba(245, 158, 11, 0.08)',
-            border: '1px solid rgba(245, 158, 11, 0.25)',
+            backgroundColor: 'var(--status-warning-bg)',
+            border: '1px solid var(--status-warning-border)',
             borderRadius: 'var(--radius-sm)',
             padding: '8px 10px',
-            color: '#fbbf24',
+            color: 'var(--status-warning)',
             fontSize: '0.70rem',
             lineHeight: 1.35,
           }}
@@ -204,16 +209,16 @@ export const LocationPanel: React.FC<LocationPanelProps> = ({
           style={{
             padding: '6px 10px',
             borderRadius: 'var(--radius-sm)',
-            background: 'rgba(239, 68, 68, 0.1)',
-            border: '1px solid rgba(239, 68, 68, 0.3)',
-            color: '#fca5a5',
+            background: 'var(--status-error-bg)',
+            border: '1px solid var(--status-error-border)',
+            color: 'var(--status-error)',
             fontSize: '0.70rem',
             display: 'flex',
             gap: '6px',
             alignItems: 'center',
           }}
         >
-          <AlertTriangle size={13} color="#ef4444" style={{ flexShrink: 0 }} />
+          <AlertTriangle size={13} color="var(--accent-fire)" style={{ flexShrink: 0 }} />
           <span>Water surface: Wildfires cannot ignite on open water bodies.</span>
         </div>
       )}
@@ -223,16 +228,16 @@ export const LocationPanel: React.FC<LocationPanelProps> = ({
           style={{
             padding: '6px 10px',
             borderRadius: 'var(--radius-sm)',
-            background: 'rgba(148, 163, 184, 0.1)',
-            border: '1px solid rgba(148, 163, 184, 0.3)',
-            color: '#cbd5e1',
+            background: 'var(--bg-surface-secondary)',
+            border: '1px solid var(--border-color)',
+            color: 'var(--text-secondary)',
             fontSize: '0.70rem',
             display: 'flex',
             gap: '6px',
             alignItems: 'center',
           }}
         >
-          <AlertTriangle size={13} color="#94a3b8" style={{ flexShrink: 0 }} />
+          <AlertTriangle size={13} color="var(--text-muted)" style={{ flexShrink: 0 }} />
           <span>Urban surface: Wildfire ignition is prohibited in urban areas.</span>
         </div>
       )}
@@ -242,16 +247,16 @@ export const LocationPanel: React.FC<LocationPanelProps> = ({
           style={{
             padding: '6px 10px',
             borderRadius: 'var(--radius-sm)',
-            background: 'rgba(56, 189, 248, 0.08)',
-            border: '1px solid rgba(56, 189, 248, 0.25)',
-            color: '#7dd3fc',
+            background: 'var(--accent-blue-subtle)',
+            border: '1px solid var(--accent-blue-border)',
+            color: 'var(--accent-blue)',
             fontSize: '0.70rem',
             display: 'flex',
             gap: '6px',
             alignItems: 'center',
           }}
         >
-          <AlertTriangle size={13} color="#38bdf8" style={{ flexShrink: 0 }} />
+          <AlertTriangle size={13} color="var(--accent-blue)" style={{ flexShrink: 0 }} />
           <span>Water status unverified</span>
         </div>
       )}
@@ -261,9 +266,9 @@ export const LocationPanel: React.FC<LocationPanelProps> = ({
           style={{
             padding: '6px 10px',
             borderRadius: 'var(--radius-sm)',
-            background: 'rgba(239, 68, 68, 0.1)',
-            border: '1px solid rgba(239, 68, 68, 0.3)',
-            color: '#fca5a5',
+            background: 'var(--status-error-bg)',
+            border: '1px solid var(--status-error-border)',
+            color: 'var(--status-error)',
             fontSize: '0.70rem',
           }}
         >
@@ -278,30 +283,33 @@ export const LocationPanel: React.FC<LocationPanelProps> = ({
           className="glass-button"
           style={{
             flex: 1,
-            padding: '6px 10px',
+            padding: '7px 10px',
             fontSize: '0.74rem',
             fontWeight: 500,
             gap: '5px',
+            background: 'var(--bg-surface)',
+            border: '1px solid var(--border-color)',
+            color: 'var(--text-primary)',
           }}
         >
-          <Crosshair size={13} color="var(--accent-cyan)" />
+          <Crosshair size={13} color="var(--accent-blue)" />
           Center
         </button>
 
-        {/* Consolidated Assessment Action: ONE clear primary action */}
+        {/* Consolidated Assessment Action: Forest-Green Primary Action */}
         {hasAssessmentResult ? (
           <button
             onClick={onOpenDetectionPanel}
             className="glass-button"
             style={{
               flex: 1.5,
-              padding: '6px 10px',
+              padding: '7px 10px',
               fontSize: '0.74rem',
               fontWeight: 600,
               gap: '6px',
-              color: isAssessmentCompleted ? '#34d399' : '#fbbf24',
-              borderColor: isAssessmentCompleted ? 'rgba(16, 185, 129, 0.35)' : 'rgba(245, 158, 11, 0.35)',
-              background: isAssessmentCompleted ? 'rgba(16, 185, 129, 0.12)' : 'rgba(245, 158, 11, 0.12)',
+              color: isAssessmentCompleted ? '#FFFFFF' : 'var(--status-warning)',
+              borderColor: isAssessmentCompleted ? 'var(--accent-forest-dark)' : 'var(--status-warning-border)',
+              background: isAssessmentCompleted ? 'var(--accent-forest)' : 'var(--status-warning-bg)',
             }}
             title="Open Fire Assessment Panel"
           >
@@ -314,13 +322,13 @@ export const LocationPanel: React.FC<LocationPanelProps> = ({
             className="glass-button"
             style={{
               flex: 1.5,
-              padding: '6px 10px',
+              padding: '7px 10px',
               fontSize: '0.74rem',
               fontWeight: 600,
               gap: '6px',
-              color: '#fbbf24',
-              borderColor: 'rgba(245, 158, 11, 0.35)',
-              background: 'rgba(245, 158, 11, 0.12)',
+              color: 'var(--status-warning)',
+              borderColor: 'var(--status-warning-border)',
+              background: 'var(--status-warning-bg)',
             }}
           >
             <Satellite size={13} />
@@ -333,13 +341,13 @@ export const LocationPanel: React.FC<LocationPanelProps> = ({
             className="glass-button"
             style={{
               flex: 1.5,
-              padding: '6px 10px',
+              padding: '7px 10px',
               fontSize: '0.74rem',
               fontWeight: 600,
               gap: '6px',
-              color: isInAmazon ? '#f87171' : '#64748b',
-              borderColor: isInAmazon ? 'rgba(239, 68, 68, 0.35)' : 'rgba(255, 255, 255, 0.08)',
-              background: isInAmazon ? 'rgba(239, 68, 68, 0.08)' : 'rgba(30, 41, 59, 0.3)',
+              color: isInAmazon ? '#FFFFFF' : 'var(--text-muted)',
+              borderColor: isInAmazon ? 'var(--accent-forest-dark)' : 'var(--border-color)',
+              background: isInAmazon ? 'var(--accent-forest)' : 'var(--bg-surface-secondary)',
               cursor: isInAmazon ? 'pointer' : 'not-allowed',
               opacity: isInAmazon ? 1 : 0.6,
             }}
@@ -359,17 +367,17 @@ export const LocationPanel: React.FC<LocationPanelProps> = ({
             className="glass-button"
             style={{
               width: '100%',
-              padding: '7px 10px',
+              padding: '8px 10px',
               fontSize: '0.75rem',
               fontWeight: 600,
-              color: isBurnable ? '#f97316' : '#94a3b8',
-              borderColor: isBurnable ? 'rgba(249, 115, 22, 0.4)' : 'rgba(255, 255, 255, 0.1)',
-              background: isBurnable ? 'rgba(249, 115, 22, 0.12)' : 'rgba(30, 41, 59, 0.3)',
+              color: isBurnable ? 'var(--accent-fire)' : 'var(--text-muted)',
+              borderColor: isBurnable ? '#F0D59E' : 'var(--border-color)',
+              background: isBurnable ? '#FAF0DC' : 'var(--bg-surface-secondary)',
               cursor: 'pointer',
               gap: '6px',
             }}
           >
-            <Flame size={13} />
+            <Flame size={13} color={isBurnable ? 'var(--accent-fire)' : 'var(--text-muted)'} />
             <span>Simulate fire ignition</span>
           </button>
         ) : (
@@ -381,16 +389,16 @@ export const LocationPanel: React.FC<LocationPanelProps> = ({
                 className="glass-button"
                 style={{
                   flex: 1.2,
-                  padding: '7px 10px',
+                  padding: '8px 10px',
                   fontSize: '0.74rem',
                   fontWeight: 600,
-                  color: '#fdba74',
-                  borderColor: 'rgba(249, 115, 22, 0.4)',
-                  background: 'rgba(249, 115, 22, 0.15)',
+                  color: 'var(--accent-fire)',
+                  borderColor: '#F0D59E',
+                  background: '#FAF0DC',
                   gap: '5px',
                 }}
               >
-                <Flame size={13} />
+                <Flame size={13} color="var(--accent-fire)" />
                 <span>Spread analysis</span>
               </button>
             )}
@@ -400,10 +408,12 @@ export const LocationPanel: React.FC<LocationPanelProps> = ({
                 className="glass-button"
                 style={{
                   flex: 0.8,
-                  padding: '7px 10px',
+                  padding: '8px 10px',
                   fontSize: '0.74rem',
                   fontWeight: 500,
-                  color: '#94a3b8',
+                  color: 'var(--text-secondary)',
+                  background: 'var(--bg-surface)',
+                  border: '1px solid var(--border-color)',
                 }}
               >
                 Clear fire
@@ -414,7 +424,7 @@ export const LocationPanel: React.FC<LocationPanelProps> = ({
       </div>
 
       {/* Forest Condition Section */}
-      <div style={{ borderTop: '1px solid rgba(255, 255, 255, 0.06)', paddingTop: '6px' }}>
+      <div style={{ borderTop: '1px solid var(--border-color)', paddingTop: '8px' }}>
         <ForestConditionPanel
           location={location}
           hasActiveFireData={false}
